@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">EvilKingMedia</string>
+
+    <string name="fa_icon_user">&#xf007;</string>
+    <string name="fa_icon_setting">&#xf013;</string>
+    <string name="fa_icon_off">&#xf011;</string>
+    <string name="fa_icon_info">&#xf05a;</string>
+    <string name="fa_icon_record">&#xf03d;</string>
+    <string name="fa_icon_history">&#xf1da;</string>
 </resources>

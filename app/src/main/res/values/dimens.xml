@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="card_margin">10dp</dimen>
+    <dimen name="image_width">100dp</dimen>
+    <dimen name="image_height">100dp</dimen>
+    <dimen name="title">20dp</dimen>
+    <dimen name="rating">15dp</dimen>
+    <dimen name="small">10dp</dimen>
+</resources>

@@ -1,22 +1,353 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context=".CategoryActivity">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:gravity="center_horizontal|center_vertical">
 
-        <Button
-            android:id="@+id/btnmovie"
-            android:layout_width="150dp"
+    <!--Top View-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp">
+
+        <!--Logo-->
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="70dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="80dp"
+            android:layout_weight="0.5"
+            android:scaleType="fitStart"
+            android:src="@drawable/logo" />
+
+        <!--User-->
+        <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
+            android:id="@+id/txtuser"
+            android:layout_width="50dp"
+            android:layout_height="70dp"
+            android:gravity="center_vertical"
+            android:text="@string/fa_icon_user"
+            android:textColor="@color/colorWhite" />
+
+        <!--Setting-->
+        <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
+            android:id="@+id/txtsetting"
+            android:layout_width="50dp"
+            android:layout_height="70dp"
+            android:gravity="center_vertical"
+            android:text="@string/fa_icon_setting"
+            android:textColor="@color/colorWhite" />
+
+        <!--Log off-->
+        <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
+            android:id="@+id/txtlogout"
+            android:layout_width="50dp"
+            android:layout_height="70dp"
+            android:gravity="center_vertical"
+            android:text="@string/fa_icon_off"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+    <!--End of Top View-->
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <!--Movies-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/moviesCardView"
+            android:layout_width="180dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/colorRed"
+            app:cardCornerRadius="10dp">
+
+            <LinearLayout
+                android:id="@+id/rlMovies"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imgMovies"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/movies"
+                    android:elevation="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MOVIES"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/imgMovies"
+                    android:layout_marginLeft="5dp"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--Music-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/musicCardView"
+            android:layout_width="180dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/colorRed"
+            app:cardCornerRadius="10dp"
+            android:layout_below="@+id/moviesCardView">
+
+            <LinearLayout
+                android:id="@+id/rlMusic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imgMusic"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/music"
+                    android:elevation="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MUSIC"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/imgMovies"
+                    android:layout_marginLeft="5dp"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--EPG-->
+       <!-- <android.support.v7.widget.CardView
+            android:id="@+id/epgCardView"
+            android:layout_width="180dp"
             android:layout_height="50dp"
-            android:text="Film"
-            android:textAllCaps="false" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/colorRed"
+            app:cardCornerRadius="10dp"
+            android:layout_below="@+id/musicCardView">
+
+            <LinearLayout
+                android:id="@+id/rlepg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
+                    android:id="@+id/epg"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:text="@string/fa_icon_info"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp"
+                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EPG"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/imgMovies"
+                    android:layout_marginLeft="5dp"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>-->
+        <!--Live tv-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/livetvCardView"
+            android:layout_width="180dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/colorRed"
+            app:cardCornerRadius="10dp"
+            android:layout_toRightOf="@+id/moviesCardView">
+
+            <LinearLayout
+                android:id="@+id/rllive"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgLive"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/live" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LIVE TV"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--Recordings-->
+       <!-- <android.support.v7.widget.CardView
+            android:id="@+id/recordingCardView"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/colorRed"
+            app:cardCornerRadius="10dp"
+            android:layout_toRightOf="@+id/epgCardView"
+            android:layout_below="@+id/livetvCardView">
+
+            <LinearLayout
+                android:id="@+id/rlrecording"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
+                    android:id="@+id/recording"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:text="@string/fa_icon_record"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RECORDINGS"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/imgMovies"
+                    android:layout_marginLeft="5dp"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>-->
+
+        <!--Series-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/seriesCardView"
+            android:layout_width="180dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/colorRed"
+            app:cardCornerRadius="10dp"
+            android:layout_toRightOf="@+id/livetvCardView">
+
+            <LinearLayout
+                android:id="@+id/rlSeries"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imgSeries"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/series" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SERIES"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/imgMovies"
+                    android:layout_marginLeft="5dp"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--Sports-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/sportsCardView"
+            android:layout_width="180dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/colorRed"
+            app:cardCornerRadius="10dp"
+            android:layout_below="@+id/seriesCardView"
+            android:layout_toRightOf="@+id/livetvCardView">
+
+            <LinearLayout
+                android:id="@+id/rlSports"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imgSports"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/sports" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SPORTS"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/imgMovies"
+                    android:layout_marginLeft="5dp"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--Catch Up-->
+        <!--<android.support.v7.widget.CardView
+            android:id="@+id/catchUpCardView"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/colorRed"
+            app:cardCornerRadius="10dp"
+            android:layout_below="@+id/sportsCardView"
+            android:layout_toRightOf="@+id/recordingCardView">
+
+            <LinearLayout
+                android:id="@+id/rlcatchup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
+                    android:id="@+id/catchup"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:text="@string/fa_icon_history"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CATCH UP"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/imgMovies"
+                    android:layout_marginLeft="5dp"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>-->
     </RelativeLayout>
 </LinearLayout>
