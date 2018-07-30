@@ -7,11 +7,19 @@ public class MoviesModel {
     private String rating;
     private String year;
     private String duration;
+    private String url;
 
     public MoviesModel() {
 
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getImage() {
         return image;
@@ -61,6 +69,7 @@ public class MoviesModel {
                 ", rating='" + rating + '\'' +
                 ", year='" + year + '\'' +
                 ", duration='" + duration + '\'' +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

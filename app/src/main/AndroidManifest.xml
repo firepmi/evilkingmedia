@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".film.FilmActivity"
             android:screenOrientation="landscape"></activity>
+        <activity android:name=".film.WebViewActivity"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

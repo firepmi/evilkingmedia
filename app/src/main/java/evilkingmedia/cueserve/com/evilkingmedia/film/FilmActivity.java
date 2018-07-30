@@ -88,6 +88,7 @@ public class FilmActivity extends AppCompatActivity {
                 int ratingSize = rating.size();
                 Elements mElementYear = doc.select("#dle-content span[class=ml-label]");
                 int yearSize = mElementYear.size();
+                Elements mElementurl = doc.select("#dle-content a[href]");
                 for(int j =0 ;j<yearSize;j++)
                 { if(mElementYear.get(j).text().contains("min"))
                 {
@@ -123,6 +124,12 @@ public class FilmActivity extends AppCompatActivity {
                     //For duration
                     movie.setDuration(durationArrayList.get(i));
 
+                    //For Url
+                    Elements mElementH2 = doc.select("#dle-content h2");
+                    Elements mElementUrl =  mElementH2.get(i).getElementsByTag("a");
+                    String url = mElementUrl.attr("href");
+                    Log.d("href", url);
+                    movie.setUrl(url);
                     movieList.add(movie);
 
                 }
