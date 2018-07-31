@@ -76,9 +76,11 @@ public class FilmActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
+
+            //Movie1
             try {
                 // Connect to the web site
-                Document doc = Jsoup.connect(Constant.MOVIEURL+"/").timeout(10000).get();
+                Document doc = Jsoup.connect(Constant.MOVIEURL1+"/").timeout(10000).get();
                 // Using Elements to get the Meta data
                 Elements title = doc.select("#dle-content p[class=h4]");
                 int titleSize = title.size();
@@ -136,6 +138,50 @@ public class FilmActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+           //Movie2
+          /*  try {
+                // Connect to the web site
+                Document doc = Jsoup.connect(Constant.MOVIEURL2+"/").timeout(10000).get();
+                // Using Elements to get the Meta data
+                Elements title = doc.select("div.row wracontindexpost");
+                int titleSize = title.size();
+                for (int i = 0; i < titleSize; i++) {
+                    Elements mElementImage = doc.select("div.row wracontindexpost");
+                    String image = mElementImage.get(i).getElementsByClass("div.container-index-post col-xs-4 col-sm-3 col-md-2-5 col-lg-2").text();
+                    Log.d("image", image);
+                    MoviesModel movie = new MoviesModel();
+                    movie.setImage(image);
+
+                    //For Movie Title
+                    Elements mElementTitle = doc.select("#dle-content p[class=h4]");
+                    String movieTitle = mElementTitle.get(i).text();
+                    Log.d("movieTitle", movieTitle);
+                    movie.setTitle(movieTitle);
+
+                    //For Rating
+                    Elements mElementRating = doc.select("#dle-content span[class=ml-imdb]");
+                    String movieRating = mElementRating.get(i).text();
+                    movie.setRating(movieRating);
+
+                    //For year
+                    movie.setYear(yearArrayList.get(i));
+
+                    //For duration
+                    movie.setDuration(durationArrayList.get(i));
+
+                    //For Url
+                    Elements mElementH2 = doc.select("#dle-content h2");
+                    Elements mElementUrl =  mElementH2.get(i).getElementsByTag("a");
+                    String url = mElementUrl.attr("href");
+                    Log.d("href", url);
+                    movie.setUrl(url);
+                    movieList.add(movie);
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
             return null;
         }
 

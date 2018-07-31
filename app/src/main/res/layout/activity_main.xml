@@ -1,34 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".CategoryActivity">
 
+
+        <ImageView
+            android:id="@+id/imgLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/filmstrip"
+            android:layout_gravity="left"
+            android:scaleType="fitStart"
+             />
 
     <!--Top View-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="3"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+      >
 
         <!--Logo-->
         <ImageView
             android:layout_width="@dimen/_10sdp"
-            android:layout_height="@dimen/_70sdp"
+            android:layout_height="@dimen/_60sdp"
             android:layout_gravity="left"
-            android:layout_marginLeft="@dimen/_80sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:layout_weight="0.5"
             android:scaleType="fitStart"
             android:src="@drawable/logo" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14:36 July 24, 2018"
+            android:textColor="@color/colorWhite"
+            android:layout_marginRight="@dimen/_10sdp"/>
         <!--User-->
         <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
             android:id="@+id/txtuser"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_70sdp"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
             android:gravity="center_vertical"
             android:text="@string/fa_icon_user"
             android:textColor="@color/colorWhite"
@@ -37,8 +62,8 @@
         <!--Setting-->
         <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
             android:id="@+id/txtsetting"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_70sdp"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
             android:gravity="center_vertical"
             android:text="@string/fa_icon_setting"
             android:textColor="@color/colorWhite"
@@ -47,8 +72,8 @@
         <!--Log off-->
         <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
             android:id="@+id/txtlogout"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_70sdp"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
             android:gravity="center_vertical"
             android:text="@string/fa_icon_off"
             android:textColor="@color/colorWhite"
@@ -58,15 +83,13 @@
     <!--End of Top View-->
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_70sdp">
+        android:layout_weight="5"
+        android:layout_marginBottom="@dimen/_35sdp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,11 +105,11 @@
             android:layout_marginTop="@dimen/_5sdp"
             app:cardBackgroundColor="@color/colorRed"
             app:cardCornerRadius="@dimen/_10sdp"
-            android:layout_weight="1.7">
+            android:layout_weight="1.5">
 
             <LinearLayout
                 android:id="@+id/rlMovies"
-                android:layout_width="183dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center">
 
@@ -102,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_toRightOf="@+id/imgMovies"
-                    android:text="MOVIES"
+                    android:text="FILM"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -115,7 +138,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1.5"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:cardBackgroundColor="@color/colorRed"
             app:cardCornerRadius="@dimen/_10sdp"
             android:layout_below="@+id/moviesCardView">
@@ -135,7 +158,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MUSIC"
+                    android:text="MUSICA"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
                     android:layout_toRightOf="@+id/imgMovies"
@@ -145,14 +168,14 @@
         </android.support.v7.widget.CardView>
 
         <!--EPG-->
-       <!-- <android.support.v7.widget.CardView
+         <android.support.v7.widget.CardView
             android:id="@+id/epgCardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.8"
+            android:layout_weight="1.75"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:cardBackgroundColor="@color/colorRed"
             app:cardCornerRadius="@dimen/_10sdp"
             android:layout_below="@+id/musicCardView">
@@ -163,15 +186,12 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
-                    android:id="@+id/epg"
+                <ImageView
+                    android:id="@+id/imgEPG"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:text="@string/fa_icon_info"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_15sdp"
-                    />
+                    android:src="@drawable/epg"
+                    android:elevation="@dimen/_5sdp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -182,7 +202,7 @@
                     android:layout_marginLeft="@dimen/_5sdp"
                     />
             </LinearLayout>
-        </android.support.v7.widget.CardView>-->
+        </android.support.v7.widget.CardView>
         </LinearLayout>
         <!--Live tv-->
         <LinearLayout
@@ -195,7 +215,7 @@
             android:id="@+id/livetvCardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_5sdp"
             app:cardBackgroundColor="@color/colorRed"
@@ -226,13 +246,13 @@
         </android.support.v7.widget.CardView>
 
         <!--Recordings-->
-       <!-- <android.support.v7.widget.CardView
+         <android.support.v7.widget.CardView
             android:id="@+id/recordingCardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="6"
+            android:layout_weight="4"
             android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             app:cardBackgroundColor="@color/colorRed"
             app:cardCornerRadius="@dimen/_10sdp"
@@ -245,25 +265,23 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
-                    android:id="@+id/recording"
+                <ImageView
+                    android:id="@+id/imgWeather"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:text="@string/fa_icon_record"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_15sdp"/>
+                    android:src="@drawable/weather"
+                    android:elevation="@dimen/_5sdp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="RECORDINGS"
+                    android:text="METEO"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
                     android:layout_toRightOf="@+id/imgMovies"
                     android:layout_marginLeft="@dimen/_5sdp"
                     />
             </LinearLayout>
-        </android.support.v7.widget.CardView>-->
+        </android.support.v7.widget.CardView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -276,7 +294,7 @@
             android:id="@+id/seriesCardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.7"
+            android:layout_weight="1.5"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginRight="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
@@ -298,7 +316,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SERIES"
+                    android:text="SERIE TV"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
                     android:layout_toRightOf="@+id/imgMovies"
@@ -315,7 +333,7 @@
             android:layout_weight="1.5"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:cardBackgroundColor="@color/colorRed"
             app:cardCornerRadius="10dp"
             android:layout_below="@+id/seriesCardView"
@@ -345,14 +363,14 @@
         </android.support.v7.widget.CardView>
 
         <!--Catch Up-->
-       <!-- <android.support.v7.widget.CardView
+       <android.support.v7.widget.CardView
             android:id="@+id/catchUpCardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.8"
             android:layout_marginRight="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             app:cardBackgroundColor="@color/colorRed"
             app:cardCornerRadius="@dimen/_10sdp"
@@ -365,25 +383,59 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
-                    android:id="@+id/catchup"
+                <ImageView
+                    android:id="@+id/imgEbook"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:text="@string/fa_icon_history"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_15sdp"/>
+                    android:src="@drawable/ebook"
+                    android:elevation="@dimen/_5sdp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CATCH UP"
+                    android:text="E BOOK"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
                     android:layout_toRightOf="@+id/imgMovies"
                     android:layout_marginLeft="@dimen/_5sdp"
                     />
             </LinearLayout>
-        </android.support.v7.widget.CardView>-->
+        </android.support.v7.widget.CardView>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/_26sdp"
+        android:layout_marginLeft="@dimen/_24sdp"
+        android:orientation="horizontal"
+        android:padding="@dimen/_4sdp"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_7sdp"
+            android:drawableEnd="@drawable/rss"
+            />
+        <!--<ImageView-->
+            <!--android:layout_width="15dp"-->
+            <!--android:layout_height="10dp"-->
+            <!--android:src="@drawable/rss"-->
+           <!--android:layout_toRightOf="@+id/txt"/>-->
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/imgRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/filmstrip"
+        android:layout_gravity="right"
+        android:scaleType="fitEnd"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>

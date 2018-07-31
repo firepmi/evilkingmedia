@@ -33,6 +33,7 @@ import java.util.List;
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmActivity;
+import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
 public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview> {
@@ -78,7 +79,7 @@ public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview
 
         final MoviesModel movie = moviesList.get(position);
 
-        Picasso.with(context).load(Constant.MOVIEURL+movie.getImage()).into(holder.imgcontent);
+        Picasso.with(context).load(Constant.MOVIEURL1+movie.getImage()).into(holder.imgcontent);
         holder.txtMovieTitle.setText(movie.getTitle());
         holder.txtMovieRating.setText(movie.getRating());
         holder.txtMovieYear.setText(movie.getYear());
@@ -118,10 +119,10 @@ public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview
                 videoPath = videoUrl.attr("data-link");
 
 
-                /*Intent intent = new Intent(Intent.ACTION_VIEW);
+                 /*Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(Uri.parse(videoPath), "video/mp4");
-                context.startActivity(intent);*/
-
+                context.startActivity(intent);
+*/
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -131,12 +132,20 @@ public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview
         @Override
         protected void onPostExecute(Void result) {
             // Set description into TextView
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoPath));
-            context. startActivity(browserIntent);
 
-          /*  Intent webIntent = new Intent(context, evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity.class);
+
+            //In app
+           /*  Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.parse(videoPath+".mp4"), "video/*");
+            context.startActivity(intent);*/
+
+            //Open video in browser
+          /*   Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoPath));
+            context. startActivity(browserIntent);*/
+
+              Intent webIntent = new Intent(context, WebViewActivity.class);
             webIntent.putExtra("url",videoPath);
-            context.startActivity(webIntent);*/
+            context.startActivity(webIntent);
         }
     }
 
