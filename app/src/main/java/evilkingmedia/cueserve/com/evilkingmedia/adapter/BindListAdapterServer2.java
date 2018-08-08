@@ -18,24 +18,19 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
-public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview> implements Filterable {
+public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapterServer2.myview> implements Filterable {
     private List<MoviesModel> movielistFiltered;
     private List<MoviesModel> moviesList;
     Context context;
@@ -45,26 +40,34 @@ public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview
     BindListAdapter adapter;
 
 
-
-
     public class myview extends RecyclerView.ViewHolder {
 
         private CardView card_view;
         private ImageView imgcontent;
         private TextView txtMovieTitle, txtMovieRating, txtMovieYear, txtMovieDuration;
+        View view1, view2;
 
         public myview(View view) {
             super(view);
             card_view = view.findViewById(R.id.card_view);
             imgcontent = view.findViewById(R.id.imgcontent);
             txtMovieTitle = view.findViewById(R.id.txtMovieTitle);
-           txtMovieRating = view.findViewById(R.id.txtMovieRating);
+            view1 = view.findViewById(R.id.view1);
+            view2 = view.findViewById(R.id.view2);
+            txtMovieRating = view.findViewById(R.id.txtMovieRating);
             txtMovieYear = view.findViewById(R.id.txtMovieYear);
             txtMovieDuration = view.findViewById(R.id.txtMovieDuration);
+            view1.setVisibility(View.GONE);
+            view2.setVisibility(View.GONE);
+            txtMovieRating.setVisibility(View.GONE);
+            txtMovieYear.setVisibility(View.GONE);
+            txtMovieDuration.setVisibility(View.GONE);
+            imgcontent.getLayoutParams().height = 400;
+
         }
     }
 
-    public BindListAdapter(List<MoviesModel> moviesList, Context context) {
+    public BindListAdapterServer2(List<MoviesModel> moviesList, Context context) {
         this.moviesList = moviesList;
         this.context = context;
         this.movielistFiltered = moviesList;
@@ -72,7 +75,7 @@ public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview
 
     @NonNull
     @Override
-    public BindListAdapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindListAdapterServer2.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gridview_list, parent, false);
 
@@ -80,19 +83,28 @@ public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindListAdapter.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull BindListAdapterServer2.myview holder, final int position) {
 
         final MoviesModel movie = moviesList.get(position);
 
-        Picasso.with(context).load(Constant.MOVIEURL1+movie.getImage()).into(holder.imgcontent);
+        if (movie.getImage() == "") {
+           holder.imgcontent.setImageResource(R.color.colorWhite);
+            //Picasso.with(context).load(R.drawable.ic_image).into(holder.imgcontent);
+        } else {
+            Picasso.with(context).load(movie.getImage()).into(holder.imgcontent);
+        }
+
         holder.txtMovieTitle.setText(movie.getTitle());
-        holder.txtMovieRating.setText(movie.getRating());
+       /* holder.txtMovieRating.setText(movie.getRating());
         holder.txtMovieYear.setText(movie.getYear());
-        holder.txtMovieDuration.setText(movie.getDuration());
+        holder.txtMovieDuration.setText(movie.getDuration());*/
 
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               /* Intent webIntent = new Intent(context, WebViewActivity.class);
+                webIntent.putExtra("url", "https://speedvideo.net/embed-nalqx7svhsmq-607x360.html");
+                context.startActivity(webIntent);*/
                 itemposition = position;
                 new prepareMovieData().execute();
 
@@ -120,7 +132,6 @@ public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview
             try {
 
 
-
                 Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
 
 
@@ -128,7 +139,7 @@ public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview
                 String src = iframe.attr("src");
 
                 Log.e("body", src);
-                videoPath="https:"+src;
+                videoPath =  src;
 
 
 
@@ -167,7 +178,6 @@ public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview
                 videoPath = videoUrl.attr("data-link");*/
 
 
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -187,8 +197,8 @@ public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview
             //Open video in browser
             /* Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://oload.site/embed/Ezw7lhzGxB4/"));
             context. startActivity(browserIntent);*/
-              Intent webIntent = new Intent(context, WebViewActivity.class);
-            webIntent.putExtra("url", videoPath);
+            Intent webIntent = new Intent(context, WebViewActivity.class);
+            webIntent.putExtra("url", "https://swzz.xyz/link/2325R/embed/552x352/");
             context.startActivity(webIntent);
         }
     }
@@ -227,7 +237,6 @@ public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview
             }
         };
     }
-
 
 
 }

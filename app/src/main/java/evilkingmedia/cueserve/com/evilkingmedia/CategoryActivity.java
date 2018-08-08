@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmActivity;
+import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -35,7 +36,7 @@ public class CategoryActivity extends AppCompatActivity {
         rlMovies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, FilmActivity.class);
+                Intent i = new Intent(CategoryActivity.this, FilmCategoryActivity.class);
                 startActivity(i);
             }
         });

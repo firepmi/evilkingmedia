@@ -8,6 +8,7 @@ public class MoviesModel {
     private String year;
     private String duration;
     private String url;
+    private String Currenturl;
 
     public MoviesModel() {
 
@@ -61,6 +62,14 @@ public class MoviesModel {
         this.duration = duration;
     }
 
+    public String getCurrenturl() {
+        return Currenturl;
+    }
+
+    public void setCurrenturl(String currenturl) {
+        Currenturl = currenturl;
+    }
+
     @Override
     public String toString() {
         return "MoviesModel{" +
@@ -70,6 +79,7 @@ public class MoviesModel {
                 ", year='" + year + '\'' +
                 ", duration='" + duration + '\'' +
                 ", url='" + url + '\'' +
+                ", Currenturl='" + Currenturl + '\'' +
                 '}';
     }
 }

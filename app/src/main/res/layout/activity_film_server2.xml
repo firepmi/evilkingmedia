@@ -34,38 +34,40 @@
                 android:layout_weight="1"
                 android:layout_marginTop="5px"
                 android:drawableLeft="@drawable/ic_search"
-                android:hint="Search your favourite movies"/>
+                android:hint="Search your favourite movies"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
 
             <Button
                 android:id="@+id/btnMoviname"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-               android:text="Search"
+                android:text="Search"
                 android:textAllCaps="false"/>
 
         </LinearLayout>
 
-    <!--<android.support.v7.widget.SearchView
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:background="@color/colorWhite"
-        android:layout_below="@+id/categories"/>-->
+        <!--<android.support.v7.widget.SearchView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:background="@color/colorWhite"
+            android:layout_below="@+id/categories"/>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/categories"
-        android:layout_marginBottom="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0.1">
-    </android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/categories"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.1">
+            </android.support.v7.widget.RecyclerView>
 
             <LinearLayout
                 android:layout_width="match_parent"
