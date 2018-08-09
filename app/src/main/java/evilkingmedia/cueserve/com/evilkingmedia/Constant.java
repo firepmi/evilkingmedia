@@ -9,4 +9,5 @@ public class Constant {
     public static String MOVIEURL2 = "https://filmsenzalimiti.black/genere/film";
     public static String MOVIEURL3 = "https://www.cb01.zone/";
     public static String MOVIESERACH2 = "https://filmsenzalimiti.black/";
+    public static String MOVIESERACH3 = " https://www.cb01.zone/cerca/";
 }

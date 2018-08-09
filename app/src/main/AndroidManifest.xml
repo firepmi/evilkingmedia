@@ -40,7 +40,15 @@
             android:name=".film.FilmActivityServer2"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme" />
-        <activity android:name=".film.FilmActivityServer3"></activity>
+        <activity android:name=".film.FilmActivityServer3"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"/>
+        <activity android:name=".film.WebViewActivityServer3"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"/>
+        <activity android:name=".film.FilmActivityServer4"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"></activity>
     </application>
 
 </manifest>
