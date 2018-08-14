@@ -14,11 +14,12 @@ import android.widget.TextView;
 
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
+import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesCategoryActivity;
 
 public class CategoryActivity extends AppCompatActivity {
 
     private TextView txtBottom;
-    private LinearLayout rlMovies;
+    private LinearLayout rlMovies,rlSeries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +33,20 @@ public class CategoryActivity extends AppCompatActivity {
         String styledText = "<font color='blue'>androidaba.com:</font> Pocket TV: plu di 1300 canali TV da tutto il mondo - OLA TV per Android: canali TV da tutto il mondo - MEGA Official 3.3.8";
         txtBottom.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);
         rlMovies = findViewById(R.id.rlMovies);
+        rlSeries = findViewById(R.id.rlSeries);
 
         rlMovies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CategoryActivity.this, FilmCategoryActivity.class);
+                startActivity(i);
+            }
+        });
+
+        rlSeries.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, SeriesCategoryActivity.class);
                 startActivity(i);
             }
         });

@@ -49,6 +49,15 @@
         <activity android:name=".film.FilmActivityServer4"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme"></activity>
+        <activity android:name=".series.SeriesCategoryActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"/>
+        <activity android:name=".series.SeriesActivityServer1"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"/>
+        <activity android:name=".series.SeriesActivityServerSub1"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"/>
     </application>
 
 </manifest>
