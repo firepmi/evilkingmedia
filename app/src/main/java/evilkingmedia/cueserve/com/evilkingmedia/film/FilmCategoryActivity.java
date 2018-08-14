@@ -10,7 +10,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.R;
 
 public class FilmCategoryActivity extends AppCompatActivity {
 
-    LinearLayout rlMovies, rlMovies1, rlMovies2;
+    LinearLayout rlMovies, rlMovies1, rlMovies2, rlMovies3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class FilmCategoryActivity extends AppCompatActivity {
         rlMovies = findViewById(R.id.rlMovies);
         rlMovies1 = findViewById(R.id.rlMovies1);
         rlMovies2 = findViewById(R.id.rlMovies2);
-
+        rlMovies3 = findViewById(R.id.rlMovies3);
         rlMovies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,6 +40,14 @@ public class FilmCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(FilmCategoryActivity.this, FilmActivityServer3.class);
+                startActivity(i);
+            }
+        });
+
+        rlMovies3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(FilmCategoryActivity.this,FilmActivityServer4.class);
                 startActivity(i);
             }
         });

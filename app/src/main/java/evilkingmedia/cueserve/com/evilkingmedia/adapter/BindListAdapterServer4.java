@@ -31,7 +31,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
-public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapterServer3.myview> implements Filterable {
+public class BindListAdapterServer4 extends RecyclerView.Adapter<BindListAdapterServer4.myview> implements Filterable {
     private List<MoviesModel> movielistFiltered;
     private List<MoviesModel> moviesList;
     Context context;
@@ -67,7 +67,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
         }
     }
 
-    public BindListAdapterServer3(List<MoviesModel> moviesList, Context context) {
+    public BindListAdapterServer4(List<MoviesModel> moviesList, Context context) {
         this.moviesList = moviesList;
         this.context = context;
         this.movielistFiltered = moviesList;
@@ -75,7 +75,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
 
     @NonNull
     @Override
-    public BindListAdapterServer3.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindListAdapterServer4.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gridview_list, parent, false);
 
@@ -83,7 +83,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindListAdapterServer3.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull BindListAdapterServer4.myview holder, final int position) {
 
         final MoviesModel movie = moviesList.get(position);
 
@@ -134,9 +134,10 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
 
                 Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
 
-                Elements link=doc.select("div[class=tabs-catch-all]");
-                String src=link.attr("data-src");
-                Log.d("src",src);
+                Elements iframe = doc.getElementsByTag("iframe");
+                String src = iframe.attr("src");
+
+                Log.e("body", src);
 
                 videoPath =  src;
 
@@ -196,8 +197,8 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
             //Open video in browser
             /* Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://oload.site/embed/Ezw7lhzGxB4/"));
             context. startActivity(browserIntent);*/
-            Intent webIntent = new Intent(context, WebViewActivityServer3.class);
-            webIntent.putExtra("url", "https://filmstreaming.gratis/openload/player.php?id=rMYu6C3dE-HVgum-nCX8P-e7HBJ-3gvir76RU77");
+            Intent webIntent = new Intent(context, WebViewActivity.class);
+            webIntent.putExtra("url", videoPath);
             context.startActivity(webIntent);
         }
     }

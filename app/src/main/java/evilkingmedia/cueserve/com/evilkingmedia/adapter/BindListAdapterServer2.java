@@ -3,6 +3,7 @@ package evilkingmedia.cueserve.com.evilkingmedia.adapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
+import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
 public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapterServer2.myview> implements Filterable {
@@ -195,9 +197,9 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
             context.startActivity(intent);*/
 
             //Open video in browser
-            /* Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://oload.site/embed/Ezw7lhzGxB4/"));
+            /* Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoPath));
             context. startActivity(browserIntent);*/
-            Intent webIntent = new Intent(context, WebViewActivity.class);
+            Intent webIntent = new Intent(context, WebViewActivityServer3.class);
             webIntent.putExtra("url", videoPath);
             context.startActivity(webIntent);
         }

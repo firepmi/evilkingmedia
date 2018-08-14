@@ -51,7 +51,7 @@ public class FilmActivityServer2 extends AppCompatActivity {
     EditText etMoviename;
     Button btnMoviename;
     private int elementsize;
-    Boolean isPrev, isNext, isSearch = false;
+    Boolean isPrev, isNext, isSearch = false, isFilmDel = false;
     int corePoolSize = 60;
     String Currenturl;
     android.support.v7.widget.SearchView search;
@@ -61,7 +61,7 @@ public class FilmActivityServer2 extends AppCompatActivity {
     int keepAliveTime = 10;
     private ArrayList<String> yearArrayList = new ArrayList<>();
     private ArrayList<String> durationArrayList = new ArrayList<>();
-    private Button btn[];
+    private Button btnhome, btnfilmdel2018, btnfilmdel2017;
     BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>(maximumPoolSize);
     Executor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.SECONDS, workQueue);
 
@@ -76,6 +76,9 @@ public class FilmActivityServer2 extends AppCompatActivity {
         //  setContentView(R.layout.gridview_list);
         linearCategory = findViewById(R.id.categories);
         recyclerView = findViewById(R.id.recyclerview);
+        btnhome = findViewById(R.id.btnhome);
+        btnfilmdel2018 = findViewById(R.id.btnfilmdel2018);
+        btnfilmdel2017 = findViewById(R.id.btnfilmdel2017);
         ivNext = findViewById(R.id.ivNext);
         ivPrev = findViewById(R.id.ivPrev);
         ivUp = findViewById(R.id.ivUp);
@@ -100,7 +103,7 @@ public class FilmActivityServer2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 isSearch = true;
-                new searchdata(Constant.MOVIESERACH2).execute();
+                new searchdata(Constant.MOVIEURL2_search).execute();
 
             }
         });
@@ -113,7 +116,6 @@ public class FilmActivityServer2 extends AppCompatActivity {
             public void onClick(View view) {
                 i++;
                 new NextPagedata().execute();
-                recyclerView.smoothScrollBy(0, 200);
             }
         });
 
@@ -135,6 +137,53 @@ public class FilmActivityServer2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 recyclerView.smoothScrollBy(0, 200);
+
+            }
+        });
+
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new prepareMovieData(Constant.MOVIEURL2, "").execute();
+                movieList.clear();
+                mAdapter.notifyDataSetChanged();
+                Category = "";
+                isNext = false;
+                i = 0;
+                etMoviename.setText("");
+
+            }
+        });
+
+        btnfilmdel2018.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new prepareMovieData(Constant.MOVIEURL2_FILMDEL2018, "").execute();
+                movieList.clear();
+                mAdapter.notifyDataSetChanged();
+                Category = "";
+                isNext = false;
+                i = 0;
+                etMoviename.setText("");
+
+
+
+            }
+        });
+
+        btnfilmdel2017.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new prepareMovieData(Constant.MOVIEURL2_FILMDEL2017, "").execute();
+                movieList.clear();
+                mAdapter.notifyDataSetChanged();
+                Category = "";
+                isNext = false;
+                i = 0;
+                etMoviename.setText("");
 
             }
         });
@@ -167,36 +216,29 @@ public class FilmActivityServer2 extends AppCompatActivity {
             //Movie1
             try {
                 // Connect to the web site
-                Document doc = Jsoup.connect(mainurl + "/" + movieUrl).timeout(10000).get();
+                Document doc = Jsoup.connect(mainurl + "" + movieUrl).timeout(10000).get();
 
                 MoviesModel moviesurl = new MoviesModel();
                 moviesurl.setCurrenturl(mainurl + "" + movieUrl);
                 movieurlList.add(moviesurl);
 
-                Elements data = doc.getElementsByClass("container main").first().select("ul[class=posts]").first().getElementsByTag("li");
+                Elements data = doc.select("#content").first().getElementsByClass("movie-poster");
 
                 Log.d("data size", data.size() + "");
                 for (int i = 0; i < data.size(); i++) {
 
+                    Elements imageurl = data.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+                    String imagedata = imageurl.get(i).attr("src");
+                    String title = imageurl.get(i).attr("alt");
+                    Elements urldata = data.get(i).getElementsByTag("a");
+                    String url = urldata.attr("href");
                     MoviesModel movie = new MoviesModel();
-
-                    Elements image = data.select("li");
-                    Elements gettag = image.get(i).getElementsByTag("a");
-                    String imageurl = gettag.attr("data-thumbnail");
-                    String movieurl = gettag.attr("href");
-                    Log.d("movieurl", movieurl);
-                    Log.d("image data", imageurl);
-                    movie.setImage(imageurl);
-                    movie.setUrl(movieurl);
-
-                    Elements name = image.get(i).select("div[class=title]");
-                    String title = name.text();
-                    Log.d("title", title);
+                    movie.setImage(imagedata);
+                    movie.setUrl(url);
                     movie.setTitle(title);
                     movieList.add(movie);
                 }
 
-                System.out.print(data);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -231,6 +273,7 @@ public class FilmActivityServer2 extends AppCompatActivity {
                     } else {
                         ivPrev.setVisibility(View.GONE);
                     }
+
                 } catch (Exception e) {
                     ivPrev.setVisibility(View.GONE);
                 }
@@ -256,6 +299,9 @@ public class FilmActivityServer2 extends AppCompatActivity {
                         ivPrev.setVisibility(View.VISIBLE);
                     } else {
                         ivPrev.setVisibility(View.GONE);
+                    }
+                    if (isFilmDel == true) {
+                        ivNext.setVisibility(View.GONE);
                     }
                 } catch (Exception e) {
                     ivPrev.setVisibility(View.GONE);
@@ -411,9 +457,9 @@ public class FilmActivityServer2 extends AppCompatActivity {
                 }
                 doc = Jsoup.connect(newurl).timeout(10000).get();
                 movieurlList.clear();
-                for (Element urls : doc.getElementsByClass("navigation")) {
+                for (Element urls : doc.getElementsByClass("navigation keremiya-pagenavi")) {
                     //perform your data extractions here.
-                    for (Element urlss : urls.getElementsByTag("li")) {
+                    for (Element urlss : urls.getElementsByClass("naviright")) {
                         for (Element nexturl : urlss.getElementsByTag("a")) {
                             result = urlss != null ? urlss.absUrl("href") : null;
                             Log.d("Urls", String.valueOf(nexturl));
@@ -439,19 +485,19 @@ public class FilmActivityServer2 extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             // Set description into TextView
 
-            String SpilString =NextPageUrl;
-            String[] separated = NextPageUrl.split("\\?");
-            for (String item : separated)
-            {
-                System.out.println("item = " + item);
-            }
-            NextPageUrl=separated[0];
+
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
             movieList.clear();
             ivPrev.setVisibility(View.VISIBLE);
             if (isSearch == true) {
+                String SpilString = NextPageUrl;
+                String[] separated = NextPageUrl.split("\\?");
+                for (String item : separated) {
+                    System.out.println("item = " + item);
+                }
+                NextPageUrl = separated[0];
                 new searchdata(NextPageUrl).execute();
 
             } else {
@@ -494,9 +540,9 @@ public class FilmActivityServer2 extends AppCompatActivity {
                 }
                 doc = Jsoup.connect(newurl).timeout(10000).get();
                 movieurlList.clear();
-                for (Element urls : doc.getElementsByClass("navigation")) {
+                for (Element urls : doc.getElementsByClass("navigation keremiya-pagenavi")) {
                     //perform your data extractions here.
-                    for (Element urlss : urls.getElementsByTag("li")) {
+                    for (Element urlss : urls.getElementsByClass("navileft")) {
                         for (Element nexturl : urlss.getElementsByTag("a")) {
                             result = urlss != null ? urlss.absUrl("href") : null;
                             Log.d("Urls", String.valueOf(nexturl));
@@ -505,11 +551,11 @@ public class FilmActivityServer2 extends AppCompatActivity {
                             MoviesModel movieurl = new MoviesModel();
                             movieurl.setCurrenturl(PrevPageUrl);
                             movieurlList.add(movieurl);
-                            break;
+
                         }
-                        break;
+
                     }
-                    break;
+
                 }
 
 
@@ -620,25 +666,19 @@ public class FilmActivityServer2 extends AppCompatActivity {
                 System.out.print(document);
                 movieList.clear();
 
-                Elements data = document.getElementsByClass("container main").first().select("ul[class=posts]").first().getElementsByTag("li");
+                Elements data = document.select("#content").first().getElementsByClass("movie-poster");
 
                 Log.d("data size", data.size() + "");
                 for (int i = 0; i < data.size(); i++) {
 
+                    Elements imageurl = data.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+                    String imagedata = imageurl.get(i).attr("src");
+                    String title = imageurl.get(i).attr("alt");
+                    Elements urldata = data.get(i).getElementsByTag("a");
+                    String url = urldata.attr("href");
                     MoviesModel movie = new MoviesModel();
-
-                    Elements image = data.select("li");
-                    Elements gettag = image.get(i).getElementsByTag("a");
-                    String imageurl = gettag.attr("data-thumbnail");
-                    String movieurl = gettag.attr("href");
-                    Log.d("movieurl", movieurl);
-                    Log.d("image data", imageurl);
-                    movie.setImage(imageurl);
-                    movie.setUrl(movieurl);
-
-                    Elements name = image.get(i).select("div[class=title]");
-                    String title = name.text();
-                    Log.d("title", title);
+                    movie.setImage(imagedata);
+                    movie.setUrl(url);
                     movie.setTitle(title);
                     movieList.add(movie);
                 }
@@ -668,6 +708,7 @@ public class FilmActivityServer2 extends AppCompatActivity {
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.invalidate();
             recyclerView.setAdapter(mAdapter);
+
 
             try {
                 if (isNext == true) {

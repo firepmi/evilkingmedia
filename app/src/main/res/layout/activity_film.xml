@@ -13,7 +13,42 @@
         android:id="@+id/categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Home"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:id="@+id/btnhome"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Film Al Cinema"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:id="@+id/btnfilmal"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Film Sub ITA"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:id="@+id/btnfilmsub"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Film A/Z"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:id="@+id/btnfilmaz"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +69,9 @@
                 android:layout_weight="1"
                 android:layout_marginTop="5px"
                 android:drawableLeft="@drawable/ic_search"
-                android:hint="Search your favourite movies"/>
+                android:hint="Search your favourite movies"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
 
             <Button
                 android:id="@+id/btnMoviname"

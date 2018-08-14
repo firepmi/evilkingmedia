@@ -2,12 +2,15 @@ package evilkingmedia.cueserve.com.evilkingmedia.film;
 
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 
@@ -22,7 +25,7 @@ public class WebViewActivity extends AppCompatActivity {
         int i = 0;
         videoPath = getIntent().getStringExtra("url");
         WebView webView = findViewById(R.id.web_view);
-
+        mProgress = new ProgressDialog(WebViewActivity.this);
 
       /*  webView.setVideoURI(Uri.parse(videoPath));
         webView.setBufferSize(2048);
@@ -60,7 +63,7 @@ public class WebViewActivity extends AppCompatActivity {
                 // TODO show you progress image
 
                 super.onPageStarted(view, url, favicon);
-                mProgress = new ProgressDialog(WebViewActivity.this);
+
                 mProgress.setMessage("Loading...");
                 mProgress.show();
 
@@ -74,6 +77,8 @@ public class WebViewActivity extends AppCompatActivity {
                 super.onPageFinished(view, url);
                 mProgress.dismiss();
             }
+
+
         });
        /* webView.setWebViewClient(new WebViewClient(){
             @Override
@@ -111,7 +116,7 @@ public class WebViewActivity extends AppCompatActivity {
         });*/
         webView.setWillNotCacheDrawing(true);
         webView.setDrawingCacheEnabled(false);
-        webView.loadDataWithBaseURL(videoPath, "", "video/divx", "UTF-8", "");
+        //webView.loadDataWithBaseURL(videoPath, "", "video/divx", "UTF-8", "");
         webView.loadUrl(videoPath);
 
        /* VideoView videoView = (VideoView) findViewById(R.id.web_view);
@@ -123,4 +128,6 @@ public class WebViewActivity extends AppCompatActivity {
         videoView.setVideoURI(video);
         videoView.start();*/
     }
+
+
 }
