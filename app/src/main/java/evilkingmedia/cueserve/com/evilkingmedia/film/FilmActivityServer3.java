@@ -37,7 +37,6 @@ import java.util.concurrent.TimeUnit;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListAdapterServer2;
 import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListAdapterServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
@@ -62,7 +61,7 @@ public class FilmActivityServer3 extends AppCompatActivity {
     int keepAliveTime = 10;
     private ArrayList<String> yearArrayList = new ArrayList<>();
     private ArrayList<String> durationArrayList = new ArrayList<>();
-    private Button btn[];
+    private Button btnhome, btnhdstream;
     BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>(maximumPoolSize);
     Executor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.SECONDS, workQueue);
 
@@ -72,11 +71,13 @@ public class FilmActivityServer3 extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_film_server2);
+        setContentView(R.layout.activity_film_server3);
 
         //  setContentView(R.layout.gridview_list);
         linearCategory = findViewById(R.id.categories);
         recyclerView = findViewById(R.id.recyclerview);
+        btnhome = findViewById(R.id.btnhome);
+        btnhdstream = findViewById(R.id.btnhdstream);
         ivNext = findViewById(R.id.ivNext);
         ivPrev = findViewById(R.id.ivPrev);
         ivUp = findViewById(R.id.ivUp);
@@ -114,7 +115,6 @@ public class FilmActivityServer3 extends AppCompatActivity {
             public void onClick(View view) {
                 i++;
                 new NextPagedata().execute();
-                recyclerView.smoothScrollBy(0, 200);
             }
         });
 
@@ -136,6 +136,35 @@ public class FilmActivityServer3 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 recyclerView.smoothScrollBy(0, 200);
+
+            }
+        });
+
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new prepareMovieData(Constant.MOVIEURL3, "").execute();
+                movieList.clear();
+                mAdapter.notifyDataSetChanged();
+                Category = "";
+                isNext = false;
+                i = 0;
+                etMoviename.setText("");
+
+            }
+        });
+
+        btnhdstream.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new prepareMovieData(Constant.MOVIEURL3_HD, "").execute();
+                movieList.clear();
+                mAdapter.notifyDataSetChanged();
+                Category = "";
+                isNext = false;
+                i = 0;
+                etMoviename.setText("");
 
             }
         });
@@ -168,7 +197,7 @@ public class FilmActivityServer3 extends AppCompatActivity {
             //Movie1
             try {
                 // Connect to the web site
-                Document doc = Jsoup.connect(mainurl + "/" + movieUrl).timeout(10000).get();
+                Document doc = Jsoup.connect(mainurl + "" + movieUrl).timeout(10000).get();
 
                 MoviesModel moviesurl = new MoviesModel();
                 moviesurl.setCurrenturl(mainurl + "" + movieUrl);

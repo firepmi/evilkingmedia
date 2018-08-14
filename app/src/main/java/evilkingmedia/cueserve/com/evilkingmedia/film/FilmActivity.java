@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -60,7 +61,7 @@ public class FilmActivity extends AppCompatActivity {
     int keepAliveTime = 10;
     private ArrayList<String> yearArrayList = new ArrayList<>();
     private ArrayList<String> durationArrayList = new ArrayList<>();
-    private Button btn[];
+    private Button btnhome, btnfilmal, btnfilmsub, btnfilmaz;
     BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>(maximumPoolSize);
     Executor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.SECONDS, workQueue);
 
@@ -75,6 +76,10 @@ public class FilmActivity extends AppCompatActivity {
       //  setContentView(R.layout.gridview_list);
         linearCategory = findViewById(R.id.categories);
         recyclerView = findViewById(R.id.recyclerview);
+        btnhome = findViewById(R.id.btnhome);
+        btnfilmal = findViewById(R.id.btnfilmal);
+        btnfilmsub = findViewById(R.id.btnfilmsub);
+        btnfilmaz = findViewById(R.id.btnfilmaz);
         ivNext = findViewById(R.id.ivNext);
         ivPrev = findViewById(R.id.ivPrev);
         ivUp = findViewById(R.id.ivUp);
@@ -86,10 +91,18 @@ public class FilmActivity extends AppCompatActivity {
         etMoviename = findViewById(R.id.etMoviname);
         btnMoviename = findViewById(R.id.btnMoviname);
 
+        etMoviename.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                etMoviename.setFocusableInTouchMode(true);
+                etMoviename.setFocusable(true);
+                return false;
+            }
+        });
+
         btnMoviename.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 new searchdata().execute();
 
             }
@@ -124,7 +137,6 @@ public class FilmActivity extends AppCompatActivity {
             public void onClick(View view) {
                 i++;
                 new NextPagedata().execute();
-                recyclerView.smoothScrollBy(0, 200);
             }
         });
 
@@ -146,6 +158,66 @@ public class FilmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 recyclerView.smoothScrollBy(0, 200);
+
+            }
+        });
+
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new prepareMovieData(Constant.MOVIEURL1, "").execute();
+                movieList.clear();
+                mAdapter.notifyDataSetChanged();
+                Category = "";
+                isNext = false;
+                i = 0;
+                etMoviename.setText("");
+
+            }
+        });
+
+        btnfilmal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                movieList.clear();
+
+                mAdapter.notifyDataSetChanged();
+                Category = Constant.MOVIEURL1_CINEMA;
+                isNext = false;
+                i = 0;
+                new prepareMovieData(Constant.MOVIEURL1, Constant.MOVIEURL1_CINEMA).execute();
+                etMoviename.setText("");
+
+            }
+        });
+
+        btnfilmsub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new prepareMovieData(Constant.MOVIEURL1, Constant.MOVIEURL1_SUB).execute();
+                movieList.clear();
+                mAdapter.notifyDataSetChanged();
+                Category = Constant.MOVIEURL1_SUB;
+                isNext = false;
+                i = 0;
+                etMoviename.setText("");
+
+            }
+        });
+
+        btnfilmaz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new prepareMovieData(Constant.MOVIEURL1, Constant.MOVIEURL1_ATOZ).execute();
+                movieList.clear();
+                mAdapter.notifyDataSetChanged();
+                Category = Constant.MOVIEURL1_ATOZ;
+                isNext = false;
+                i = 0;
+                etMoviename.setText("");
 
             }
         });
@@ -189,36 +261,44 @@ public class FilmActivity extends AppCompatActivity {
                 Log.e("categoryUl", "" + categoryUl.size());
                 Elements category = categoryUl.select("li");
                 Log.e("category", "" + category.size());
-                final Button button[] = new Button[category.size()];
-                btn = new Button[category.size()];
-                if (mainurl == Constant.MOVIEURL1 && movieUrl == "") {
-                    for (int k = 0; k < category.size() - 2; k++) {
+               /* final Button button[] = new Button[category.size()];
+                btn = new Button[category.size()];*/
+               /* if (mainurl == Constant.MOVIEURL1 && movieUrl == "") {
+                    for (int k = 0; k < category.size(); k++) {
                         Elements mElementUrl = category.get(k).getElementsByTag("a");
                         String url = mElementUrl.text();
                         Log.e("categoty_list", url);
 
-                        button[k] = new Button(FilmActivity.this);
-                        button[k].setText(url);
-                        button[k].setTextColor(getResources().getColor(R.color.colorWhite));
-                        button[k].setPadding(5, 5, 5, 5);
-                        button[k].setBackgroundColor(getResources().getColor(R.color.colorBlack));
-                        button[k].setTextSize(12);
-                        button[k].setOnClickListener(onClickButton);
+                        if (url.equals("Home") || url.equals("Film Al Cinema") || url.equals("Film Sub ITA")  || url.equals("Lista Film A/Z")) {
 
-                        final int finalK = k;
-                        runOnUiThread(new Runnable() {
+                            button[k] = new Button(FilmActivity.this);
+                            button[k].setText(url);
+                            button[k].setTextColor(getResources().getColor(R.color.colorWhite));
+                            button[k].setPadding(5, 5, 5, 5);
+                            button[k].setBackgroundColor(getResources().getColor(R.color.colorBlack));
+                            button[k].setTextSize(12);
+                            button[k].setOnClickListener(onClickButton);
 
-                            @Override
-                            public void run() {
+                            final int finalK = k;
+                            runOnUiThread(new Runnable() {
 
-                                linearCategory.addView(button[finalK]);
+                                @Override
+                                public void run() {
+
+                                    linearCategory.addView(button[finalK]);
 
 
-                            }
-                        });
+                                }
+                            });
+
+
+                        }
+
 
                     }
-                }
+
+
+                }*/
                 // Using Elements to get the Meta data
 
                 //getting atoz data

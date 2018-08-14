@@ -1,7 +1,9 @@
 package evilkingmedia.cueserve.com.evilkingmedia.film;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +44,7 @@ public class WebViewActivityServer3 extends AppCompatActivity {
                 // probably you need to open that url rather than redirect:
                 if (url.equals(videoPath)) {
                     view.loadUrl(url);
+
                 }
 
                 return true; // then it is not handled by default action

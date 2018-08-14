@@ -13,7 +13,32 @@
         android:id="@+id/categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="HomePage"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:id="@+id/btnhome"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Film Del 2018"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:id="@+id/btnfilmdel2018"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Film Del 2017"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:id="@+id/btnfilmdel2017"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
