@@ -4,39 +4,23 @@ package evilkingmedia.cueserve.com.evilkingmedia.adapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.film.FilmActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
-import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityServer1;
-import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityServerSub1;
 
 
-public class BindListSeriesAdapter extends RecyclerView.Adapter<BindListSeriesAdapter.myview> {
+public class BindListSeries1Adapter extends RecyclerView.Adapter<BindListSeries1Adapter.myview> {
     private List<String> movielistFiltered;
     Context context;
     private ProgressDialog mProgressDialog;
@@ -63,7 +47,7 @@ public class BindListSeriesAdapter extends RecyclerView.Adapter<BindListSeriesAd
         }
     }
 
-    public BindListSeriesAdapter(ArrayList<String> arrayList, Context context) {
+    public BindListSeries1Adapter(ArrayList<String> arrayList, Context context) {
 
         this.context = context;
         this.arrayListString = arrayList;
@@ -71,7 +55,7 @@ public class BindListSeriesAdapter extends RecyclerView.Adapter<BindListSeriesAd
 
     @NonNull
     @Override
-    public BindListSeriesAdapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindListSeries1Adapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gridview_list, parent, false);
 
@@ -79,7 +63,7 @@ public class BindListSeriesAdapter extends RecyclerView.Adapter<BindListSeriesAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindListSeriesAdapter.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull BindListSeries1Adapter.myview holder, final int position) {
 
 
         holder.txtMovieTitle.setText(arrayListString.get(position));
@@ -117,7 +101,7 @@ public class BindListSeriesAdapter extends RecyclerView.Adapter<BindListSeriesAd
 
                 }
 
-                Intent subCategory = new Intent(context, SeriesActivityServerSub1.class);
+                Intent subCategory = new Intent(context, SeriesActivityServer1.class);
                 subCategory.putExtra("url",sub_url);
                 context.startActivity(subCategory);
 

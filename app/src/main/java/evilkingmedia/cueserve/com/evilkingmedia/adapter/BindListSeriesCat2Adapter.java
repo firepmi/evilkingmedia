@@ -35,7 +35,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
 
 
-public class BindListSeriesSubServer1 extends RecyclerView.Adapter<BindListSeriesSubServer1.myview>  implements Filterable {
+public class BindListSeriesCat2Adapter extends RecyclerView.Adapter<BindListSeriesCat2Adapter.myview> {
     private List<MoviesModel> movielistFiltered;
     private List<MoviesModel> moviesList;
     Context context;
@@ -69,7 +69,7 @@ public class BindListSeriesSubServer1 extends RecyclerView.Adapter<BindListSerie
         }
     }
 
-    public BindListSeriesSubServer1(List<MoviesModel> moviesList, Context context) {
+    public BindListSeriesCat2Adapter(List<MoviesModel> moviesList, Context context) {
         this.moviesList = moviesList;
         this.context = context;
         this.movielistFiltered = moviesList;
@@ -77,7 +77,7 @@ public class BindListSeriesSubServer1 extends RecyclerView.Adapter<BindListSerie
 
     @NonNull
     @Override
-    public BindListSeriesSubServer1.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindListSeriesCat2Adapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gridview_list, parent, false);
 
@@ -85,7 +85,7 @@ public class BindListSeriesSubServer1 extends RecyclerView.Adapter<BindListSerie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindListSeriesSubServer1.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull BindListSeriesCat2Adapter.myview holder, final int position) {
 
         final MoviesModel movie = moviesList.get(position);
 
@@ -95,7 +95,7 @@ public class BindListSeriesSubServer1 extends RecyclerView.Adapter<BindListSerie
         } else {
             Picasso.with(context).load(movie.getImage()).into(holder.imgcontent);
         }
-         //Picasso.with(context).load(movie.getImage()).into(holder.imgcontent);
+        //Picasso.with(context).load(movie.getImage()).into(holder.imgcontent);
         holder.txtMovieTitle.setText(movie.getTitle());
         holder.txtMovieRating.setText(movie.getRating());
         holder.txtMovieYear.setText(movie.getYear());
@@ -156,41 +156,4 @@ public class BindListSeriesSubServer1 extends RecyclerView.Adapter<BindListSerie
         }
     }
 
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-
-                if (charString.equals("")) {
-                    moviesList = movielistFiltered;
-                } else {
-                    List<MoviesModel> filteredList = new ArrayList<>();
-                    for (MoviesModel row : movielistFiltered) {
-                        if (row.getTitle().toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(row);
-                        }
-                    }
-
-                    moviesList = filteredList;
-                }
-
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = moviesList;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                moviesList = (ArrayList<MoviesModel>) filterResults.values;
-                notifyDataSetChanged();
-
-
-            }
-        };
     }
-
-
-
-}
