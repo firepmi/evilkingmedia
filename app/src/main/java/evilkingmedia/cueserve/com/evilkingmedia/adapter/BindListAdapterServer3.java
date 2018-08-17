@@ -197,7 +197,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
             /* Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://oload.site/embed/Ezw7lhzGxB4/"));
             context. startActivity(browserIntent);*/
             Intent webIntent = new Intent(context, WebViewActivityServer3.class);
-            webIntent.putExtra("url", "https://filmstreaming.gratis/openload/player.php?id=rMYu6C3dE-HVgum-nCX8P-e7HBJ-3gvir76RU77");
+            webIntent.putExtra("url", videoPath);
             context.startActivity(webIntent);
         }
     }

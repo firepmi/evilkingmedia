@@ -1,7 +1,6 @@
 package evilkingmedia.cueserve.com.evilkingmedia.series;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -37,19 +36,21 @@ import java.util.concurrent.TimeUnit;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListSeriesSubServer1;
+import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListAdapterServer4;
+import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListSeries2Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
-public class SeriesActivityServer1 extends AppCompatActivity {
+public class SeriesActivityServer3 extends AppCompatActivity {
     private LinearLayout linearCategory;
     private RecyclerView recyclerView;
-    private BindListSeriesSubServer1 mAdapter;
+    private BindListAdapterServer4 mAdapter;
     private List<MoviesModel> movieList = new ArrayList<>();
     private List<MoviesModel> movieurlList = new ArrayList<>();
     private ProgressDialog mProgressDialog;
     ImageView ivNext, ivPrev, ivUp, ivDown;
     EditText etMoviename;
     Button btnMoviename;
+    String Pageurl;
     ArrayList<String> arrayList = new ArrayList<>();
     private int elementsize;
     Boolean isPrev, isNext, isSearch = false, isNextSearch = false, isMovieita = false;
@@ -72,13 +73,10 @@ public class SeriesActivityServer1 extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_series_server1);
-        String url = getIntent().getStringExtra("url");
+        setContentView(R.layout.activity_series_server3);
         //  setContentView(R.layout.gridview_list);
         linearCategory = findViewById(R.id.categories);
         recyclerView = findViewById(R.id.recyclerview);
-        btnhome = findViewById(R.id.btnhome);
-        btncategory = findViewById(R.id.btncategory);
         ivNext = findViewById(R.id.ivNext);
         ivPrev = findViewById(R.id.ivPrev);
         ivUp = findViewById(R.id.ivUp);
@@ -103,15 +101,15 @@ public class SeriesActivityServer1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 isSearch = true;
-                new searchdata(Constant.SERIESURL1).execute();
+                new searchdata(Constant.SERIESURL3).execute();
 
             }
         });
 
-        if (url == null) {
-            new prepareMovieData(Constant.SERIESURL1, "").execute();
+        if (Pageurl == null) {
+            new prepareMovieData(Constant.SERIESURL3, "").execute();
         } else {
-            new prepareMovieData(url, "").execute();
+            new prepareMovieData(Pageurl, "").execute();
         }
 
 
@@ -146,30 +144,6 @@ public class SeriesActivityServer1 extends AppCompatActivity {
             }
         });
 
-
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                new prepareMovieData(Constant.SERIESURL1, "").execute();
-                movieList.clear();
-                mAdapter.notifyDataSetChanged();
-                Category = "";
-                isNext = false;
-                isMovieita = false;
-                i = 0;
-                etMoviename.setText("");
-            }
-        });
-
-        btncategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent i = new Intent(SeriesActivityServer1.this, SeriesActivityCatServer1.class);
-                startActivity(i);
-            }
-        });
     }
 
 
@@ -177,6 +151,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
         String movieUrl;
         String mainurl;
         Document doc;
+
         public prepareMovieData(String mainurl, String movieurl1Cinema) {
             this.movieUrl = movieurl1Cinema;
             this.mainurl = mainurl;
@@ -186,7 +161,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(SeriesActivityServer1.this);
+            mProgressDialog = new ProgressDialog(SeriesActivityServer3.this);
             mProgressDialog.setTitle("");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
@@ -198,28 +173,32 @@ public class SeriesActivityServer1 extends AppCompatActivity {
 
             //Movie1
             try {
+                movieList.clear();
                 // Connect to the web site
-                 doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
+                doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
                 MoviesModel moviesurl = new MoviesModel();
                 moviesurl.setCurrenturl(mainurl + "" + movieUrl);
                 movieurlList.add(moviesurl);
-                Elements link = doc.select("div[class=contenedor]");
-                //     Elements data = link.select("div[class=items]");
-                Elements image = link.select("div[class=imagen]");
-                Elements name = image.select("h2");
+
+                System.out.print(doc);
+
+                Element data = doc.getElementById("dt_contenedor");
+                Element data1 = data.getElementById("contenedor");
 
 
-                //Elements imagestr = image.select("img");
-                for (int i = 0; i < image.size(); i++) {
+                Elements data2 = data1.select("#archive-content").first().select("article");
+                Log.d("data size", data2.size() + "");
+
+                for (int i = 0; i < data2.size(); i++) {
+                    Elements imageurl = data2.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+                    String imagedata = imageurl.get(i).attr("src");
+                    String title = imageurl.get(i).attr("alt");
+                    String urldata = data2.get(i).getElementsByClass("poster").first().getElementsByTag("a").attr("href");
                     MoviesModel movie = new MoviesModel();
-                    String img_str = image.get(i).select("img").attr("src");
-                    String url = image.get(i).select("a").attr("href");
-                    String name_str = name.get(i).text();
-                    movie.setImage(img_str);
-                    movie.setTitle(name_str);
-                    movie.setUrl(url);
+                    movie.setImage(imagedata);
+                    movie.setUrl(urldata);
+                    movie.setTitle(title);
                     movieList.add(movie);
-
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -236,18 +215,17 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                 mProgressDialog.dismiss();
             }
 
-            Elements pagination= doc.getElementsByClass("wp-pagenavi");
-            if(pagination.size() != 0){
+            Elements pagination = doc.getElementsByClass("pagination");
+            if (pagination.size() != 0) {
                 ivNext.setVisibility(View.VISIBLE);
-            }
-            else{
+            } else {
                 ivNext.setVisibility(View.GONE);
             }
 
             if (!movieUrl.isEmpty()) {
-                mAdapter = new BindListSeriesSubServer1(movieList, SeriesActivityServer1.this);
+                mAdapter = new BindListAdapterServer4(movieList, SeriesActivityServer3.this);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer1.this, 3);
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer3.this, 3);
                 recyclerView.setLayoutManager(mLayoutManager);
                 //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -272,9 +250,9 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                     ivPrev.setVisibility(View.GONE);
                 }
             } else {
-                mAdapter = new BindListSeriesSubServer1(movieList, SeriesActivityServer1.this);
+                mAdapter = new BindListAdapterServer4(movieList, SeriesActivityServer3.this);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer1.this, 3);
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer3.this, 3);
                 recyclerView.setLayoutManager(mLayoutManager);
                 //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -313,7 +291,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(SeriesActivityServer1.this);
+            mProgressDialog = new ProgressDialog(SeriesActivityServer3.this);
             mProgressDialog.setTitle("");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
@@ -336,23 +314,17 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                 }
                 doc = Jsoup.connect(newurl).timeout(10000).get();
                 movieurlList.clear();
-                for (Element urls : doc.getElementsByClass("wp-pagenavi")) {
+                for (Element urls : doc.getElementsByClass("pagination")) {
                     //perform your data extractions here.
                     for (Element urlss : urls.getElementsByTag("a")) {
                         result = urlss != null ? urlss.absUrl("href") : null;
                         Log.d("Urls", String.valueOf(urlss));
                         NextPageUrl = urlss.attr("href");
                         Log.d("Urls", NextPageUrl);
-                        arrayList.add(NextPageUrl);
-
-                    }
-                    Log.e("array", arrayList + "");
-
-                    for (int i = 0; i < arrayList.size() - 1; i++) {
-                        NextPageUrl = arrayList.get(i);
                         MoviesModel movieurl = new MoviesModel();
                         movieurl.setCurrenturl(NextPageUrl);
                         movieurlList.add(movieurl);
+
                     }
                 }
 
@@ -404,7 +376,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(SeriesActivityServer1.this);
+            mProgressDialog = new ProgressDialog(SeriesActivityServer3.this);
             mProgressDialog.setTitle("");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
@@ -427,7 +399,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                 }
                 doc = Jsoup.connect(newurl).timeout(10000).get();
                 movieurlList.clear();
-                for (Element urls : doc.getElementsByClass("wp-pagenavi")) {
+                for (Element urls : doc.getElementsByClass("pagination")) {
                     //perform your data extractions here.
                     for (Element urlss : urls.getElementsByTag("a")) {
                         result = urlss != null ? urlss.absUrl("href") : null;
@@ -442,7 +414,6 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                     }
                     break;
                 }
-
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -483,7 +454,6 @@ public class SeriesActivityServer1 extends AppCompatActivity {
     private class searchdata extends AsyncTask<String, Void, Void> {
         String mainurl = null;
         String newurl = null;
-        Document document;
 
         public searchdata(String mainurl) {
             this.mainurl = mainurl;
@@ -492,7 +462,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(SeriesActivityServer1.this);
+            mProgressDialog = new ProgressDialog(SeriesActivityServer3.this);
             mProgressDialog.setTitle("");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
@@ -508,7 +478,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                 if (isNextSearch == false) {
                     Connection.Response loginPageResponse =
                             Jsoup.connect(mainurl)
-                                    .referrer(Constant.SERIESURL1)
+                                    .referrer(Constant.SERIESURL3)
                                     .userAgent("Mozilla/5.0")
                                     .timeout(10 * 1000)
                                     .followRedirects(true)
@@ -550,32 +520,29 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                     System.out.println("HTTP Status Code: " + responsePostLogin.statusCode());
 
                     //parse the document from response
-                    document = responsePostLogin.parse();
+                    Document document = responsePostLogin.parse();
 
 
                     movieList.clear();
 
-                    Elements link = document.select("div[class=contenedor]");
-                    //     Elements data = link.select("div[class=items]");
-                    Elements image = link.select("div[class=imagen]");
-                    Elements name = image.select("h2");
-                    //Elements imagestr = image.select("img");
-                    for (int i = 0; i < image.size(); i++) {
-                        MoviesModel movie = new MoviesModel();
-                        String img_str = image.get(i).select("img").attr("src");
-                        String url = image.get(i).select("a").attr("href");
-                        String name_str = name.get(i).text();
-                        movie.setImage(img_str);
-                        movie.setTitle(name_str);
-                        movie.setUrl(url);
-                        movieList.add(movie);
+                    Elements data = document.getElementsByClass("result-item");
 
+                    for (int i = 0; i < data.size(); i++) {
+                        String image = data.get(i).getElementsByClass("thumbnail animation-2").first().select("img[src~=(?i)\\.(png|jpe?g|gif)]").attr("src");
+                        String title = data.get(i).getElementsByClass("thumbnail animation-2").first().select("img[src~=(?i)\\.(png|jpe?g|gif)]").attr("alt");
+                        String url = data.get(i).getElementsByTag("a").attr("href");
+                        MoviesModel movie = new MoviesModel();
+                        movie.setImage(image);
+                        movie.setUrl(url);
+                        movie.setTitle(title);
+                        movieList.add(movie);
                     }
+
 
                     Map<String, String> mapLoggedInCookies = responsePostLogin.cookies();
                 } else {
 
-                     document = Jsoup.connect(mainurl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
+                    Document document = Jsoup.connect(mainurl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
 
                     movieList.clear();
 
@@ -609,16 +576,8 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                 mProgressDialog.dismiss();
             }
 
-            Elements pagination= document.getElementsByClass("wp-pagenavi");
-            if(pagination.size() != 0){
-                ivNext.setVisibility(View.VISIBLE);
-            }
-            else{
-                ivNext.setVisibility(View.GONE);
-            }
-
-            mAdapter = new BindListSeriesSubServer1(movieList, SeriesActivityServer1.this);
-            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer1.this, 3);
+            mAdapter = new BindListAdapterServer4(movieList, SeriesActivityServer3.this);
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer3.this, 3);
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.invalidate();
@@ -658,7 +617,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(SeriesActivityServer1.this);
+            mProgressDialog = new ProgressDialog(SeriesActivityServer3.this);
             mProgressDialog.setTitle("");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
@@ -671,7 +630,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
             //Movie1
             try {
                 // Connect to the web site
-                 doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
+                doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
 
                 MoviesModel moviesurl = new MoviesModel();
                 moviesurl.setCurrenturl(mainurl + "" + movieUrl);
@@ -713,9 +672,9 @@ public class SeriesActivityServer1 extends AppCompatActivity {
             }
 
             if (!movieUrl.isEmpty()) {
-                mAdapter = new BindListSeriesSubServer1(movieList, SeriesActivityServer1.this);
+                mAdapter = new BindListAdapterServer4(movieList, SeriesActivityServer3.this);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer1.this, 3);
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer3.this, 3);
                 recyclerView.setLayoutManager(mLayoutManager);
                 //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -740,9 +699,9 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                     ivPrev.setVisibility(View.GONE);
                 }
             } else {
-                mAdapter = new BindListSeriesSubServer1(movieList, SeriesActivityServer1.this);
+                mAdapter = new BindListAdapterServer4(movieList, SeriesActivityServer3.this);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer1.this, 3);
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer3.this, 3);
                 recyclerView.setLayoutManager(mLayoutManager);
                 //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());

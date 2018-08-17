@@ -51,7 +51,10 @@ public class WebViewActivity extends AppCompatActivity {
 
                 // do your handling codes here, which url is the requested url
                 // probably you need to open that url rather than redirect:
-                if (url.equals(videoPath)) {
+                if (url.contains(videoPath)) {
+                    view.loadUrl(url);
+                }
+                else if(url.contains("episode") || url.contains("Stagioni") ){
                     view.loadUrl(url);
                 }
 
