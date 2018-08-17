@@ -35,6 +35,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
+
 public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview> implements Filterable {
     private List<MoviesModel> movielistFiltered;
     private List<MoviesModel> moviesList;
@@ -43,6 +44,7 @@ public class BindListAdapter extends RecyclerView.Adapter<BindListAdapter.myview
     String videoPath;
     private int itemposition;
     BindListAdapter adapter;
+
 
 
 
