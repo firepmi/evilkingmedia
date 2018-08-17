@@ -76,7 +76,14 @@
             android:name=".series.SeriesActivityCategoryServer2"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme" />
-        <activity android:name=".series.SeriesActivityServer3"
+        <activity
+            android:name=".series.SeriesActivityServer3"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity android:name=".series.SeriesActivityServer4"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"/>
+        <activity android:name=".series.SeriesActivityCategoryServer4"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme"></activity>
     </application>
