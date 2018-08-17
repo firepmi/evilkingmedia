@@ -24,4 +24,5 @@ public class Constant {
     public static String SERIESURL1_SUB = "http://www.seriehd.me/serie-tv-streaming/";
     public static String SERIESURL2 = "https://streaminghd.fun/serietv/";
     public static String SERIESURL3 = "https://ilgeniodellostreaming.eu/serietv/";
+    public static String SPORTSURL1 = "http://hdstreams.club/";
 }

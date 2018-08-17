@@ -79,6 +79,15 @@
         <activity android:name=".series.SeriesActivityServer3"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme"></activity>
+        <activity android:name=".Sports.SportsCategoryActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"/>
+        <activity android:name=".Sports.SportsActivityServer1"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"/>
+        <activity android:name=".Sports.SportsActivityCatServer1"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"/>
     </application>
 
 </manifest>

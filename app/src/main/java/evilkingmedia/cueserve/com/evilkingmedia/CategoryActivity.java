@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsCategoryActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesCategoryActivity;
@@ -19,7 +20,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesCategoryActivity;
 public class CategoryActivity extends AppCompatActivity {
 
     private TextView txtBottom;
-    private LinearLayout rlMovies,rlSeries;
+    private LinearLayout rlMovies,rlSeries,rlSports;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class CategoryActivity extends AppCompatActivity {
         txtBottom.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);
         rlMovies = findViewById(R.id.rlMovies);
         rlSeries = findViewById(R.id.rlSeries);
+        rlSports = findViewById(R.id.rlSports);
 
         rlMovies.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +49,14 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CategoryActivity.this, SeriesCategoryActivity.class);
+                startActivity(i);
+            }
+        });
+
+        rlSports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, SportsCategoryActivity.class);
                 startActivity(i);
             }
         });
