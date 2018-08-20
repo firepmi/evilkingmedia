@@ -90,7 +90,7 @@ public class BindListSeries4Adapter extends RecyclerView.Adapter<BindListSeries4
         if (movie.getImage() == "") {
             holder.imgcontent.setImageResource(R.color.colorWhite);
         } else {
-            Picasso.with(context).load("http:"+movie.getImage()).into(holder.imgcontent);
+            Picasso.with(context).load(movie.getImage()).into(holder.imgcontent);
         }
 
         holder.txtMovieTitle.setText(movie.getTitle());

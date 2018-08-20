@@ -1,37 +1,30 @@
+
 package evilkingmedia.cueserve.com.evilkingmedia.adapter;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
+import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityCatServer2;
+import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityServer2;
 
-public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapterServer3.myview> {
+
+public class BindListSeriespart2Adapter extends RecyclerView.Adapter<BindListSeriespart2Adapter.myview> {
     private List<MoviesModel> movielistFiltered;
     private List<MoviesModel> moviesList;
     Context context;
@@ -39,6 +32,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
     String videoPath;
     private int itemposition;
     BindListAdapter adapter;
+    private ArrayList<String> arrayListString;
 
 
     public class myview extends RecyclerView.ViewHolder {
@@ -46,28 +40,24 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
         private CardView card_view;
         private ImageView imgcontent;
         private TextView txtMovieTitle, txtMovieRating, txtMovieYear, txtMovieDuration;
-        View view1, view2;
+        private View view1, view2;
 
         public myview(View view) {
             super(view);
             card_view = view.findViewById(R.id.card_view);
             imgcontent = view.findViewById(R.id.imgcontent);
             txtMovieTitle = view.findViewById(R.id.txtMovieTitle);
-            view1 = view.findViewById(R.id.view1);
-            view2 = view.findViewById(R.id.view2);
             txtMovieRating = view.findViewById(R.id.txtMovieRating);
             txtMovieYear = view.findViewById(R.id.txtMovieYear);
             txtMovieDuration = view.findViewById(R.id.txtMovieDuration);
+            view1 = view.findViewById(R.id.view1);
+            view2 = view.findViewById(R.id.view2);
             view1.setVisibility(View.GONE);
             view2.setVisibility(View.GONE);
-            txtMovieRating.setVisibility(View.GONE);
-            txtMovieYear.setVisibility(View.GONE);
-            txtMovieDuration.setVisibility(View.GONE);
-
         }
     }
 
-    public BindListAdapterServer3(List<MoviesModel> moviesList, Context context) {
+    public BindListSeriespart2Adapter(List<MoviesModel> moviesList, Context context) {
         this.moviesList = moviesList;
         this.context = context;
         this.movielistFiltered = moviesList;
@@ -75,7 +65,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
 
     @NonNull
     @Override
-    public BindListAdapterServer3.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindListSeriespart2Adapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gridview_list, parent, false);
 
@@ -83,7 +73,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindListAdapterServer3.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull BindListSeriespart2Adapter.myview holder, final int position) {
 
         final MoviesModel movie = moviesList.get(position);
 
@@ -93,20 +83,21 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
         } else {
             Picasso.with(context).load(movie.getImage()).into(holder.imgcontent);
         }
-
+        //Picasso.with(context).load(movie.getImage()).into(holder.imgcontent);
         holder.txtMovieTitle.setText(movie.getTitle());
-       /* holder.txtMovieRating.setText(movie.getRating());
+        holder.txtMovieRating.setText(movie.getRating());
         holder.txtMovieYear.setText(movie.getYear());
-        holder.txtMovieDuration.setText(movie.getDuration());*/
+        holder.txtMovieDuration.setText(movie.getDuration());
 
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent webIntent = new Intent(context, WebViewActivity.class);
-                webIntent.putExtra("url", "https://speedvideo.net/embed-nalqx7svhsmq-607x360.html");
-                context.startActivity(webIntent);*/
                 itemposition = position;
-                new prepareMovieData().execute();
+                itemposition++;
+                Intent i = new Intent(context, SeriesActivityCatServer2.class);
+                i.putExtra("url", moviesList.get(position).getUrl());
+                i.putExtra("position", itemposition);
+                context.startActivity(i);
 
             }
         });
@@ -116,45 +107,6 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
     @Override
     public int getItemCount() {
         return moviesList.size();
-    }
-
-    private class prepareMovieData extends AsyncTask<Void, Void, Void> {
-        String desc;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-
-
-                Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
-
-                Elements link=doc.select("div[class=tabs-catch-all]");
-                String src=link.attr("data-src");
-                Log.d("src",src);
-
-                videoPath =  src;
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-
-            Intent webIntent = new Intent(context, WebViewActivityServer3.class);
-            webIntent.putExtra("url", videoPath);
-            context.startActivity(webIntent);
-        }
-
     }
 
 

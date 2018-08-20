@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -201,33 +202,32 @@ public class SeriesActivityServer4 extends AppCompatActivity {
             try {
                 movieList.clear();
                 // Connect to the web site
-                doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
+                doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10*1000).get();
                 MoviesModel moviesurl = new MoviesModel();
                 moviesurl.setCurrenturl(mainurl + "" + movieUrl);
                 movieurlList.add(moviesurl);
-                String title = null;
-                Elements maincol = doc.select("#main_col").first().getElementsByClass("mediaWrap mediaWrapAlt");
 
-                for (int i = 0; i < maincol.size(); i++) {
+                        String title = null;
+                        Elements maincol = doc.select("#main_col").first().getElementsByClass("mediaWrap mediaWrapAlt");
 
-                    String image = maincol.get(i).getElementsByTag("img").attr("src");
-                    String url = maincol.get(i).getElementsByTag("a").attr("href");
-                    if (Pageurl == null) {
-                        title = maincol.get(i).getElementsByTag("a").attr("title");
-                    } else {
-                        title = maincol.get(i).getElementsByClass("title-film").first().getElementsByTag("a").first().getElementsByTag("p").text();
-                    }
+                        for (int i = 0; i < maincol.size(); i++) {
 
-                    Log.e("image", image);
-                    MoviesModel movie = new MoviesModel();
-                    movie.setImage(image);
-                    movie.setUrl(url);
-                    movie.setTitle(title);
-                    movieList.add(movie);
+                            String image = maincol.get(i).getElementsByTag("a").select("img").attr("src");
+                            String url = maincol.get(i).getElementsByTag("a").attr("href");
+                            if (Pageurl == null) {
+                                title = maincol.get(i).getElementsByTag("a").attr("title");
+                            } else {
+                                title = maincol.get(i).getElementsByClass("title-film").first().getElementsByTag("a").first().getElementsByTag("p").text();
+                            }
 
-                }
+                            Log.e("image", image);
+                            MoviesModel movie = new MoviesModel();
+                            movie.setImage(image);
+                            movie.setUrl(url);
+                            movie.setTitle(title);
+                            movieList.add(movie);
 
-
+                        }
             } catch (IOException e) {
                 e.printStackTrace();
             }

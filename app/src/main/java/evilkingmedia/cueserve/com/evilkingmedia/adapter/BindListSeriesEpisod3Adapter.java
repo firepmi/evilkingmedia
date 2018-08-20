@@ -27,11 +27,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
+import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityEpisodServer1;
+import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityEpisodServer3;
+import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityServer1;
 
-public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapterServer3.myview> {
+
+public class BindListSeriesEpisod3Adapter extends RecyclerView.Adapter<BindListSeriesEpisod3Adapter.myview> implements Filterable {
     private List<MoviesModel> movielistFiltered;
     private List<MoviesModel> moviesList;
     Context context;
@@ -39,6 +41,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
     String videoPath;
     private int itemposition;
     BindListAdapter adapter;
+    private ArrayList<String> arrayListString;
 
 
     public class myview extends RecyclerView.ViewHolder {
@@ -46,28 +49,24 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
         private CardView card_view;
         private ImageView imgcontent;
         private TextView txtMovieTitle, txtMovieRating, txtMovieYear, txtMovieDuration;
-        View view1, view2;
+        private View view1, view2;
 
         public myview(View view) {
             super(view);
             card_view = view.findViewById(R.id.card_view);
             imgcontent = view.findViewById(R.id.imgcontent);
             txtMovieTitle = view.findViewById(R.id.txtMovieTitle);
-            view1 = view.findViewById(R.id.view1);
-            view2 = view.findViewById(R.id.view2);
             txtMovieRating = view.findViewById(R.id.txtMovieRating);
             txtMovieYear = view.findViewById(R.id.txtMovieYear);
             txtMovieDuration = view.findViewById(R.id.txtMovieDuration);
+            view1 = view.findViewById(R.id.view1);
+            view2 = view.findViewById(R.id.view2);
             view1.setVisibility(View.GONE);
             view2.setVisibility(View.GONE);
-            txtMovieRating.setVisibility(View.GONE);
-            txtMovieYear.setVisibility(View.GONE);
-            txtMovieDuration.setVisibility(View.GONE);
-
         }
     }
 
-    public BindListAdapterServer3(List<MoviesModel> moviesList, Context context) {
+    public BindListSeriesEpisod3Adapter(List<MoviesModel> moviesList, Context context) {
         this.moviesList = moviesList;
         this.context = context;
         this.movielistFiltered = moviesList;
@@ -75,7 +74,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
 
     @NonNull
     @Override
-    public BindListAdapterServer3.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindListSeriesEpisod3Adapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gridview_list, parent, false);
 
@@ -83,7 +82,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindListAdapterServer3.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull BindListSeriesEpisod3Adapter.myview holder, final int position) {
 
         final MoviesModel movie = moviesList.get(position);
 
@@ -93,20 +92,19 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
         } else {
             Picasso.with(context).load(movie.getImage()).into(holder.imgcontent);
         }
-
+        //Picasso.with(context).load(movie.getImage()).into(holder.imgcontent);
         holder.txtMovieTitle.setText(movie.getTitle());
-       /* holder.txtMovieRating.setText(movie.getRating());
+        holder.txtMovieRating.setText(movie.getRating());
         holder.txtMovieYear.setText(movie.getYear());
-        holder.txtMovieDuration.setText(movie.getDuration());*/
+        holder.txtMovieDuration.setText(movie.getDuration());
 
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent webIntent = new Intent(context, WebViewActivity.class);
-                webIntent.putExtra("url", "https://speedvideo.net/embed-nalqx7svhsmq-607x360.html");
-                context.startActivity(webIntent);*/
                 itemposition = position;
-                new prepareMovieData().execute();
+                Intent i = new Intent(context, SeriesActivityEpisodServer3.class);
+                i.putExtra("url", moviesList.get(position).getUrl());
+                context.startActivity(i);
 
             }
         });
@@ -134,11 +132,11 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
 
                 Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
 
-                Elements link=doc.select("div[class=tabs-catch-all]");
-                String src=link.attr("data-src");
-                Log.d("src",src);
 
-                videoPath =  src;
+                Elements iframe = doc.getElementsByTag("iframe");
+                String src = iframe.attr("src");
+                Log.e("body", src);
+                videoPath = src;
 
 
             } catch (IOException e) {
@@ -150,12 +148,48 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
         @Override
         protected void onPostExecute(Void result) {
 
-            Intent webIntent = new Intent(context, WebViewActivityServer3.class);
-            webIntent.putExtra("url", videoPath);
-            context.startActivity(webIntent);
         }
+    }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+
+                if (charString.equals("")) {
+                    moviesList = movielistFiltered;
+                } else {
+                    List<MoviesModel> filteredList = new ArrayList<>();
+                    for (MoviesModel row : movielistFiltered) {
+                        if (row.getTitle().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    moviesList = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = moviesList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                moviesList = (ArrayList<MoviesModel>) filterResults.values;
+                notifyDataSetChanged();
+
+
+            }
+        };
     }
 
 
 }
+
+
+
+
+

@@ -80,21 +80,32 @@
             android:name=".series.SeriesActivityServer3"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme" />
-        <activity android:name=".series.SeriesActivityServer4"
+        <activity
+            android:name=".series.SeriesActivityServer4"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"/>
-        <activity android:name=".series.SeriesActivityCategoryServer4"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".series.SeriesActivityCategoryServer4"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"></activity>
-        <activity android:name=".Sports.SportsCategoryActivity"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Sports.SportsCategoryActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"/>
-        <activity android:name=".Sports.SportsActivityServer1"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Sports.SportsActivityServer1"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"/>
-        <activity android:name=".Sports.SportsActivityCatServer1"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Sports.SportsActivityCatServer1"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"/>
+            android:theme="@style/MyTheme" />
+        <activity android:name=".series.SeriesActivityEpisodServer1"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity android:name=".series.SeriesActivityEpisodServer3"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" ></activity>
     </application>
 
 </manifest>

@@ -18,7 +18,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+
+import java.net.Proxy;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,8 +91,12 @@ public class SportsActivityServer1 extends AppCompatActivity {
 
             //Movie1
             try {
-                // Connect to the web site
-                Document doc = Jsoup.connect(Constant.SPORTSURL1).timeout(10000).get();
+               /* System.setProperty("http.proxyUser", "username");
+                System.setProperty("http.proxyPassword", "password");
+                System.setProperty("https.proxyHost", "127.0.0.1");
+                System.setProperty("https.proxyPort", "3128");*/
+                Document doc = Jsoup.connect(Constant.SPORTSURL1).get();
+                System.out.print(doc);
 
 
                 //For Categories

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.MediaController;
@@ -24,7 +25,7 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_webview);
         int i = 0;
         videoPath = getIntent().getStringExtra("url");
-        WebView webView = findViewById(R.id.web_view);
+        final WebView webView = findViewById(R.id.web_view);
         mProgress = new ProgressDialog(WebViewActivity.this);
 
       /*  webView.setVideoURI(Uri.parse(videoPath));
@@ -76,7 +77,7 @@ public class WebViewActivity extends AppCompatActivity {
 
             public void onPageFinished(WebView view, String url) {
 
-
+                view.loadUrl("javascript:var series = document.getElementsByTagName('br'); series.parentNode.removeChild(series);");
                 super.onPageFinished(view, url);
                 mProgress.dismiss();
             }
@@ -119,6 +120,8 @@ public class WebViewActivity extends AppCompatActivity {
         });*/
         webView.setWillNotCacheDrawing(true);
         webView.setDrawingCacheEnabled(false);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
         //webView.loadDataWithBaseURL(videoPath, "", "video/divx", "UTF-8", "");
         webView.loadUrl(videoPath);
 

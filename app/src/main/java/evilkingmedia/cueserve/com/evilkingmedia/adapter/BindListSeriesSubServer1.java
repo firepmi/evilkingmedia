@@ -129,17 +129,14 @@ public class BindListSeriesSubServer1 extends RecyclerView.Adapter<BindListSerie
         @Override
         protected Void doInBackground(Void... params) {
             try {
+                String urllink="http://hdpass.net/"+moviesList.get(itemposition).getUrl();
+                Document doc = Jsoup.connect(urllink).timeout(10000).maxBodySize(0).get();
 
 
-
-                Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
-
-
-                Elements iframe = doc.getElementsByTag("iframe");
+                Elements iframe = doc.getElementsByClass("wrapIframeSeries").first().getElementsByTag("iframe");
                 String src = iframe.attr("src");
-
                 Log.e("body", src);
-                videoPath=src;
+                videoPath="http:"+src;
 
 
             } catch (IOException e) {

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -29,15 +30,16 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListSeriesCat2Adapter;
+import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListSeriespart2Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
 public class SeriesActivityCatServer2 extends AppCompatActivity {
     private LinearLayout linearCategory;
     private RecyclerView recyclerView;
-    private BindListSeriesCat2Adapter mAdapter;
+    private BindListSeriespart2Adapter mAdapter;
+    private BindListSeriesCat2Adapter mAdapter2;
     private List<MoviesModel> movieList = new ArrayList<>();
     private List<MoviesModel> movieurlList = new ArrayList<>();
     private ProgressDialog mProgressDialog;
@@ -51,8 +53,10 @@ public class SeriesActivityCatServer2 extends AppCompatActivity {
     String Currenturl;
     android.support.v7.widget.SearchView search;
     int i = 0;
+    Boolean videoplay = false;
     String Category = "";
     int maximumPoolSize = 80;
+    int position;
     int keepAliveTime = 10;
     private ArrayList<String> yearArrayList = new ArrayList<>();
     private ArrayList<String> durationArrayList = new ArrayList<>();
@@ -69,11 +73,11 @@ public class SeriesActivityCatServer2 extends AppCompatActivity {
         setContentView(R.layout.activity_series_server_sub2);
 
         //  setContentView(R.layout.gridview_list);
-
         recyclerView = findViewById(R.id.recyclerview);
         btnhome = findViewById(R.id.btnhome);
         btncategory = findViewById(R.id.btncategory);
         url = getIntent().getStringExtra("url");
+        position = getIntent().getIntExtra("position", 0);
 
 
         new prepareMovieData(url, "").execute();
@@ -129,16 +133,55 @@ public class SeriesActivityCatServer2 extends AppCompatActivity {
                 // Connect to the web site
                 Document doc = Jsoup.connect(mainurl + "/" + movieUrl).timeout(10000).get();
 
-                Elements data = doc.select("ul[class=episodios]").first().getElementsByClass("episodiotitle");
 
-                for (int i = 0; i < data.size(); i++) {
+                if (position == 0) {
+                    videoplay = false;
+                    Elements data = doc.getElementsByClass("se-c");
 
-                    String urldata = data.get(i).getElementsByTag("a").attr("href");
-                    String title = data.get(i).getElementsByTag("a").text();
-                    MoviesModel movie = new MoviesModel();
-                    movie.setTitle(title);
-                    movie.setUrl(urldata);
-                    movieList.add(movie);
+                    Log.e("size", data.size() + "");
+
+                    for (int i = 0; i < data.size(); i++) {
+
+                        //String urldata = data.get(i).getElementsByTag("a").attr("href");
+                        String title = data.get(i).getElementsByClass("title").text();
+                        MoviesModel movie = new MoviesModel();
+                        movie.setTitle(title);
+                        movie.setUrl(url);
+                        movieList.add(movie);
+                    }
+                } else {
+                    videoplay = true;
+                    Log.e("position", position + "");
+
+                    Elements episode = doc.getElementsByClass("se-a");
+
+                    for (int i = 0; i < episode.size(); i++) {
+                        Elements episodedata = episode.get(position - 1).select("li");
+                        Log.e("size episode", episodedata.size() + "");
+                        for (int j = 0; j < episodedata.size(); j++) {
+
+                            String title = episodedata.get(j).getElementsByClass("episodiotitle").first().getElementsByTag("a").text();
+                            String url = episodedata.get(j).getElementsByClass("episodiotitle").first().getElementsByTag("a").attr("href");
+                            MoviesModel movie = new MoviesModel();
+                            movie.setTitle(title);
+                            movie.setUrl(url);
+                            movieList.add(movie);
+                            //String urls=url.get().attr("href");
+                            //Elements body=titleelement.get(position - 1).getElementsByClass("episodiotitle");
+                            //String title = titleelement.get(position -1 ).getElementsByTag("a").attr("href");
+                            Log.e("url", url);
+
+                        }
+                        break;
+                        //System.out.print(episode.get(position - 1));
+                       /* Elements title = episode.get(position - 1).select("ul[class=episodios]").first().getElementsByClass("episodiotitle");
+                        String url = episode.select("ul[class=episodios]").first().getElementsByTag("li").first().getElementsByClass("episodiotitle").attr("href");
+                        Log.e("title", title + "");*/
+                       /* MoviesModel movie = new MoviesModel();
+                        movie.setTitle(title);
+                        movie.setUrl(url);
+                        movieList.add(movie);*/
+                    }
                 }
 
 
@@ -156,14 +199,27 @@ public class SeriesActivityCatServer2 extends AppCompatActivity {
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
+            if(videoplay == true){
+                mAdapter2 = new BindListSeriesCat2Adapter(movieList, SeriesActivityCatServer2.this);
+                // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityCatServer2.this, 3);
+                recyclerView.setLayoutManager(mLayoutManager);
+                //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(mAdapter2);
+            }
+            else{
+                mAdapter = new BindListSeriespart2Adapter(movieList, SeriesActivityCatServer2.this);
+                // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityCatServer2.this, 3);
+                recyclerView.setLayoutManager(mLayoutManager);
+                //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(mAdapter);
+            }
 
-            mAdapter = new BindListSeriesCat2Adapter(movieList, SeriesActivityCatServer2.this);
-            // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityCatServer2.this, 3);
-            recyclerView.setLayoutManager(mLayoutManager);
-            //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.setAdapter(mAdapter);
+
+
         }
     }
 

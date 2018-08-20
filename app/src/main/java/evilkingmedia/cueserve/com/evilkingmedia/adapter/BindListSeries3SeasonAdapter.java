@@ -30,8 +30,9 @@ import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
+import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityServer3;
 
-public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapterServer3.myview> {
+public class BindListSeries3SeasonAdapter extends RecyclerView.Adapter<BindListSeries3SeasonAdapter.myview> {
     private List<MoviesModel> movielistFiltered;
     private List<MoviesModel> moviesList;
     Context context;
@@ -67,7 +68,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
         }
     }
 
-    public BindListAdapterServer3(List<MoviesModel> moviesList, Context context) {
+    public BindListSeries3SeasonAdapter(List<MoviesModel> moviesList, Context context) {
         this.moviesList = moviesList;
         this.context = context;
         this.movielistFiltered = moviesList;
@@ -75,7 +76,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
 
     @NonNull
     @Override
-    public BindListAdapterServer3.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindListSeries3SeasonAdapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gridview_list, parent, false);
 
@@ -83,7 +84,7 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindListAdapterServer3.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull BindListSeries3SeasonAdapter.myview holder, final int position) {
 
         final MoviesModel movie = moviesList.get(position);
 
@@ -134,9 +135,10 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
 
                 Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
 
-                Elements link=doc.select("div[class=tabs-catch-all]");
-                String src=link.attr("data-src");
-                Log.d("src",src);
+                Elements iframe = doc.getElementsByTag("iframe");
+                String src = iframe.attr("src");
+
+                Log.e("body", src);
 
                 videoPath =  src;
 
@@ -150,12 +152,16 @@ public class BindListAdapterServer3 extends RecyclerView.Adapter<BindListAdapter
         @Override
         protected void onPostExecute(Void result) {
 
-            Intent webIntent = new Intent(context, WebViewActivityServer3.class);
-            webIntent.putExtra("url", videoPath);
-            context.startActivity(webIntent);
+            Intent i = new Intent(context, SeriesActivityServer3.class);
+            i.putExtra("url", videoPath);
+            context.startActivity(i);
         }
-
     }
 
-
 }
+
+
+
+
+
+

@@ -36,21 +36,22 @@ import java.util.concurrent.TimeUnit;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListAdapterServer4;
-import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListSeries2Adapter;
+import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListSeries3SeasonAdapter;
+import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListSeriesEpisod3Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
 public class SeriesActivityServer3 extends AppCompatActivity {
     private LinearLayout linearCategory;
     private RecyclerView recyclerView;
-    private BindListAdapterServer4 mAdapter;
+    private BindListSeries3SeasonAdapter mAdapter;
+    private BindListSeriesEpisod3Adapter mAdapter2;
     private List<MoviesModel> movieList = new ArrayList<>();
     private List<MoviesModel> movieurlList = new ArrayList<>();
     private ProgressDialog mProgressDialog;
     ImageView ivNext, ivPrev, ivUp, ivDown;
     EditText etMoviename;
     Button btnMoviename;
-    String Pageurl;
+    String Pageurl, url = null;
     ArrayList<String> arrayList = new ArrayList<>();
     private int elementsize;
     Boolean isPrev, isNext, isSearch = false, isNextSearch = false, isMovieita = false;
@@ -84,7 +85,7 @@ public class SeriesActivityServer3 extends AppCompatActivity {
         ivNext.setVisibility(View.GONE);
         ivPrev.setVisibility(View.GONE);
         isNext = false;
-
+        url = getIntent().getStringExtra("url");
         etMoviename = findViewById(R.id.etMoviname);
         btnMoviename = findViewById(R.id.btnMoviname);
 
@@ -110,6 +111,11 @@ public class SeriesActivityServer3 extends AppCompatActivity {
             new prepareMovieData(Constant.SERIESURL3, "").execute();
         } else {
             new prepareMovieData(Pageurl, "").execute();
+        }
+        if (url == null) {
+            new prepareMovieData(Constant.SERIESURL3, "").execute();
+        } else {
+            new prepareMovieData(url, "").execute();
         }
 
 
@@ -182,23 +188,38 @@ public class SeriesActivityServer3 extends AppCompatActivity {
 
                 System.out.print(doc);
 
-                Element data = doc.getElementById("dt_contenedor");
-                Element data1 = data.getElementById("contenedor");
+                if (url == null) {
+                    Element data = doc.getElementById("dt_contenedor");
+                    Element data1 = data.getElementById("contenedor");
 
 
-                Elements data2 = data1.select("#archive-content").first().select("article");
-                Log.d("data size", data2.size() + "");
+                    Elements data2 = data1.select("#archive-content").first().select("article");
+                    Log.d("data size", data2.size() + "");
 
-                for (int i = 0; i < data2.size(); i++) {
-                    Elements imageurl = data2.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
-                    String imagedata = imageurl.get(i).attr("src");
-                    String title = imageurl.get(i).attr("alt");
-                    String urldata = data2.get(i).getElementsByClass("poster").first().getElementsByTag("a").attr("href");
-                    MoviesModel movie = new MoviesModel();
-                    movie.setImage(imagedata);
-                    movie.setUrl(urldata);
-                    movie.setTitle(title);
-                    movieList.add(movie);
+                    for (int i = 0; i < data2.size(); i++) {
+                        Elements imageurl = data2.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+                        String imagedata = imageurl.get(i).attr("src");
+                        String title = imageurl.get(i).attr("alt");
+                        String urldata = data2.get(i).getElementsByClass("poster").first().getElementsByTag("a").attr("href");
+                        MoviesModel movie = new MoviesModel();
+                        movie.setImage(imagedata);
+                        movie.setUrl(urldata);
+                        movie.setTitle(title);
+                        movieList.add(movie);
+                    }
+                } else {
+
+                    Elements bodydata = doc.getElementsByClass("row").select("[class=navbar navbar-fixed-top navbar-default nav1]").select("li");
+
+                    for (int i = 0; i < bodydata.size(); i++) {
+                        String title = bodydata.get(i).getElementsByTag("a").text();
+                        String url = bodydata.get(i).getElementsByTag("a").attr("href");
+                        MoviesModel movie = new MoviesModel();
+                        movie.setUrl(url);
+                        movie.setTitle(title);
+                        movieList.add(movie);
+                    }
+                    //System.out.print(bodydata);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -222,8 +243,8 @@ public class SeriesActivityServer3 extends AppCompatActivity {
                 ivNext.setVisibility(View.GONE);
             }
 
-            if (!movieUrl.isEmpty()) {
-                mAdapter = new BindListAdapterServer4(movieList, SeriesActivityServer3.this);
+            if (url == null) {
+                mAdapter = new BindListSeries3SeasonAdapter(movieList, SeriesActivityServer3.this);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer3.this, 3);
                 recyclerView.setLayoutManager(mLayoutManager);
@@ -250,13 +271,13 @@ public class SeriesActivityServer3 extends AppCompatActivity {
                     ivPrev.setVisibility(View.GONE);
                 }
             } else {
-                mAdapter = new BindListAdapterServer4(movieList, SeriesActivityServer3.this);
+                mAdapter2 = new BindListSeriesEpisod3Adapter(movieList, SeriesActivityServer3.this);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer3.this, 3);
                 recyclerView.setLayoutManager(mLayoutManager);
                 //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(mAdapter);
+                recyclerView.setAdapter(mAdapter2);
                 //ivNext.setVisibility(View.VISIBLE);
 
 
@@ -576,7 +597,7 @@ public class SeriesActivityServer3 extends AppCompatActivity {
                 mProgressDialog.dismiss();
             }
 
-            mAdapter = new BindListAdapterServer4(movieList, SeriesActivityServer3.this);
+            mAdapter = new BindListSeries3SeasonAdapter(movieList, SeriesActivityServer3.this);
             RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer3.this, 3);
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -672,7 +693,7 @@ public class SeriesActivityServer3 extends AppCompatActivity {
             }
 
             if (!movieUrl.isEmpty()) {
-                mAdapter = new BindListAdapterServer4(movieList, SeriesActivityServer3.this);
+                mAdapter = new BindListSeries3SeasonAdapter(movieList, SeriesActivityServer3.this);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer3.this, 3);
                 recyclerView.setLayoutManager(mLayoutManager);
@@ -699,7 +720,7 @@ public class SeriesActivityServer3 extends AppCompatActivity {
                     ivPrev.setVisibility(View.GONE);
                 }
             } else {
-                mAdapter = new BindListAdapterServer4(movieList, SeriesActivityServer3.this);
+                mAdapter = new BindListSeries3SeasonAdapter(movieList, SeriesActivityServer3.this);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer3.this, 3);
                 recyclerView.setLayoutManager(mLayoutManager);

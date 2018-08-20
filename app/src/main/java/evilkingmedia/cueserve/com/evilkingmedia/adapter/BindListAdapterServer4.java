@@ -31,7 +31,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
-public class BindListAdapterServer4 extends RecyclerView.Adapter<BindListAdapterServer4.myview> implements Filterable {
+public class BindListAdapterServer4 extends RecyclerView.Adapter<BindListAdapterServer4.myview> {
     private List<MoviesModel> movielistFiltered;
     private List<MoviesModel> moviesList;
     Context context;
@@ -142,42 +142,6 @@ public class BindListAdapterServer4 extends RecyclerView.Adapter<BindListAdapter
                 videoPath =  src;
 
 
-
-
-
-
-
-                /*  Document ibody = Jsoup.parseBodyFragment(html);*/
-
-             /*   Document docbody = Jsoup.connect("https://megadrive.co/embed/3gdselmarhke").timeout(6000000).maxBodySize(0)
-                        .userAgent("Mozilla/5.0 (Windows NT 6.2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.69 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).followRedirects(true).get();*/
-
-               /* for( Element element : docbody.select("meta,script") )
-                {
-                    element.remove();
-                    Log.e("body",element+"");
-                }*/
-                /* Element ibody=docbody.select("meta").first().remove();*/
-
-                //Elements vurl = docbody.select("meta[property=og:video]");
-
-               /* for (Element metaTag : vurl) {
-                    String content = metaTag.attr("content");
-                    Log.e("contents", content);
-                }*/
-                //Log.e("maindata", vurl + "");
-                /*for(int i=0; i < iframe.size();i++){
-                    Log.e("iframe",iframe+"");
-                }*/
-
-
-               /* videoPath=doc.select("iframe").attr("src");
-                Log.e("video",videoPath);*/
-                /*Elements elements = doc.select("#collapse1 ul.host > a");
-                Elements videoUrl = elements.get(0).getElementsByTag("a");
-                videoPath = videoUrl.attr("data-link");*/
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -186,57 +150,11 @@ public class BindListAdapterServer4 extends RecyclerView.Adapter<BindListAdapter
 
         @Override
         protected void onPostExecute(Void result) {
-            // Set description into TextView
 
-
-            //In app
-           /*  Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.parse(videoPath+".mp4"), "video/*");
-            context.startActivity(intent);*/
-
-            //Open video in browser
-            /* Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://oload.site/embed/Ezw7lhzGxB4/"));
-            context. startActivity(browserIntent);*/
             Intent webIntent = new Intent(context, WebViewActivity.class);
             webIntent.putExtra("url", videoPath);
             context.startActivity(webIntent);
         }
     }
-
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-
-                if (charString.equals("")) {
-                    moviesList = movielistFiltered;
-                } else {
-                    List<MoviesModel> filteredList = new ArrayList<>();
-                    for (MoviesModel row : movielistFiltered) {
-                        if (row.getTitle().toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(row);
-                        }
-                    }
-
-                    moviesList = filteredList;
-                }
-
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = moviesList;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                moviesList = (ArrayList<MoviesModel>) filterResults.values;
-                notifyDataSetChanged();
-
-
-            }
-        };
-    }
-
 
 }
