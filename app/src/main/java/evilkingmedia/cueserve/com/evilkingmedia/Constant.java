@@ -27,8 +27,8 @@ public class Constant {
     public static String SERIESURL4 = "https://www.filmsenzalimiti.info/serie-tv/";
     public static String SERIESURL4_search = "https://www.filmsenzalimiti.info/";
     public static String SPORTSURL1 = "http://hdstreams.club/";
-    public static String SPORTSURL2 = "http://www.sports-stream.net/";
+   /* public static String SPORTSURL2 = "http://www.sports-stream.net/";
     public static String SERIESURL4 = "https://www.tantifilm.uno/serie-tv/";
-    public static String SERIESURL4_search = "https://www.tantifilm.uno/";
+    public static String SERIESURL4_search = "https://www.tantifilm.uno/";*/
     public static String SPORTSURL2 = "https://streamingsports.me/";
 }
