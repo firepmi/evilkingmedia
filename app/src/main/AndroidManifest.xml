@@ -95,6 +95,9 @@
         <activity android:name=".Sports.SportsActivityCatServer1"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme"/>
+        <activity android:name=".Sports.SportsActivityServer2"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"/>
     </application>
 
 </manifest>

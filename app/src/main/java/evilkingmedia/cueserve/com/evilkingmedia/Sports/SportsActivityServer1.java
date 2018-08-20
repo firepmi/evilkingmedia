@@ -26,7 +26,7 @@ import java.util.Map;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListSports1Adapter;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSports1Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
 public class SportsActivityServer1 extends AppCompatActivity {
