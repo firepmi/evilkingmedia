@@ -28,6 +28,14 @@ public class SportsCategoryActivity extends AppCompatActivity {
             }
         });
 
+        rlSports1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(SportsCategoryActivity.this, SportsActivityServer2.class);
+                startActivity(i);
+            }
+        });
+
 
     }
 }

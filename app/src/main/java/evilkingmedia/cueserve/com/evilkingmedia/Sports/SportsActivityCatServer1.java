@@ -13,12 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListSports1Adapter;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSports1Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
 public class SportsActivityCatServer1 extends AppCompatActivity {

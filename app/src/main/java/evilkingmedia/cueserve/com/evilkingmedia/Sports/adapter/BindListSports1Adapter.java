@@ -1,25 +1,16 @@
-package evilkingmedia.cueserve.com.evilkingmedia.adapter;
+package evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,17 +18,13 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityCatServer1;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer1;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
 public class BindListSports1Adapter extends RecyclerView.Adapter<BindListSports1Adapter.myview>  {

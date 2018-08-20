@@ -9,6 +9,33 @@ public class SportsModel implements Serializable{
     private String url;
     private String category;
     private String channel;
+    private String team1;
+    private String team2;
+    private String currentUrl;
+
+    public String getCurrentUrl() {
+        return currentUrl;
+    }
+
+    public void setCurrentUrl(String currentUrl) {
+        this.currentUrl = currentUrl;
+    }
+
+    public String getTeam1() {
+        return team1;
+    }
+
+    public void setTeam1(String team1) {
+        this.team1 = team1;
+    }
+
+    public String getTeam2() {
+        return team2;
+    }
+
+    public void setTeam2(String team2) {
+        this.team2 = team2;
+    }
 
     public String getChannel() {
         return channel;
@@ -58,6 +85,9 @@ public class SportsModel implements Serializable{
                 ", url='" + url + '\'' +
                 ", category='" + category + '\'' +
                 ", channel='" + channel + '\'' +
+                ", team1='" + team1 + '\'' +
+                ", team2='" + team2 + '\'' +
+                ", currentUrl='" + currentUrl + '\'' +
                 '}';
     }
 }
