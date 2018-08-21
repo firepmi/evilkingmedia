@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -41,6 +43,7 @@ public class BindListSports1Adapter extends RecyclerView.Adapter<BindListSports1
         private CardView card_view;
         private TextView txtDate, txtTime;
         private View view1,view2;
+        private LinearLayout ll_bottom;
 
         public myview(View view) {
             super(view);
@@ -49,6 +52,7 @@ public class BindListSports1Adapter extends RecyclerView.Adapter<BindListSports1
             txtTime = view.findViewById(R.id.txtMovieRating);
             view1 = view.findViewById(R.id.view1);
             view2 = view.findViewById(R.id.view2);
+            ll_bottom = view.findViewById(R.id.ll_bottom);
         }
     }
 
@@ -74,8 +78,19 @@ public class BindListSports1Adapter extends RecyclerView.Adapter<BindListSports1
 
         holder.view1.setVisibility(View.GONE);
         holder.view2.setVisibility(View.GONE);
-        holder.txtDate.setText(sportsModel.getDate());
-        holder.txtTime.setText(sportsModel.getTime());
+        if(sportsModelList.get(position).getTime() == null)
+        {
+            holder.txtDate.setText(sportsModel.getTeam1());
+          //  holder.txtTime.setText(sportsModel.getDate());
+
+        }
+        else
+        {
+            holder.txtDate.setText(sportsModel.getDate());
+            holder.txtTime.setText(sportsModel.getTime());
+            holder.ll_bottom.setGravity(Gravity.CENTER);
+
+        }
 
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override

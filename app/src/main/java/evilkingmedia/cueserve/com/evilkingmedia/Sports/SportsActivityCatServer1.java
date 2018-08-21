@@ -66,6 +66,7 @@ public class SportsActivityCatServer1 extends AppCompatActivity {
                 SportsModel sportsModel = new SportsModel();
                 sportsModel.setDate(sportsModelUrlList.get(i).getChannel());
                 sportsModel.setUrl(sportsModelUrlList.get(i).getUrl());
+                sportsModel.setTeam1(sportsModelUrlList.get(i).getTeam1());
                 sportsModelList.add(sportsModel);
             }
         }

@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
@@ -43,6 +45,7 @@ public class SportsActivityServer1 extends AppCompatActivity {
     private List<SportsModel> sportsModelUrlList = new ArrayList<>();
     private ArrayList<String> dateArrayList = new ArrayList<>();
     private ArrayList<String> timeArrayList = new ArrayList<>();
+    private ArrayList<String> teamArrayList = new ArrayList<>();
     private Map<String, String> urlStringMap = new HashMap<String, String>();
     private ProgressDialog mProgressDialog;
     private ImageView ivNext,ivPrev, ivUp, ivDown;
@@ -95,7 +98,7 @@ public class SportsActivityServer1 extends AppCompatActivity {
                 System.setProperty("http.proxyPassword", "password");
                 System.setProperty("https.proxyHost", "127.0.0.1");
                 System.setProperty("https.proxyPort", "3128");*/
-                Document doc = Jsoup.connect(Constant.SPORTSURL1).get();
+                Document doc = Jsoup.connect(Constant.SPORTSURL1).timeout(10000).get();
                 System.out.print(doc);
 
 
@@ -122,10 +125,17 @@ public class SportsActivityServer1 extends AppCompatActivity {
 
                 for(int i = 0;i<p.size();i++)
                 {
+                    Elements span = p.get(i).select("span");
+
                     Elements a = p.get(i).select("a");
-                    for(int j=0 ; j<a.size();j++)
+                    for(int j=0 ; j<span.size();j++)
                     {
 
+
+
+                        Node node = span.get(j).nextSibling();
+                        Log.e("Node",node.toString());
+                        String team = node.toString().replaceAll("&nbsp;","");
                         Elements mElementUrl = a.get(j).select("a");
                         String url = mElementUrl.attr("href");
                         String category = String.valueOf(i);
@@ -134,7 +144,7 @@ public class SportsActivityServer1 extends AppCompatActivity {
                         sportsModelUrl.setCategory(category);
                         sportsModelUrl.setUrl(url);
                         sportsModelUrl.setChannel(channel);
-
+                        sportsModelUrl.setTeam1(team);
                         sportsModelUrlList.add(sportsModelUrl);
                     }
 
@@ -158,7 +168,8 @@ public class SportsActivityServer1 extends AppCompatActivity {
             protected void onPostExecute (Void result){
                 // Set description into TextView
                 if (mProgressDialog != null) {
-                    mProgressDialog.dismiss();
+                    if(mProgressDialog.isShowing())
+                        mProgressDialog.dismiss();
                 }
 
 
