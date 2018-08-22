@@ -119,8 +119,14 @@ private class prepareSportsUrl extends AsyncTask<String, Void, Void> {
             Elements container = doc.select("div[class=container mtb]");
             Elements table = container.select("table[class=table table-striped]");
             Elements td = table.select("td[class=event-watch]");
+            String a = td.select("a").attr("href");
 
-            if(td.contains("a"))
+            if(a == null || a.isEmpty())
+            {
+                streaming = false;
+                urldata = table.select("td").text();
+            }
+            else
             {
                 streaming = true;
                 Elements mElementUrl = td.select("a");
@@ -129,11 +135,7 @@ private class prepareSportsUrl extends AsyncTask<String, Void, Void> {
                 String url2[] = url1[1].split("\\)");
                 String data = url2[0].replace("'","");
                 urldata = data;
-            }
-            else
-            {
-                streaming = false;
-                urldata = table.select("td").text();
+
             }
 
         } catch (IOException e) {

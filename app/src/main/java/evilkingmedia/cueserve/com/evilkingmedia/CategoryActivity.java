@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import evilkingmedia.cueserve.com.evilkingmedia.EPG.EPGActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsCategoryActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
@@ -20,7 +21,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesCategoryActivity;
 public class CategoryActivity extends AppCompatActivity {
 
     private TextView txtBottom;
-    private LinearLayout rlMovies,rlSeries,rlSports;
+    private LinearLayout rlMovies,rlSeries,rlSports, rlepg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class CategoryActivity extends AppCompatActivity {
         rlMovies = findViewById(R.id.rlMovies);
         rlSeries = findViewById(R.id.rlSeries);
         rlSports = findViewById(R.id.rlSports);
+        rlepg = findViewById(R.id.rlepg);
 
         rlMovies.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +59,14 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CategoryActivity.this, SportsCategoryActivity.class);
+                startActivity(i);
+            }
+        });
+
+        rlepg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, EPGActivity.class);
                 startActivity(i);
             }
         });
