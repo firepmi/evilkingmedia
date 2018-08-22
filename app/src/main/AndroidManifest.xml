@@ -113,6 +113,9 @@
         <activity android:name=".EPG.EPGActivity"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme"/>
+        <activity android:name=".EPG.EPGDetailActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"/>
     </application>
 
 </manifest>

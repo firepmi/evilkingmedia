@@ -31,5 +31,6 @@ public class Constant {
     public static String SERIESURL4 = "https://www.tantifilm.uno/serie-tv/";
     public static String SERIESURL4_search = "https://www.tantifilm.uno/";*/
     public static String SPORTSURL2 = "https://streamingsports.me/";
-    public static String EPGURL = "https://www.sorrisi.com/guidatv/canali-tv/";
+    //public static String EPGURL = "https://www.sorrisi.com/guidatv/canali-tv/";
+    public static String EPGURL = "http://guidatv.quotidiano.net/";
 }
