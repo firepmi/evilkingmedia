@@ -7,4 +7,5 @@
     <string name="fa_icon_info">&#xf05a;</string>
     <string name="fa_icon_record">&#xf03d;</string>
     <string name="fa_icon_history">&#xf1da;</string>
+    <string name="title_activity_sports_server5">SportsActivityServer5</string>
 </resources>

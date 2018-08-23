@@ -33,4 +33,10 @@ public class Constant {
     public static String SPORTSURL2 = "https://streamingsports.me/";
     //public static String EPGURL = "https://www.sorrisi.com/guidatv/canali-tv/";
     public static String EPGURL = "http://guidatv.quotidiano.net/";
+    public static String SPORTSURL3 = "https://www.batmanstream.net/";
+    public static String SPORTSURL4 = "http://www.rojadiracta.me/";
+    public static String SPORTSURL5 = "http://toplive.info/";
+
+    public static String MUSICURL1 = " https://pastebin.com/raw/PUJb9caE/.m3u";
+    public static String METEOURL = "http://supermyspace.xyz/LISTE/meteoevil.m3u";
 }

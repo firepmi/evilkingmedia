@@ -146,40 +146,6 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
 
 
 
-
-
-
-                /*  Document ibody = Jsoup.parseBodyFragment(html);*/
-
-             /*   Document docbody = Jsoup.connect("https://megadrive.co/embed/3gdselmarhke").timeout(6000000).maxBodySize(0)
-                        .userAgent("Mozilla/5.0 (Windows NT 6.2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.69 Safari/537.36").ignoreContentType(true).ignoreHttpErrors(true).followRedirects(true).get();*/
-
-               /* for( Element element : docbody.select("meta,script") )
-                {
-                    element.remove();
-                    Log.e("body",element+"");
-                }*/
-                /* Element ibody=docbody.select("meta").first().remove();*/
-
-                //Elements vurl = docbody.select("meta[property=og:video]");
-
-               /* for (Element metaTag : vurl) {
-                    String content = metaTag.attr("content");
-                    Log.e("contents", content);
-                }*/
-                //Log.e("maindata", vurl + "");
-                /*for(int i=0; i < iframe.size();i++){
-                    Log.e("iframe",iframe+"");
-                }*/
-
-
-               /* videoPath=doc.select("iframe").attr("src");
-                Log.e("video",videoPath);*/
-                /*Elements elements = doc.select("#collapse1 ul.host > a");
-                Elements videoUrl = elements.get(0).getElementsByTag("a");
-                videoPath = videoUrl.attr("data-link");*/
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -188,17 +154,7 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
 
         @Override
         protected void onPostExecute(Void result) {
-            // Set description into TextView
 
-
-            //In app
-           /*  Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.parse(videoPath+".mp4"), "video/*");
-            context.startActivity(intent);*/
-
-            //Open video in browser
-            /* Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoPath));
-            context. startActivity(browserIntent);*/
             Intent webIntent = new Intent(context, WebViewActivityServer3.class);
             webIntent.putExtra("url", videoPath);
             context.startActivity(webIntent);

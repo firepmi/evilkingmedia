@@ -1,7 +1,6 @@
 package evilkingmedia.cueserve.com.evilkingmedia.Sports;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -29,12 +27,12 @@ import java.util.Map;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSports2Adapter;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSports3Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
-public class SportsActivityServer2 extends AppCompatActivity   {
+public class SportsActivityServer3 extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private BindListSports2Adapter mAdapter;
+    private BindListSports3Adapter mAdapter;
     private List<SportsModel> sportsModelList = new ArrayList<>();
     private List<SportsModel> sportsModelUrlList = new ArrayList<>();
     private List<SportsModel> movieurlList = new ArrayList<>();
@@ -42,19 +40,19 @@ public class SportsActivityServer2 extends AppCompatActivity   {
     private ArrayList<String> timeArrayList = new ArrayList<>();
     private Map<String, String> urlStringMap = new HashMap<String, String>();
     private ProgressDialog mProgressDialog;
-    private ImageView ivNext,ivPrev, ivUp, ivDown;
-    private LinearLayout ll_search,ll_categories;
-    private Button btnhome, btncategory;
+    private ImageView ivNext, ivPrev, ivUp, ivDown;
+    private LinearLayout ll_search, ll_categories;
     Boolean isNext;
     int i = 0;
     private String url;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_sports_server2);
+        setContentView(R.layout.activity_sports_server3);
         recyclerView = findViewById(R.id.recyclerview);
         ivNext = findViewById(R.id.ivNext);
         ivPrev = findViewById(R.id.ivPrev);
@@ -62,12 +60,9 @@ public class SportsActivityServer2 extends AppCompatActivity   {
         ivDown = findViewById(R.id.ivDown);
         ll_search = findViewById(R.id.ll_search);
         ll_categories = findViewById(R.id.categories);
-        btnhome = findViewById(R.id.btnhome);
-        btncategory = findViewById(R.id.btncategory);
         isNext = false;
         ivNext.setVisibility(View.GONE);
         ivPrev.setVisibility(View.GONE);
-        ll_search.setVisibility(View.GONE);
 
         url = getIntent().getStringExtra("url");
 
@@ -87,32 +82,18 @@ public class SportsActivityServer2 extends AppCompatActivity   {
             }
         });
         if (url == null) {
-            new prepareSportsData(Constant.SPORTSURL2).execute();
+            new prepareSportsData(Constant.SPORTSURL3).execute();
         } else {
             new prepareSportsData(url).execute();
         }
 
 
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        btncategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent i = new Intent(SportsActivityServer2.this, SportsCategoryActivityServer2.class);
-                startActivity(i);
-            }
-        });
     }
 
     private class prepareSportsData extends AsyncTask<String, Void, Void> {
         Document doc = null;
         String url;
+
         public prepareSportsData(String nextPageUrl) {
             this.url = nextPageUrl;
         }
@@ -120,7 +101,7 @@ public class SportsActivityServer2 extends AppCompatActivity   {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(SportsActivityServer2.this);
+            mProgressDialog = new ProgressDialog(SportsActivityServer3.this);
             mProgressDialog.setTitle("");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
@@ -139,7 +120,22 @@ public class SportsActivityServer2 extends AppCompatActivity   {
                 moviesurl.setCurrentUrl(url);
                 movieurlList.add(moviesurl);
                 //For Categories
-                Elements container = doc.select("div[class=container mtb]");
+
+                Elements data = doc.getElementsByClass("lshpanel");
+                Elements table = data.select("table");
+                Elements row = table.select("tr");
+                for (int i = 0; i < row.size(); i++) {
+
+                    String title = row.get(i).getElementsByClass("lshevent").text();
+                    String time = row.get(i).getElementsByClass("lshstart_time").text();
+                    Log.e("title", time);
+                    SportsModel sports = new SportsModel();
+                    sports.setTitle(title);
+                    sports.setTime(time);
+                    sportsModelList.add(sports);
+                }
+                //System.out.print(row);
+               /* Elements container = doc.select("div[class=container mtb]");
                 // Elements content = container.select("div[class=col-lg-9]");
                 Elements tbody = container.select("tbody");
                 Elements tr = tbody.select("tr");
@@ -159,7 +155,7 @@ public class SportsActivityServer2 extends AppCompatActivity   {
                     sportsModel.setUrl(url);
                     sportsModelList.add(sportsModel);
                 }
-
+*/
 
                 return null;
             } catch (IOException e) {
@@ -167,17 +163,17 @@ public class SportsActivityServer2 extends AppCompatActivity   {
             }
             return null;
         }
+
         @Override
-        protected void onPostExecute (Void result){
+        protected void onPostExecute(Void result) {
             // Set description into TextView
 
             mProgressDialog.dismiss();
 
 
-
-            mAdapter = new BindListSports2Adapter(sportsModelList, SportsActivityServer2.this,  sportsModelUrlList);
+            mAdapter = new BindListSports3Adapter(sportsModelList, SportsActivityServer3.this, sportsModelUrlList);
             // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SportsActivityServer2.this, 2);
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SportsActivityServer3.this, 3);
             recyclerView.setLayoutManager(mLayoutManager);
             //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -222,7 +218,7 @@ public class SportsActivityServer2 extends AppCompatActivity   {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(SportsActivityServer2.this);
+            mProgressDialog = new ProgressDialog(SportsActivityServer3.this);
             mProgressDialog.setTitle("");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
@@ -278,7 +274,7 @@ public class SportsActivityServer2 extends AppCompatActivity   {
             sportsModelList.clear();
             ivPrev.setVisibility(View.VISIBLE);
             NextPageUrl = "https://streamingsports.me/" + NextPageUrl;
-            new  prepareSportsData(NextPageUrl).execute();
+            new prepareSportsData(NextPageUrl).execute();
         }
 
         ;
@@ -292,7 +288,7 @@ public class SportsActivityServer2 extends AppCompatActivity   {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(SportsActivityServer2.this);
+            mProgressDialog = new ProgressDialog(SportsActivityServer3.this);
             mProgressDialog.setTitle("");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
