@@ -19,8 +19,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesCategoryActivity;
 public class CategoryActivity extends AppCompatActivity {
 
     private TextView txtBottom;
-    private LinearLayout rlMovies,rlSeries,rlSports, rlepg;
-    private LinearLayout rlMovies, rlSeries, rlSports, rlMusic, rlMeteo;
+    private LinearLayout rlMovies, rlSeries, rlSports, rlMusic, rlMeteo,rlepg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
