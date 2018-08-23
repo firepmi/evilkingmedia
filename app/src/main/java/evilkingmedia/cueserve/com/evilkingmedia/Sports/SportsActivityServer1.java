@@ -18,14 +18,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-
-import java.net.Proxy;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +68,7 @@ public class SportsActivityServer1 extends AppCompatActivity {
     }
 
     private class prepareSportsData extends AsyncTask<String, Void, Void> {
-
+        Document doc = null;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -91,11 +84,7 @@ public class SportsActivityServer1 extends AppCompatActivity {
 
             //Movie1
             try {
-               /* System.setProperty("http.proxyUser", "username");
-                System.setProperty("http.proxyPassword", "password");
-                System.setProperty("https.proxyHost", "127.0.0.1");
-                System.setProperty("https.proxyPort", "3128");*/
-                Document doc = Jsoup.connect(Constant.SPORTSURL1).get();
+                doc = Jsoup.connect(Constant.SPORTSURL1).get();
                 System.out.print(doc);
 
 
@@ -123,6 +112,8 @@ public class SportsActivityServer1 extends AppCompatActivity {
                 for(int i = 0;i<p.size();i++)
                 {
                     Elements a = p.get(i).select("a");
+                    //String Team = p.get(i).text();
+                    //Log.e("team", Team);
                     for(int j=0 ; j<a.size();j++)
                     {
 
@@ -134,6 +125,7 @@ public class SportsActivityServer1 extends AppCompatActivity {
                         sportsModelUrl.setCategory(category);
                         sportsModelUrl.setUrl(url);
                         sportsModelUrl.setChannel(channel);
+
 
                         sportsModelUrlList.add(sportsModelUrl);
                     }
@@ -170,7 +162,6 @@ public class SportsActivityServer1 extends AppCompatActivity {
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                     recyclerView.invalidate();
                     recyclerView.setAdapter(mAdapter);
-
 
 
             }

@@ -7,20 +7,18 @@ import android.text.Html;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import evilkingmedia.cueserve.com.evilkingmedia.Meteo.MeteoActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsCategoryActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.film.FilmActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesCategoryActivity;
 
 public class CategoryActivity extends AppCompatActivity {
 
     private TextView txtBottom;
-    private LinearLayout rlMovies,rlSeries,rlSports;
+    private LinearLayout rlMovies, rlSeries, rlSports, rlMusic, rlMeteo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +34,9 @@ public class CategoryActivity extends AppCompatActivity {
         rlMovies = findViewById(R.id.rlMovies);
         rlSeries = findViewById(R.id.rlSeries);
         rlSports = findViewById(R.id.rlSports);
+        rlMusic = findViewById(R.id.rlMusic);
+        rlMeteo = findViewById(R.id.rlMeteo);
+
 
         rlMovies.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,5 +61,21 @@ public class CategoryActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+       /* rlMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, MusicaActivityServer1.class);
+                startActivity(i);
+            }
+        });*/
+
+       rlMeteo.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent i =new Intent(CategoryActivity.this, MeteoActivity.class);
+               startActivity(i);
+           }
+       });
     }
 }

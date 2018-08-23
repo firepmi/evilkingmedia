@@ -31,4 +31,10 @@ public class Constant {
     public static String SERIESURL4 = "https://www.tantifilm.uno/serie-tv/";
     public static String SERIESURL4_search = "https://www.tantifilm.uno/";*/
     public static String SPORTSURL2 = "https://streamingsports.me/";
+    public static String SPORTSURL3 = "https://www.batmanstream.net/";
+    public static String SPORTSURL4 = "http://www.rojadiracta.me/";
+    public static String SPORTSURL5 = "http://toplive.info/";
+
+    public static String MUSICURL1 = " https://pastebin.com/raw/PUJb9caE/.m3u";
+    public static String METEOURL = "http://supermyspace.xyz/LISTE/meteoevil.m3u";
 }

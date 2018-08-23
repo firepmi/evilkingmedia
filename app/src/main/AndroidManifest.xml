@@ -3,6 +3,8 @@
     package="evilkingmedia.cueserve.com.evilkingmedia">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -100,16 +102,51 @@
             android:name=".Sports.SportsActivityCatServer1"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme" />
-        <activity android:name=".series.SeriesActivityEpisodServer1"
+        <activity
+            android:name=".series.SeriesActivityEpisodServer1"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme" />
-        <activity android:name=".series.SeriesActivityEpisodServer3"
+        <activity
+            android:name=".series.SeriesActivityEpisodServer3"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme" ></activity>
-            android:theme="@style/MyTheme"/>
-        <activity android:name=".Sports.SportsActivityServer2"
+            android:theme="@style/MyTheme" />
+        android:theme="@style/MyTheme"/>
+        <activity
+            android:name=".Sports.SportsActivityServer2"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"/>
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Sports.SportsCategoryActivityServer2"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Sports.SportsActivityServer3"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Sports.SportsActivityServer4"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Sports.SportsActivityServer5"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity android:name=".Musica.MusicaActivityServer1">
+            <action android:name="android.intent.action.SEND" />
+            <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+
+            <data android:mimeType="application/vnd.google.panorama360+jpg" />
+            <data android:mimeType="image/*" />
+            <data android:mimeType="video/*" />
+        </activity>
+        <activity android:name=".Meteo.MeteoActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity android:name=".Meteo.VideoPlayer"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme"></activity>
     </application>
 
 </manifest>
