@@ -10,18 +10,27 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import evilkingmedia.cueserve.com.evilkingmedia.EPG.EPGActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.Ebbok.EbbokActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.Livetv.LiveActivityCategory;
 import evilkingmedia.cueserve.com.evilkingmedia.Meteo.MeteoActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.Musica.MusicActivityCategory;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsCategoryActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesCategoryActivity;
 
 public class CategoryActivity extends AppCompatActivity {
 
-    private TextView txtBottom;
+    private TextView txtBottom,txt_dt_time;
     private LinearLayout rlMovies, rlSeries, rlSports, rlMusic, rlMeteo, rlepg, rllive, rlebook;
 
     @Override
@@ -43,6 +52,27 @@ public class CategoryActivity extends AppCompatActivity {
         rlMeteo = findViewById(R.id.rlMeteo);
         rllive = findViewById(R.id.rllive);
         rlebook = findViewById(R.id.rlebook);
+        txt_dt_time = findViewById(R.id.dt_time);
+
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                final Date date = new Date();
+                final DateFormat df = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
+                df.setTimeZone(TimeZone.getTimeZone("GMT+2"));
+                CategoryActivity.this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        txt_dt_time.setText(df.format(date));
+                    }
+                });
+
+
+            }
+        }, 0, 1000);
+
+
+
 
         rlMovies.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,13 +90,13 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
-       /* rlSports.setOnClickListener(new View.OnClickListener() {
+         rlSports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CategoryActivity.this, SportsCategoryActivity.class);
                 startActivity(i);
             }
-        });*/
+        });
 
         rlepg.setOnClickListener(new View.OnClickListener() {
             @Override

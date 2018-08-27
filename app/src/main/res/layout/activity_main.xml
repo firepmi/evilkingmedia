@@ -44,11 +44,13 @@
             android:src="@drawable/logo" />
 
         <TextView
+            android:id="@+id/dt_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="14:36 July 24, 2018"
+            android:text=" 14:36 July 24, 2018"
             android:textColor="@color/colorWhite"
-            android:layout_marginRight="@dimen/_10sdp"/>
+            android:layout_marginRight="@dimen/_10sdp"
+            android:textSize="15dp"/>
         <!--User-->
         <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
             android:id="@+id/txtuser"
@@ -390,6 +392,7 @@
                     android:src="@drawable/ebook"
                     android:elevation="@dimen/_5sdp"/>
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="E BOOK"

@@ -134,7 +134,7 @@ private class prepareSportsUrl extends AsyncTask<String, Void, Void> {
                 String url1[] = url_str.split("javascript:window.open\\(");
                 String url2[] = url1[1].split("\\)");
                 String data = url2[0].replace("'","");
-                urldata = data;
+                urldata = data.replace("http","https");
 
             }
 
