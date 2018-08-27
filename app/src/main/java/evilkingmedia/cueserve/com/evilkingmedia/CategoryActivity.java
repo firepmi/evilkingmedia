@@ -1,6 +1,7 @@
 package evilkingmedia.cueserve.com.evilkingmedia;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -11,15 +12,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import evilkingmedia.cueserve.com.evilkingmedia.EPG.EPGActivity;
+import evilkingmedia.cueserve.com.evilkingmedia.Ebbok.EbbokActivity;
+import evilkingmedia.cueserve.com.evilkingmedia.Livetv.LiveActivityCategory;
 import evilkingmedia.cueserve.com.evilkingmedia.Meteo.MeteoActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsCategoryActivity;
+import evilkingmedia.cueserve.com.evilkingmedia.Musica.MusicActivityCategory;
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesCategoryActivity;
 
 public class CategoryActivity extends AppCompatActivity {
 
     private TextView txtBottom;
-    private LinearLayout rlMovies, rlSeries, rlSports, rlMusic, rlMeteo,rlepg;
+    private LinearLayout rlMovies, rlSeries, rlSports, rlMusic, rlMeteo, rlepg, rllive, rlebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,7 @@ public class CategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         txtBottom = findViewById(R.id.txt);
-        String styledText = "<font color='blue'>androidaba.com:</font> Pocket TV: plu di 1300 canali TV da tutto il mondo - OLA TV per Android: canali TV da tutto il mondo - MEGA Official 3.3.8";
+        String styledText = "Sito Ufficiale: evilkingmedia.com - Assistenza Web: androidaba.com - Assistenza Telegram:<font color='blue'> https://t.me/evilkingmedia</font> ";
         txtBottom.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);
         rlMovies = findViewById(R.id.rlMovies);
         rlSeries = findViewById(R.id.rlSeries);
@@ -38,7 +41,8 @@ public class CategoryActivity extends AppCompatActivity {
         rlepg = findViewById(R.id.rlepg);
         rlMusic = findViewById(R.id.rlMusic);
         rlMeteo = findViewById(R.id.rlMeteo);
-
+        rllive = findViewById(R.id.rllive);
+        rlebook = findViewById(R.id.rlebook);
 
         rlMovies.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,13 +60,13 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
-        rlSports.setOnClickListener(new View.OnClickListener() {
+       /* rlSports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CategoryActivity.this, SportsCategoryActivity.class);
                 startActivity(i);
             }
-        });
+        });*/
 
         rlepg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,13 +76,13 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
-       /* rlMusic.setOnClickListener(new View.OnClickListener() {
+        rlMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, MusicaActivityServer1.class);
+                Intent i = new Intent(CategoryActivity.this, MusicActivityCategory.class);
                 startActivity(i);
             }
-        });*/
+        });
 
        rlMeteo.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -87,5 +91,21 @@ public class CategoryActivity extends AppCompatActivity {
                startActivity(i);
            }
        });
+
+        rllive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CategoryActivity.this, LiveActivityCategory.class);
+                startActivity(i);
+            }
+        });
+
+        rlebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://drive.google.com/drive/folders/0BzG97RrFLXbOSmh1Uk1lTS1uWFU"));
+                startActivity(browserIntent);
+            }
+        });
     }
 }

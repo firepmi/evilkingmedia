@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -24,7 +23,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
@@ -90,11 +88,12 @@ public class EPGDetailActivity extends AppCompatActivity {
                     String hour = mElementUrl.get(i).select("div[class=hour]").text();
                     String program_category = mElementUrl.get(i).select("div[class=program-category]").text();
                     String program_title = mElementUrl.get(i).select("div[class=program-title]").text();
-
+                    String progarm_url = mElementUrl.get(i).absUrl("href");
                     MoviesModel moviesModel = new MoviesModel();
                     moviesModel.setTitle(program_title);
                     moviesModel.setDuration(hour);
                     moviesModel.setYear(program_category);
+                    moviesModel.setUrl(progarm_url);
                     epgModelList.add(moviesModel);
                 }
 

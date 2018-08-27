@@ -7,7 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.SearchView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,7 +17,6 @@ import android.widget.LinearLayout;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -25,11 +25,7 @@ import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer1;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSports1Adapter;
-import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListAdapter;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
-import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
 public class EPGActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -38,28 +34,45 @@ public class EPGActivity extends AppCompatActivity {
     private List<MoviesModel> epgModelList = new ArrayList<>();
     private ImageView ivNext,ivPrev, ivUp, ivDown;
     private LinearLayout ll_search,ll_categories;
+    SearchView searchview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_film);
+        setContentView(R.layout.activity_epg);
         recyclerView = findViewById(R.id.recyclerview);
 
-        ivNext = findViewById(R.id.ivNext);
-        ivPrev = findViewById(R.id.ivPrev);
+
         ivUp = findViewById(R.id.ivUp);
         ivDown = findViewById(R.id.ivDown);
-        ll_search = findViewById(R.id.ll_search);
-        ll_categories = findViewById(R.id.categories);
+        searchview = findViewById(R.id.searchView);
 
-        ivPrev.setVisibility(View.GONE);
-        ivUp.setVisibility(View.GONE);
-        ivDown.setVisibility(View.GONE);
-        ivNext.setVisibility(View.GONE);
-        ll_search.setVisibility(View.GONE);
-        ll_categories.setVisibility(View.GONE);
+        searchview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                searchview.setFocusable(true);
+                searchview.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+        });
+
         new prepareEPGData().execute();
     }
 

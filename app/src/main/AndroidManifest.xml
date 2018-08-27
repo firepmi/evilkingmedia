@@ -130,30 +130,69 @@
         <activity
             android:name=".Sports.SportsActivityServer5"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"/>
-        <activity android:name=".EPG.EPGActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"/>
-        <activity android:name=".EPG.EPGDetailActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"/>
             android:theme="@style/MyTheme" />
-        <activity android:name=".Musica.MusicaActivityServer1">
-            <action android:name="android.intent.action.SEND" />
-            <action android:name="android.intent.action.SEND_MULTIPLE" />
-
-            <category android:name="android.intent.category.DEFAULT" />
-
-            <data android:mimeType="application/vnd.google.panorama360+jpg" />
-            <data android:mimeType="image/*" />
-            <data android:mimeType="video/*" />
-        </activity>
-        <activity android:name=".Meteo.MeteoActivity"
+        <activity
+            android:name=".EPG.EPGActivity"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme" />
-        <activity android:name=".Meteo.VideoPlayer"
+        <activity
+            android:name=".EPG.EPGDetailActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"></activity>
+            android:theme="@style/MyTheme" />
+        android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Musica.MusicaActivityServer1"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Meteo.MeteoActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Meteo.VideoPlayer"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".EPG.EPGProgramDetailActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Musica.MusicActivityCategory"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Musica.MusicaActivityServer2"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Musica.MusicaActivityServer3"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Musica.MusicaActivityServer4"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Livetv.LiveActivityCategory"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Livetv.LiveActivityServer1"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Livetv.LiveActivityServer2"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Livetv.LiveActivityServer3"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Livetv.LiveActivityServer4"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity android:name=".Ebbok.EbbokActivity"></activity>
     </application>
 
 </manifest>

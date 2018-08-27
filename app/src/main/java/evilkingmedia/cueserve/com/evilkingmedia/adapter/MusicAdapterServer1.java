@@ -21,13 +21,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import evilkingmedia.cueserve.com.evilkingmedia.Meteo.MeteoActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MeteoModel;
-import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
 
-public class MeteoAdapter extends RecyclerView.Adapter<MeteoAdapter.myview> implements Filterable {
+public class MusicAdapterServer1 extends RecyclerView.Adapter<MusicAdapterServer1.myview> implements Filterable {
 
     private List<String> moviesList;
     Context context;
@@ -38,9 +36,9 @@ public class MeteoAdapter extends RecyclerView.Adapter<MeteoAdapter.myview> impl
     private List<MeteoModel> meteoList;
     private List<MeteoModel> meteofilterList;
 
-    public MeteoAdapter(List<MeteoModel> meteolist, MeteoActivity meteoActivity) {
-        this.meteoList=meteolist;
-        this.context=meteoActivity;
+    public MusicAdapterServer1(List<MeteoModel> meteolist, Context meteoActivity) {
+        this.meteoList = meteolist;
+        this.context = meteoActivity;
         this.meteofilterList = meteolist;
     }
 
@@ -73,7 +71,7 @@ public class MeteoAdapter extends RecyclerView.Adapter<MeteoAdapter.myview> impl
 
     @NonNull
     @Override
-    public MeteoAdapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MusicAdapterServer1.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gridview_list, parent, false);
 
@@ -81,7 +79,7 @@ public class MeteoAdapter extends RecyclerView.Adapter<MeteoAdapter.myview> impl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MeteoAdapter.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull MusicAdapterServer1.myview holder, final int position) {
 
         final MeteoModel meteo = meteoList.get(position);
 
@@ -94,12 +92,12 @@ public class MeteoAdapter extends RecyclerView.Adapter<MeteoAdapter.myview> impl
             public void onClick(View v) {
                 itemposition = position;
 
-                if(!appInstalledOrNot("co.wuffy.player")){
+                if (!appInstalledOrNot("co.wuffy.player")) {
                     Toast.makeText(context, "Installed Wuffy Player To Play This Video",
                             Toast.LENGTH_LONG).show();
-                }else{
+                } else {
                     Bundle bnd = new Bundle();
-                    bnd.putString("path",meteoList.get(position).getUrl() );
+                    bnd.putString("path", meteoList.get(position).getUrl());
                     bnd.putString("name", meteoList.get(position).getTitle());
                     Intent intent = new Intent();
                     intent.setClassName("co.wuffy.player", "org.wuffy.videoplayer.WuffyPlayer");
@@ -122,8 +120,7 @@ public class MeteoAdapter extends RecyclerView.Adapter<MeteoAdapter.myview> impl
         try {
             pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
             app_installed = true;
-        }
-        catch (PackageManager.NameNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException e) {
             app_installed = false;
         }
         return app_installed;
@@ -150,7 +147,7 @@ public class MeteoAdapter extends RecyclerView.Adapter<MeteoAdapter.myview> impl
                 }
 
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = moviesList;
+                filterResults.values = meteoList;
                 return filterResults;
             }
 
