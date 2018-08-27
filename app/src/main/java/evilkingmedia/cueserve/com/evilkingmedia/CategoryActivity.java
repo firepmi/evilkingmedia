@@ -16,6 +16,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.Ebbok.EbbokActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.Livetv.LiveActivityCategory;
 import evilkingmedia.cueserve.com.evilkingmedia.Meteo.MeteoActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.Musica.MusicActivityCategory;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsCategoryActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesCategoryActivity;
 
@@ -60,13 +61,13 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
-       /* rlSports.setOnClickListener(new View.OnClickListener() {
+        rlSports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CategoryActivity.this, SportsCategoryActivity.class);
                 startActivity(i);
             }
-        });*/
+        });
 
         rlepg.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,7 @@ package evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -150,6 +151,14 @@ private class prepareSportsUrl extends AsyncTask<String, Void, Void> {
         // Set description into TextView
         if(streaming) {
             Intent webIntent = new Intent(context, WebViewActivity.class);
+            String SpilString = urldata;
+            String[] separated = urldata.split(",");
+            for (String item : separated) {
+                System.out.println("item = " + item);
+            }
+            urldata = separated[0];
+            //"https://www.youtube.com/embed/yfOTGQNZSOY?autoplay=1"
+            //http://www.youtube.com/embed/yfOTGQNZSOY?autoplay=1
             webIntent.putExtra("url", urldata);
             context.startActivity(webIntent);
         }

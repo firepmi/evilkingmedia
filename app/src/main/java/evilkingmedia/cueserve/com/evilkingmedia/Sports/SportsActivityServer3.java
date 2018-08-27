@@ -111,6 +111,7 @@ public class SportsActivityServer3 extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... strings) {
 
+            String urldata = null;
             //Movie1
             try {
                 // Connect to the web site
@@ -121,17 +122,28 @@ public class SportsActivityServer3 extends AppCompatActivity {
                 movieurlList.add(moviesurl);
                 //For Categories
 
-                Elements data = doc.getElementsByClass("lshpanel");
+                Elements data = doc.select("#event-pane").first().getElementsByClass("lshpanel");
+
+                for (int j = 0; j < data.size(); j++) {
+
+                    urldata = data.get(i).getElementsByTag("a").attr("href");
+                    Log.e("url", urldata);
+                }
+
                 Elements table = data.select("table");
                 Elements row = table.select("tr");
+                Log.e("size", row.size() + "");
+
                 for (int i = 0; i < row.size(); i++) {
 
                     String title = row.get(i).getElementsByClass("lshevent").text();
                     String time = row.get(i).getElementsByClass("lshstart_time").text();
-                    Log.e("title", time);
+
                     SportsModel sports = new SportsModel();
                     sports.setTitle(title);
                     sports.setTime(time);
+                    sports.setUrl(urldata);
+                    Log.e("title", time + " " + title);
                     sportsModelList.add(sports);
                 }
                 //System.out.print(row);
@@ -179,7 +191,7 @@ public class SportsActivityServer3 extends AppCompatActivity {
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.invalidate();
             recyclerView.setAdapter(mAdapter);
-            ivNext.setVisibility(View.VISIBLE);
+            //ivNext.setVisibility(View.VISIBLE);
 
             try {
                 if (isNext == true) {
