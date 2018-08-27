@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.WebViewActivitySports3;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
@@ -81,7 +82,11 @@ public class BindListSportsLinks4Adapter extends RecyclerView.Adapter<BindListSp
             @Override
             public void onClick(View v) {
                 itemposition = position;
-                new  prepareSportsUrl( sportsModelList.get(position).getUrl()).execute();
+                //new  prepareSportsUrl( sportsModelList.get(position).getUrl()).execute();
+                Intent webIntent = new Intent(context, WebViewActivitySports3.class);
+                webIntent.putExtra("url", sportsModelList.get(position).getUrl());
+                context.startActivity(webIntent);
+
                 /*Intent webIntent = new Intent(context, WebViewActivityServer3.class);
                 webIntent.putExtra("url", sportsModelList.get(position).getUrl());
                 context.startActivity(webIntent);*/
@@ -138,7 +143,7 @@ public class BindListSportsLinks4Adapter extends RecyclerView.Adapter<BindListSp
         protected void onPostExecute (Void result){
             // Set description into TextView
 
-            Intent webIntent = new Intent(context, WebViewActivity.class);
+            Intent webIntent = new Intent(context, WebViewActivitySports3.class);
             webIntent.putExtra("url", urldata);
             context.startActivity(webIntent);
 

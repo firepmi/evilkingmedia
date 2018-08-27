@@ -1,6 +1,8 @@
 package evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,9 +12,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.util.List;
 
+import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.WebViewActivitySports3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
 public class BindListSports3Adapter extends RecyclerView.Adapter<BindListSports3Adapter.myview> {
@@ -76,13 +85,51 @@ public class BindListSports3Adapter extends RecyclerView.Adapter<BindListSports3
             @Override
             public void onClick(View v) {
                 itemposition = position;
-                /*Intent i = new Intent(context, SportsActivityServer4.class);
+               /* Intent i = new Intent(context, SportsActivityServer3.class);
                 i.putExtra("url", sportsModelList.get(position).getUrl());
-                i.putExtra("position", itemposition + 1);
-                context.startActivity(i);*/
+                context.startActivity(i);
+*/
+                new prepareSportsData().execute();
             }
         });
 
+    }
+
+    private class prepareSportsData extends AsyncTask<Void, Void, Void> {
+        String desc;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+
+                String url = Constant.SPORTSURL3 + "/" + sportsModelList.get(itemposition).getUrl();
+
+                Document doc = Jsoup.connect(url).timeout(10000).maxBodySize(0).get();
+
+                Elements data = doc.select("tr[class=sectiontableentry2]").first().getElementsByTag("td").select("a");
+                videoPath = data.attr("href");
+                // System.out.print(data);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+
+            Intent webIntent = new Intent(context, WebViewActivitySports3.class);
+            webIntent.putExtra("url", videoPath);
+            context.startActivity(webIntent);
+        }
     }
 
     @Override
