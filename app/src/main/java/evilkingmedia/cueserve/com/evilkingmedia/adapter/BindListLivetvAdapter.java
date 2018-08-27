@@ -27,7 +27,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.model.MeteoModel;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
 
-public class MeteoAdapter extends RecyclerView.Adapter<MeteoAdapter.myview> implements Filterable {
+public class BindListLivetvAdapter extends RecyclerView.Adapter<BindListLivetvAdapter.myview> implements Filterable {
 
     private List<String> moviesList;
     Context context;
@@ -38,7 +38,7 @@ public class MeteoAdapter extends RecyclerView.Adapter<MeteoAdapter.myview> impl
     private List<MeteoModel> meteoList;
     private List<MeteoModel> meteofilterList;
 
-    public MeteoAdapter(List<MeteoModel> meteolist, MeteoActivity meteoActivity) {
+    public BindListLivetvAdapter(List<MeteoModel> meteolist, Context meteoActivity) {
         this.meteoList=meteolist;
         this.context=meteoActivity;
         this.meteofilterList = meteolist;
@@ -48,40 +48,27 @@ public class MeteoAdapter extends RecyclerView.Adapter<MeteoAdapter.myview> impl
     public class myview extends RecyclerView.ViewHolder {
 
         private CardView card_view;
-        private ImageView imgcontent;
-        private TextView txtMovieTitle, txtMovieRating, txtMovieYear, txtMovieDuration;
-        private View view1, view2;
+        private TextView txtMovieTitle;
 
         public myview(View view) {
             super(view);
             card_view = view.findViewById(R.id.card_view);
-            imgcontent = view.findViewById(R.id.imgcontent);
             txtMovieTitle = view.findViewById(R.id.txtMovieTitle);
-            txtMovieRating = view.findViewById(R.id.txtMovieRating);
-            txtMovieYear = view.findViewById(R.id.txtMovieYear);
-            txtMovieDuration = view.findViewById(R.id.txtMovieDuration);
-            view1 = view.findViewById(R.id.view1);
-            view2 = view.findViewById(R.id.view2);
-            view1.setVisibility(View.GONE);
-            view2.setVisibility(View.GONE);
-            txtMovieDuration.setVisibility(View.GONE);
-            txtMovieRating.setVisibility(View.GONE);
-            txtMovieYear.setVisibility(View.GONE);
         }
     }
 
 
     @NonNull
     @Override
-    public MeteoAdapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindListLivetvAdapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.gridview_list, parent, false);
+                .inflate(R.layout.livetv_list, parent, false);
 
         return new myview(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MeteoAdapter.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull BindListLivetvAdapter.myview holder, final int position) {
 
         final MeteoModel meteo = meteoList.get(position);
 
@@ -150,7 +137,7 @@ public class MeteoAdapter extends RecyclerView.Adapter<MeteoAdapter.myview> impl
                 }
 
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = moviesList;
+                filterResults.values = meteoList;
                 return filterResults;
             }
 

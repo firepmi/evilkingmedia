@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
@@ -32,7 +33,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.adapter.MusicAdapterServer1;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MeteoModel;
 
-public class MusicaActivityServer1 extends AppCompatActivity {
+public class MusicaActivityServer4 extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private MusicAdapterServer1 mAdapter;
@@ -52,7 +53,6 @@ public class MusicaActivityServer1 extends AppCompatActivity {
     ArrayList<String> alltitle = new ArrayList<String>();
     private List<MeteoModel> meteolist = new ArrayList<>();
     SearchView searchview;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,15 +61,14 @@ public class MusicaActivityServer1 extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_musica_server1);
 
-        mProgressDialog = new ProgressDialog(MusicaActivityServer1.this);
+        mProgressDialog = new ProgressDialog(MusicaActivityServer4.this);
         //  setContentView(R.layout.gridview_list);
         recyclerView = findViewById(R.id.recyclerview);
         ivUp = findViewById(R.id.ivUp);
         ivDown = findViewById(R.id.ivDown);
+
         searchview = findViewById(R.id.searchView);
-
-
-        new prepareMovieData(Constant.MUSICURL1).execute();
+        new prepareMovieData(Constant.MUSICURL4).execute();
 
         ivUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,37 +152,50 @@ public class MusicaActivityServer1 extends AppCompatActivity {
                 for (int i = 0; i < allURls.size(); i++) {
                     url = allURls.get(i).toString();
 
-                    if (allURls.get(i).toString().contains("http") || allURls.get(i + 1).toString().contains("mms")) {
+                    if (allURls.get(i).toString().contains("#EXTINF") || allURls.get(i).toString().contains("#EXTM3U")) {
 
+                    }
+                    else{
                         allURl.add(allURls.get(i).toString());
                     }
                 }
 
                 for (int i = 0; i < allURls.size(); i++) {
 
+                    Iterator<String> j = allURls.iterator();
+                    while (j.hasNext())
+                    {
+                        String s = j.next();
+                        if (s == null || s.isEmpty())
+                        {
+                            j.remove();
+                        }
+                    }
                     if (i <= allURls.size() - 2) {
-                        if (allURls.get(i + 1).toString().contains("http") || allURls.get(i + 1).toString().contains("mms")) {
+                        if (allURls.get(i + 1).toString().contains("#EXTINF")) {
 
-                            Log.e("string", "not title");
-                        } else {
                             String[] separated = allURls.get(i + 1).toString().split(",");
                             for (String item : separated) {
                                 System.out.println("item = " + item);
                             }
                             title = separated[1];
 
-                           /* String[] separated1 = title.split("]");
+                           /* String[] separated1 = title.split("\\[");
                             for (String item : separated1) {
                                 System.out.println("item = " + item);
                             }
-                            title1 = separated1[1];
-
-                            String[] separated2 = title1.split("\\[");
+                            title1 = separated1[0];
+*/
+                           /* String[] separated2 = title1.split("\\[");
                             for (String item : separated2) {
                                 System.out.println("item = " + item);
                             }
                             ftitle = separated2[0];*/
                             alltitle.add(title);
+
+
+                        } else {
+                            Log.e("string", "not title");
                         }
 
                     } else {
@@ -203,10 +215,19 @@ public class MusicaActivityServer1 extends AppCompatActivity {
 
                 }
 
-                for (int i = 0; i < alltitle.size(); i++) {
+                for (int i = 0; i < allURl.size(); i++) {
                     MeteoModel meteo = new MeteoModel();
                     ptitle = alltitle.get(i).toString();
                     meteo.setTitle(ptitle);
+                    Iterator<String> j = allURl.iterator();
+                    while (j.hasNext())
+                    {
+                        String s = j.next();
+                        if (s == null || s.isEmpty())
+                        {
+                            j.remove();
+                        }
+                    }
                     meteo.setUrl(allURl.get(i));
                     meteolist.add(meteo);
                 }
@@ -232,8 +253,8 @@ public class MusicaActivityServer1 extends AppCompatActivity {
                 mProgressDialog.dismiss();
             }
 
-            mAdapter = new MusicAdapterServer1(meteolist, MusicaActivityServer1.this);
-            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(MusicaActivityServer1.this, 2);
+            mAdapter = new MusicAdapterServer1(meteolist, MusicaActivityServer4.this);
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(MusicaActivityServer4.this, 2);
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.invalidate();

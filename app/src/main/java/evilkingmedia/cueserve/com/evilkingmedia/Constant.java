@@ -37,6 +37,22 @@ public class Constant {
     public static String SPORTSURL4 = "http://www.rojadiracta.me/";
     public static String SPORTSURL5 = "http://toplive.info/";
 
-    public static String MUSICURL1 = " https://pastebin.com/raw/PUJb9caE/.m3u";
+    public static String MUSICURL1 = "https://pastebin.com/raw/PUJb9caE/.m3u";
+    public static String MUSICURL2 = "http://supermyspace.xyz/LISTE/canalimusicalidoc.m3u";
+    public static String MUSICURL3 = "https://pastebin.com/raw/3SmUwbXB/.m3u";
+    public static String MUSICURL4 = "http://playlist.autoiptv.net/music.php/.m3u";
+
+    public static  String LIVETV1 = "http://supermyspace.xyz/EKM/ekm1.m3u";
+    public static  String LIVETV2 = "http://supermyspace.xyz/EKM/ekm2.m3u";
+    public static  String LIVETV3 = "http://supermyspace.xyz/EKM/ekm3.m3u";
+    public static  String LIVETV4 = "http://supermyspace.xyz/EKM/ekm4.m3u";
+    public static  String LIVETV5 = "http://supermyspace.xyz/EKM/ekm5.m3u";
+    public static  String LIVETV6 = "http://supermyspace.xyz/EKM/ekm6.m3u";
+    public static  String LIVETV7 = "http://supermyspace.xyz/EKM/ekm7.m3u";
+    public static  String LIVETV8 = "http://supermyspace.xyz/EKM/ekm8.m3u";
+    public static  String LIVETV9 = "http://supermyspace.xyz/EKM/ekm9.m3u";
+    public static  String LIVETV10 = "http://supermyspace.xyz/EKM/ekm10.m3u";
+
+
     public static String METEOURL = "http://supermyspace.xyz/LISTE/meteoevil.m3u";
 }
