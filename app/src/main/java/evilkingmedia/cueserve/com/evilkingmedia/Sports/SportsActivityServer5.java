@@ -28,12 +28,13 @@ import java.util.Map;
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSports4Adapter;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSports5Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSportsLinks4Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
 public class SportsActivityServer5 extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private BindListSports4Adapter mAdapter;
+    private BindListSports5Adapter mAdapter;
     private BindListSportsLinks4Adapter mAdapter2;
     private List<SportsModel> sportsModelList = new ArrayList<>();
     private List<SportsModel> sportsModelUrlList = new ArrayList<>();
@@ -117,11 +118,25 @@ public class SportsActivityServer5 extends AppCompatActivity {
             //Movie1
             try {
                 // Connect to the web site
-                doc = Jsoup.connect(url).timeout(10000).get();
+                doc = Jsoup.connect(url).timeout(20000).get();
+                Elements table = doc.select("table[class=table table-filter]");
+                Elements tr = table.select("tr[data-status=sc]");
+                for(int i=0;i< tr.size();i++)
+                {
+                    Elements eletitle = tr.get(i).select("p[class=summary]");
+                    String title = tr.get(i).select("h4[class=title]").select("p").text();
+                    String teamstr = tr.get(i).select("h4[class=title]").text();
+                    String team = teamstr.replace(title,"");
+                    String url = tr.get(i).select("div[class=media-body]").select("a").attr("href");
 
-                SportsModel moviesurl = new SportsModel();
-                moviesurl.setCurrentUrl(url);
-                movieurlList.add(moviesurl);
+
+                        SportsModel moviesurl = new SportsModel();
+                        moviesurl.setUrl(url);
+                        moviesurl.setTitle(title);
+                        moviesurl.setTeam1(team);
+                        movieurlList.add(moviesurl);
+
+                }
 
                  System.out.print(doc);
 
@@ -141,7 +156,7 @@ public class SportsActivityServer5 extends AppCompatActivity {
 
 
             if (previousurl == null) {
-                mAdapter = new BindListSports4Adapter(sportsModelList, SportsActivityServer5.this, sportsModelUrlList);
+                mAdapter = new BindListSports5Adapter(movieurlList, SportsActivityServer5.this, sportsModelUrlList);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SportsActivityServer5.this, 2);
                 recyclerView.setLayoutManager(mLayoutManager);

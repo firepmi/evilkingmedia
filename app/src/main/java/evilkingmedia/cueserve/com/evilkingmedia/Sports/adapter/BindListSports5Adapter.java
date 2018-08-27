@@ -2,6 +2,7 @@ package evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,12 +21,13 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.List;
 
+import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer4;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
-public class BindListSportsLinks4Adapter extends RecyclerView.Adapter<BindListSportsLinks4Adapter.myview> {
+public class BindListSports5Adapter extends RecyclerView.Adapter<BindListSports5Adapter.myview> {
     private List<SportsModel> sportsModelUrlList;
     private List<SportsModel> sportsModelList;
     Context context;
@@ -55,7 +58,7 @@ public class BindListSportsLinks4Adapter extends RecyclerView.Adapter<BindListSp
         }
     }
 
-    public BindListSportsLinks4Adapter(List<SportsModel> sportsModelList, Context context, List<SportsModel> urlList) {
+    public BindListSports5Adapter(List<SportsModel> sportsModelList, Context context, List<SportsModel> urlList) {
         this.sportsModelList = sportsModelList;
         this.context = context;
         this.sportsModelUrlList = urlList;
@@ -63,28 +66,30 @@ public class BindListSportsLinks4Adapter extends RecyclerView.Adapter<BindListSp
 
     @NonNull
     @Override
-    public BindListSportsLinks4Adapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindListSports5Adapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gridview_list, parent, false);
 
-        return new BindListSportsLinks4Adapter.myview(itemView);
+        return new BindListSports5Adapter.myview(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final BindListSportsLinks4Adapter.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull final BindListSports5Adapter.myview holder, final int position) {
 
         final SportsModel sportsModel = sportsModelList.get(position);
 
-        holder.txtMovieTitle.setText(sportsModel.getTitle());
+        holder.txtMovieTitle.setText(sportsModel.getTeam1());
+        holder.txtMovieRating.setText(sportsModel.getTitle());
 
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemposition = position;
-                new  prepareSportsUrl( sportsModelList.get(position).getUrl()).execute();
-                /*Intent webIntent = new Intent(context, WebViewActivityServer3.class);
-                webIntent.putExtra("url", sportsModelList.get(position).getUrl());
+                new prepareSportsUrl(Constant.SPORTSURL5+sportsModelList.get(position).getUrl()).execute();
+            /*    Intent webIntent = new Intent(context, WebViewActivity.class);
+                webIntent.putExtra("url", Constant.SPORTSURL5+sportsModelList.get(position).getUrl());
                 context.startActivity(webIntent);*/
+
             }
         });
 
@@ -120,10 +125,10 @@ public class BindListSportsLinks4Adapter extends RecyclerView.Adapter<BindListSp
 
                 Document doc  = Jsoup.connect(mainurl).timeout(10000).get();
                 //For Categories
-                Elements container = doc.select("div[class=all]");
-                Elements div = container.select("div[class=content]");
-                urldata = div.select("iframe").attr("src");
-
+                Elements container = doc.select("div[class=container]");
+                Elements div = container.select("div[class=embed-responsive embed-responsive-16by9]");
+                Elements iframe = div.select("iframe[class=embed-responsive-item]");
+                urldata= iframe.attr("src");
 
 
 
@@ -138,9 +143,9 @@ public class BindListSportsLinks4Adapter extends RecyclerView.Adapter<BindListSp
         protected void onPostExecute (Void result){
             // Set description into TextView
 
-            Intent webIntent = new Intent(context, WebViewActivity.class);
-            webIntent.putExtra("url", urldata);
-            context.startActivity(webIntent);
+             Intent webIntent = new Intent(context, WebViewActivity.class);
+                webIntent.putExtra("url", Constant.SPORTSURL5+urldata);
+                context.startActivity(webIntent);
 
 
 
@@ -150,4 +155,5 @@ public class BindListSportsLinks4Adapter extends RecyclerView.Adapter<BindListSp
         }
 
     }
+
 }

@@ -114,7 +114,7 @@ public class SportsActivityServer3 extends AppCompatActivity {
             //Movie1
             try {
                 // Connect to the web site
-                doc = Jsoup.connect(url).timeout(10000).get();
+                doc = Jsoup.connect(url).timeout(20000).get();
 
                 SportsModel moviesurl = new SportsModel();
                 moviesurl.setCurrentUrl(url);
@@ -195,15 +195,6 @@ public class SportsActivityServer3 extends AppCompatActivity {
                 ivPrev.setVisibility(View.VISIBLE);
             } else {
                 ivPrev.setVisibility(View.GONE);
-            }
-
-
-            Elements main = doc.select("ul[class=pagination]");
-
-            if (main.size() == 0) {
-                ivNext.setVisibility(View.GONE);
-            } else {
-                ivNext.setVisibility(View.VISIBLE);
             }
 
 

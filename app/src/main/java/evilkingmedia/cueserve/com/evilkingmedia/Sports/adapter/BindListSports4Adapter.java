@@ -2,6 +2,7 @@ package evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +12,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.util.List;
 
+import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer4;
+import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
 public class BindListSports4Adapter extends RecyclerView.Adapter<BindListSports4Adapter.myview> {
@@ -68,13 +76,15 @@ public class BindListSports4Adapter extends RecyclerView.Adapter<BindListSports4
 
         final SportsModel sportsModel = sportsModelList.get(position);
 
-        holder.txtMovieTitle.setText(sportsModel.getTitle());
+        holder.txtMovieTitle.setText(sportsModel.getTeam1());
+        holder.txtMovieRating.setText(sportsModel.getTitle());
 
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemposition = position;
-                Intent i = new Intent(context, SportsActivityServer4.class);
+               // new  prepareSportsUrl( sportsModelList.get(position).getUrl()).execute();
+                 Intent i = new Intent(context, SportsActivityServer4.class);
                 i.putExtra("url", sportsModelList.get(position).getUrl());
                 i.putExtra("position", itemposition + 1);
                 context.startActivity(i);
@@ -87,5 +97,6 @@ public class BindListSports4Adapter extends RecyclerView.Adapter<BindListSports4
     public int getItemCount() {
         return sportsModelList.size();
     }
+
 
 }
