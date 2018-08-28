@@ -30,7 +30,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesCategoryActivity;
 
 public class CategoryActivity extends AppCompatActivity {
 
-    private TextView txtBottom,txt_dt_time;
+    private TextView txtemail,txtBottom,txt_dt_time,txtlogout;
     private LinearLayout rlMovies, rlSeries, rlSports, rlMusic, rlMeteo, rlepg, rllive, rlebook;
 
     @Override
@@ -53,6 +53,27 @@ public class CategoryActivity extends AppCompatActivity {
         rllive = findViewById(R.id.rllive);
         rlebook = findViewById(R.id.rlebook);
         txt_dt_time = findViewById(R.id.dt_time);
+        txtemail = findViewById(R.id.txtemail);
+        txtlogout = findViewById(R.id.txtlogout);
+
+        txtemail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto","evilkodi@libero.it", null));
+              //  emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Support");
+             //   emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
+                startActivity(Intent.createChooser(emailIntent, "Send email..."));
+            }
+        });
+
+        txtlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                System.exit(0);
+            }
+        });
 
         Timer t = new Timer();
         t.schedule(new TimerTask() {

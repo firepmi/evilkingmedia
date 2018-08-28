@@ -53,7 +53,7 @@
             android:textSize="15dp"/>
         <!--User-->
         <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
-            android:id="@+id/txtuser"
+            android:id="@+id/txtemail"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:gravity="center_vertical"

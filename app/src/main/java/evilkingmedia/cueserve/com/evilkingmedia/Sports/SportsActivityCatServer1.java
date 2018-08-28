@@ -59,15 +59,16 @@ public class SportsActivityCatServer1 extends AppCompatActivity {
 
         for(int i=0;i<sportsModelUrlList.size();i++)
         {
-            int category = Integer.parseInt(sportsModelUrlList.get(i).getCategory());
-            if(category == pos)
-            {
+            if(sportsModelUrlList.get(i).getCategory()!= null) {
+                int category = Integer.parseInt(sportsModelUrlList.get(i).getCategory());
+                if (category == pos) {
 
-                SportsModel sportsModel = new SportsModel();
-                sportsModel.setDate(sportsModelUrlList.get(i).getChannel());
-                sportsModel.setUrl(sportsModelUrlList.get(i).getUrl());
-                sportsModel.setTeam1(sportsModelUrlList.get(i).getTeam1());
-                sportsModelList.add(sportsModel);
+                    SportsModel sportsModel = new SportsModel();
+                    sportsModel.setDate(sportsModelUrlList.get(i).getChannel());
+                    sportsModel.setUrl(sportsModelUrlList.get(i).getUrl());
+                    sportsModel.setTeam1(sportsModelUrlList.get(i).getTeam1());
+                    sportsModelList.add(sportsModel);
+                }
             }
         }
 
