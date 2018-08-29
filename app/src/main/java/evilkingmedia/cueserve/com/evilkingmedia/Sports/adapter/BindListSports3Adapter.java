@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
@@ -25,7 +28,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.WebViewActivitySports3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
-public class BindListSports3Adapter extends RecyclerView.Adapter<BindListSports3Adapter.myview> {
+public class BindListSports3Adapter extends RecyclerView.Adapter<BindListSports3Adapter.myview> implements Filterable {
     private List<SportsModel> sportsModelUrlList;
     private List<SportsModel> sportsModelList;
     Context context;
@@ -62,7 +65,7 @@ public class BindListSports3Adapter extends RecyclerView.Adapter<BindListSports3
     public BindListSports3Adapter(List<SportsModel> sportsModelList, Context context, List<SportsModel> urlList) {
         this.sportsModelList = sportsModelList;
         this.context = context;
-        this.sportsModelUrlList = urlList;
+        this.sportsModelUrlList = sportsModelList;
     }
 
     @NonNull
@@ -137,6 +140,41 @@ public class BindListSports3Adapter extends RecyclerView.Adapter<BindListSports3
     @Override
     public int getItemCount() {
         return sportsModelList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+
+                if (charString.equals("")) {
+                    sportsModelList = sportsModelUrlList;
+                } else {
+                    List<SportsModel> filteredList = new ArrayList<>();
+                    for (SportsModel row : sportsModelList) {
+                        if (row.getTitle().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    sportsModelList = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = sportsModelList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                sportsModelList = (ArrayList<SportsModel>) filterResults.values;
+                notifyDataSetChanged();
+
+
+            }
+        };
     }
 
 }

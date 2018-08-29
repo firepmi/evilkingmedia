@@ -74,7 +74,7 @@ public class SeriesActivityEpisodServer1 extends AppCompatActivity {
         btncategory = findViewById(R.id.btncategory);
         isNext = false;
         url = getIntent().getStringExtra("url");
-        url="http://hdpass.net/"+url;
+        //url="http://hdpass.net/"+url;
 
             new prepareMovieData(url, "").execute();
 
@@ -84,11 +84,8 @@ public class SeriesActivityEpisodServer1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                new prepareMovieData(Constant.SERIESURL1, "").execute();
-                movieList.clear();
-                mAdapter.notifyDataSetChanged();
-                Category = "";
-                i = 0;
+                Intent i = new Intent(SeriesActivityEpisodServer1.this, SeriesActivityServer1.class);
+                startActivity(i);
             }
         });
 

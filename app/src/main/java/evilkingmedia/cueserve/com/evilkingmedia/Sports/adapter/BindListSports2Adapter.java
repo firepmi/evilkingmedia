@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,23 +20,23 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer2;
+import evilkingmedia.cueserve.com.evilkingmedia.model.MeteoModel;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
-public class BindListSports2Adapter extends RecyclerView.Adapter<BindListSports2Adapter.myview>  {
+public class BindListSports2Adapter extends RecyclerView.Adapter<BindListSports2Adapter.myview> implements Filterable {
 private List<SportsModel> sportsModelUrlList;
 private List<SportsModel> sportsModelList;
         Context context;
         String videoPath;
 private int itemposition;
 
-
-
-public class myview extends RecyclerView.ViewHolder {
+    public class myview extends RecyclerView.ViewHolder {
 
     private CardView card_view;
     private TextView txtTeam1, txtTeam2, txtTime;
@@ -52,7 +54,7 @@ public class myview extends RecyclerView.ViewHolder {
     public BindListSports2Adapter(List<SportsModel> sportsModelList, Context context, List<SportsModel> urlList) {
         this.sportsModelList = sportsModelList;
         this.context = context;
-        this.sportsModelUrlList = urlList;
+        this.sportsModelUrlList = sportsModelList;
     }
 
     @NonNull
@@ -190,5 +192,41 @@ private class prepareSportsUrl extends AsyncTask<String, Void, Void> {
 
     }
 
+
 }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+
+                if (charString.equals("")) {
+                    sportsModelList = sportsModelUrlList;
+                } else {
+                    List<SportsModel> filteredList = new ArrayList<>();
+                    for (SportsModel row : sportsModelList) {
+                        if (row.getTeam1().toLowerCase().contains(charString.toLowerCase()) || row.getTeam2().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    sportsModelList = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = sportsModelList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                sportsModelList = (ArrayList<SportsModel>) filterResults.values;
+                notifyDataSetChanged();
+
+
+            }
+        };
+    }
 }

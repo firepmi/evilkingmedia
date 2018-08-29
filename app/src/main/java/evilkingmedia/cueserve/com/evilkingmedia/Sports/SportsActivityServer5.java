@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -48,6 +50,8 @@ public class SportsActivityServer5 extends AppCompatActivity {
     int i = 0;
     int position;
     private String previousurl;
+    android.support.v7.widget.SearchView search;
+    SearchView searchview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +93,32 @@ public class SportsActivityServer5 extends AppCompatActivity {
         } else {
             new prepareSportsData(previousurl).execute();
         }
+
+        searchview = findViewById(R.id.searchView);
+
+        searchview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                searchview.setFocusable(true);
+                searchview.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+        });
 
 
     }

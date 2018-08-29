@@ -153,7 +153,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
 
                 new prepareMovieData(Constant.SERIESURL1, "").execute();
                 movieList.clear();
-                mAdapter.notifyDataSetChanged();
+//              mAdapter.notifyDataSetChanged();
                 Category = "";
                 isNext = false;
                 isMovieita = false;
@@ -225,8 +225,27 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                     }
                 } else {
 
+                    Elements link = doc.select("div[class=contenedor]");
+                    //     Elements data = link.select("div[class=items]");
+                    Elements image = link.select("div[class=imagen]");
+                    Elements name = image.select("h2");
 
-                    Elements seasondata = doc.select("#series").select("li");
+
+                    //Elements imagestr = image.select("img");
+                    for (int i = 0; i < image.size(); i++) {
+                        MoviesModel movie = new MoviesModel();
+                        String img_str = image.get(i).select("img").attr("src");
+                        String url = image.get(i).select("a").attr("href");
+                        String name_str = name.get(i).text();
+                        movie.setImage(img_str);
+                        movie.setTitle(name_str);
+                        movie.setUrl(url);
+                        movieList.add(movie);
+
+                    }
+
+
+                    /*Elements seasondata = doc.select("#series").select("li");
 
                     for (int i = 0; i < seasondata.size(); i++) {
 
@@ -237,7 +256,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                         movie.setTitle(title);
                         movieList.add(movie);
                     }
-
+*/
                 }
             } catch (IOException e) {
                 e.printStackTrace();

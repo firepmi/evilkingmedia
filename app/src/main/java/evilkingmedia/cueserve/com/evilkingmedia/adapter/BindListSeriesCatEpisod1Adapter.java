@@ -29,7 +29,6 @@ import java.util.List;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityEpisodServer1;
-import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityServer1;
 
 
 public class BindListSeriesCatEpisod1Adapter extends RecyclerView.Adapter<BindListSeriesCatEpisod1Adapter.myview> implements Filterable {
@@ -101,9 +100,10 @@ public class BindListSeriesCatEpisod1Adapter extends RecyclerView.Adapter<BindLi
             @Override
             public void onClick(View v) {
                 itemposition = position;
-                Intent i = new Intent(context, SeriesActivityEpisodServer1.class);
+                new prepareMovieData().execute();
+               /* Intent i = new Intent(context, SeriesActivityEpisodServer1.class);
                 i.putExtra("url", moviesList.get(position).getUrl());
-                context.startActivity(i);
+                context.startActivity(i);*/
 
             }
         });
@@ -146,7 +146,7 @@ public class BindListSeriesCatEpisod1Adapter extends RecyclerView.Adapter<BindLi
 
         @Override
         protected void onPostExecute(Void result) {
-            Intent i = new Intent(context, SeriesActivityServer1.class);
+            Intent i = new Intent(context, SeriesActivityEpisodServer1.class);
             i.putExtra("url", videoPath);
             context.startActivity(i);
         }
