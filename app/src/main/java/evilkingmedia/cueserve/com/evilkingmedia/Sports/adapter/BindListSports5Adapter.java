@@ -2,7 +2,6 @@ package evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,7 +21,7 @@ import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer4;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer5;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
@@ -85,7 +83,11 @@ public class BindListSports5Adapter extends RecyclerView.Adapter<BindListSports5
             @Override
             public void onClick(View v) {
                 itemposition = position;
-                new prepareSportsUrl(Constant.SPORTSURL5+sportsModelList.get(position).getUrl()).execute();
+                Intent i = new Intent(context, SportsActivityServer5.class);
+                i.putExtra("url", sportsModelList.get(position).getUrl());
+                i.putExtra("position", itemposition + 1);
+                context.startActivity(i);
+                //new prepareSportsUrl(Constant.SPORTSURL5+sportsModelList.get(position).getUrl()).execute();
             /*    Intent webIntent = new Intent(context, WebViewActivity.class);
                 webIntent.putExtra("url", Constant.SPORTSURL5+sportsModelList.get(position).getUrl());
                 context.startActivity(webIntent);*/

@@ -1,6 +1,7 @@
 package evilkingmedia.cueserve.com.evilkingmedia.Sports;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -74,7 +75,8 @@ public class SportsCategoryActivityServer2 extends AppCompatActivity {
         btnhome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent i = new Intent(SportsCategoryActivityServer2.this, SportsActivityServer2.class);
+                startActivity(i);
             }
         });
 

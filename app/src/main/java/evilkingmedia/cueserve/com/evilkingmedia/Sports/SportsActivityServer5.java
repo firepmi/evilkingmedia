@@ -27,15 +27,14 @@ import java.util.Map;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSports4Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSports5Adapter;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSportsLinks4Adapter;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSprtsWatchAdapter5;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
 public class SportsActivityServer5 extends AppCompatActivity {
     private RecyclerView recyclerView;
     private BindListSports5Adapter mAdapter;
-    private BindListSportsLinks4Adapter mAdapter2;
+    private BindListSprtsWatchAdapter5 mAdapter2;
     private List<SportsModel> sportsModelList = new ArrayList<>();
     private List<SportsModel> sportsModelUrlList = new ArrayList<>();
     private List<SportsModel> movieurlList = new ArrayList<>();
@@ -97,6 +96,7 @@ public class SportsActivityServer5 extends AppCompatActivity {
     private class prepareSportsData extends AsyncTask<String, Void, Void> {
         Document doc = null;
         String url;
+        Elements urldata;
 
         public prepareSportsData(String nextPageUrl) {
             this.url = nextPageUrl;
@@ -119,27 +119,53 @@ public class SportsActivityServer5 extends AppCompatActivity {
             try {
                 // Connect to the web site
                 doc = Jsoup.connect(url).timeout(20000).get();
-                Elements table = doc.select("table[class=table table-filter]");
-                Elements tr = table.select("tr[data-status=sc]");
-                for(int i=0;i< tr.size();i++)
-                {
+
+                if (previousurl == null) {
+                    Elements table = doc.select("table[class=table table-filter]");
+                    Elements tr = table.select("tr[data-status=sc]");
+                    for (int i = 0; i < tr.size(); i++) {
+                        Elements eletitle = tr.get(i).select("p[class=summary]");
+                        String time = tr.get(i).text();
+                        Log.e("time", time);
+                        String title = tr.get(i).select("h4[class=title]").select("p").text();
+                        String teamstr = tr.get(i).select("h4[class=title]").text();
+                        String team = teamstr.replace(title, "");
+
+
+                        urldata = tr.get(i).select("div[class=media-body]").select("p[class=summary]").select("a");
+                        Log.e("url size", urldata.size() + "");
+                        SportsModel moviesurl = new SportsModel();
+                        moviesurl.setUrl(url);
+                        //moviesurl.setTitle(team);
+                        moviesurl.setTeam1(time);
+                        movieurlList.add(moviesurl);
+
+                    }
+                } else {
+
+                    Elements table = doc.select("table[class=table table-filter]");
+                    Elements tr = table.select("tr[data-status=sc]");
                     Elements eletitle = tr.get(i).select("p[class=summary]");
                     String title = tr.get(i).select("h4[class=title]").select("p").text();
                     String teamstr = tr.get(i).select("h4[class=title]").text();
-                    String team = teamstr.replace(title,"");
-                    String url = tr.get(i).select("div[class=media-body]").select("a").attr("href");
+                    String team = teamstr.replace(title, "");
 
 
+                    urldata = tr.get(position - 1).select("div[class=media-body]").select("p[class=summary]").select("a");
+                    Log.e("url size", urldata.size() + "");
+
+                    for (int i = 0; i < urldata.size(); i++) {
+                        String sportsurl = urldata.get(i).attr("href");
+                        String sportstitle = urldata.get(i).text();
                         SportsModel moviesurl = new SportsModel();
-                        moviesurl.setUrl(url);
-                        moviesurl.setTitle(title);
-                        moviesurl.setTeam1(team);
+                        moviesurl.setUrl(sportsurl);
+                        //moviesurl.setTitle(sportstitle);
+                        moviesurl.setTeam1(sportstitle);
                         movieurlList.add(moviesurl);
+                    }
+
 
                 }
-
-                 System.out.print(doc);
-
 
                 return null;
             } catch (IOException e) {
@@ -194,7 +220,7 @@ public class SportsActivityServer5 extends AppCompatActivity {
 
             } else {
 
-                mAdapter2 = new BindListSportsLinks4Adapter(sportsModelList, SportsActivityServer5.this, sportsModelUrlList);
+                mAdapter2 = new BindListSprtsWatchAdapter5(movieurlList, SportsActivityServer5.this, sportsModelUrlList);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SportsActivityServer5.this, 3);
                 recyclerView.setLayoutManager(mLayoutManager);

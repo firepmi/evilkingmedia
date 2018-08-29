@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -28,11 +29,13 @@ import java.util.Map;
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSports3Adapter;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSportsPlay3Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
 public class SportsActivityServer3 extends AppCompatActivity {
     private RecyclerView recyclerView;
     private BindListSports3Adapter mAdapter;
+    private BindListSportsPlay3Adapter mAdapter2;
     private List<SportsModel> sportsModelList = new ArrayList<>();
     private List<SportsModel> sportsModelUrlList = new ArrayList<>();
     private List<SportsModel> movieurlList = new ArrayList<>();
@@ -42,9 +45,11 @@ public class SportsActivityServer3 extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     private ImageView ivNext, ivPrev, ivUp, ivDown;
     private LinearLayout ll_search, ll_categories;
-    Boolean isNext;
-    int i = 0;
-    private String url;
+    Boolean isNext, Category = false;
+    String returnvalue = "demo";
+    int i = 0, position;
+    private String previousurl, selectedid, categoryid;
+    Button btnhome, btncategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,8 @@ public class SportsActivityServer3 extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sports_server3);
         recyclerView = findViewById(R.id.recyclerview);
+        btnhome = findViewById(R.id.btnhome);
+        btncategory = findViewById(R.id.btncategory);
         ivNext = findViewById(R.id.ivNext);
         ivPrev = findViewById(R.id.ivPrev);
         ivUp = findViewById(R.id.ivUp);
@@ -63,8 +70,13 @@ public class SportsActivityServer3 extends AppCompatActivity {
         isNext = false;
         ivNext.setVisibility(View.GONE);
         ivPrev.setVisibility(View.GONE);
-
-        url = getIntent().getStringExtra("url");
+        categoryid = getIntent().getStringExtra("categoryid");
+        if (categoryid == null) {
+            categoryid = "t1";
+        }
+        selectedid = categoryid + "-content";
+        previousurl = getIntent().getStringExtra("url");
+        position = getIntent().getIntExtra("position", 0);
 
         ivNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +93,39 @@ public class SportsActivityServer3 extends AppCompatActivity {
                 new PreviousPagedata().execute();
             }
         });
-        if (url == null) {
+
+        ivUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.smoothScrollBy(0, -200);
+            }
+        });
+
+        ivDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.smoothScrollBy(0, 200);
+            }
+        });
+
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new prepareSportsData(Constant.SPORTSURL3).execute();
+            }
+        });
+
+        btncategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Category = true;
+                new prepareSportsData(Constant.SPORTSURL3).execute();
+            }
+        });
+        if (previousurl == null) {
             new prepareSportsData(Constant.SPORTSURL3).execute();
         } else {
-            new prepareSportsData(url).execute();
+            new prepareSportsData(previousurl).execute();
         }
 
 
@@ -116,60 +157,89 @@ public class SportsActivityServer3 extends AppCompatActivity {
             try {
                 // Connect to the web site
                 doc = Jsoup.connect(url).timeout(20000).get();
+                try {
 
-                SportsModel moviesurl = new SportsModel();
-                moviesurl.setCurrentUrl(url);
-                movieurlList.add(moviesurl);
-                //For Categories
+                    SportsModel moviesurl = new SportsModel();
+                    moviesurl.setCurrentUrl(url);
+                    movieurlList.add(moviesurl);
+                    //For Categories
 
-                Elements data = doc.select("#event-pane").first().getElementsByClass("lshpanel");
+                    //System.out.print(doc);
 
-                for (int j = 0; j < data.size(); j++) {
+                    if (Category == true) {
 
-                    urldata = data.get(i).getElementsByTag("a").attr("href");
-                    Log.e("url", urldata);
+                        sportsModelList.clear();
+                        Elements tabsdata = doc.select("#tabs").select("a");
+
+                        for (int i = 0; i < tabsdata.size(); i++) {
+
+                            String id = tabsdata.get(i).getElementsByTag("a").attr("id");
+                            String title = tabsdata.get(i).getElementsByTag("a").text();
+                            SportsModel sports = new SportsModel();
+                            sports.setTitle(title);
+                            sports.setId(id);
+                            sportsModelList.add(sports);
+                        }
+
+                        System.out.print(tabsdata);
+
+
+                    } else {
+                        if (previousurl == null) {
+                            sportsModelList.clear();
+                            Elements data = doc.getElementsByClass("content").select("#" + selectedid);
+
+                            System.out.print(data);
+
+                            Elements rowdata = data.select(".slide");
+
+                            for (int i = 0; i < rowdata.size(); i++) {
+
+                                String title = rowdata.get(i).getElementsByClass("name").text();
+                                SportsModel sports = new SportsModel();
+                                sports.setTitle(title);
+                                // sports.setTime(time);
+                                sports.setUrl(url);
+                                //Log.e("title", time + " " + title);
+                                sportsModelList.add(sports);
+                            }
+
+                        } else {
+                            sportsModelList.clear();
+                            Elements data = doc.getElementsByClass("slide");
+
+                            Elements videourl = data.get(position).getElementsByClass("slide_content").select(".link");
+
+                            Log.e("sizeofurl", videourl.size() + "");
+
+                            for (int i = 0; i < videourl.size(); i++) {
+
+                                String url = videourl.get(i).getElementsByTag("a").attr("onclick");
+                                String SpilString = url;
+                                String[] separated = url.split("\\(");
+                                for (String item : separated) {
+                                    System.out.println("item = " + item);
+                                }
+                                url = separated[1];
+                                String[] separated1 = url.split("\\)");
+                                for (String item : separated1) {
+                                    System.out.println("item = " + item);
+                                }
+                                url = separated1[0];
+                                url = url.replace("'", "");
+                                SportsModel sports = new SportsModel();
+                                sports.setUrl(url);
+                                sports.setTitle(videourl.get(i).getElementsByTag("a").text());
+                                sportsModelList.add(sports);
+
+                            }
+
+
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
-                Elements table = data.select("table");
-                Elements row = table.select("tr");
-                Log.e("size", row.size() + "");
-
-                for (int i = 0; i < row.size(); i++) {
-
-                    String title = row.get(i).getElementsByClass("lshevent").text();
-                    String time = row.get(i).getElementsByClass("lshstart_time").text();
-
-                    SportsModel sports = new SportsModel();
-                    sports.setTitle(title);
-                    sports.setTime(time);
-                    sports.setUrl(urldata);
-                    Log.e("title", time + " " + title);
-                    sportsModelList.add(sports);
-                }
-                //System.out.print(row);
-               /* Elements container = doc.select("div[class=container mtb]");
-                // Elements content = container.select("div[class=col-lg-9]");
-                Elements tbody = container.select("tbody");
-                Elements tr = tbody.select("tr");
-
-
-
-                for(int i=0;i<tr.size();i++)
-                {
-                    String url = tr.get(i).attr("data-href").toString();
-                    String td_time = tr.get(i).select("td[class=event-time]").text();
-                    String td_team1 = tr.get(i).select("td[class=event-home]").text();
-                    String td_team2 = tr.get(i).select("td[class=event-away]").text();
-                    SportsModel sportsModel = new SportsModel();
-                    sportsModel.setTime(td_time);
-                    sportsModel.setTeam1(td_team1);
-                    sportsModel.setTeam2(td_team2);
-                    sportsModel.setUrl(url);
-                    sportsModelList.add(sportsModel);
-                }
-*/
-
-                return null;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -182,31 +252,63 @@ public class SportsActivityServer3 extends AppCompatActivity {
 
             mProgressDialog.dismiss();
 
+            if (previousurl == null || Category == true) {
 
-            mAdapter = new BindListSports3Adapter(sportsModelList, SportsActivityServer3.this, sportsModelUrlList);
-            // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SportsActivityServer3.this, 3);
-            recyclerView.setLayoutManager(mLayoutManager);
-            //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.invalidate();
-            recyclerView.setAdapter(mAdapter);
-            //ivNext.setVisibility(View.VISIBLE);
+                mAdapter = new BindListSports3Adapter(sportsModelList, SportsActivityServer3.this, sportsModelUrlList);
+                // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SportsActivityServer3.this, 3);
+                recyclerView.setLayoutManager(mLayoutManager);
+                //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.invalidate();
+                recyclerView.setAdapter(mAdapter);
+                //ivNext.setVisibility(View.VISIBLE);
 
-            try {
-                if (isNext == true) {
+                try {
+                    if (isNext == true) {
+                        ivPrev.setVisibility(View.VISIBLE);
+                    } else {
+                        ivPrev.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    ivPrev.setVisibility(View.GONE);
+                }
+                if (i != 0) {
+
                     ivPrev.setVisibility(View.VISIBLE);
                 } else {
                     ivPrev.setVisibility(View.GONE);
                 }
-            } catch (Exception e) {
-                ivPrev.setVisibility(View.GONE);
-            }
-            if (i != 0) {
 
-                ivPrev.setVisibility(View.VISIBLE);
+
             } else {
-                ivPrev.setVisibility(View.GONE);
+                mAdapter2 = new BindListSportsPlay3Adapter(sportsModelList, SportsActivityServer3.this, sportsModelUrlList);
+                // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SportsActivityServer3.this, 3);
+                recyclerView.setLayoutManager(mLayoutManager);
+                //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.invalidate();
+                recyclerView.setAdapter(mAdapter2);
+                //ivNext.setVisibility(View.VISIBLE);
+
+                try {
+                    if (isNext == true) {
+                        ivPrev.setVisibility(View.VISIBLE);
+                    } else {
+                        ivPrev.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    ivPrev.setVisibility(View.GONE);
+                }
+                if (i != 0) {
+
+                    ivPrev.setVisibility(View.VISIBLE);
+                } else {
+                    ivPrev.setVisibility(View.GONE);
+                }
+
+
             }
 
 
