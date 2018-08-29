@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,17 +21,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
-import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityCatServer4;
 
-public class BindListSeries4Adapter extends RecyclerView.Adapter<BindListSeries4Adapter.myview> {
+public class BindListSeries4SubAdapter extends RecyclerView.Adapter<BindListSeries4SubAdapter.myview> {
     private List<MoviesModel> movielistFiltered;
     private List<MoviesModel> moviesList;
     Context context;
@@ -42,7 +36,7 @@ public class BindListSeries4Adapter extends RecyclerView.Adapter<BindListSeries4
     String videoPath;
     private int itemposition;
     BindListAdapter adapter;
-    private ArrayList<MoviesModel> seriesList = new ArrayList<MoviesModel>();
+    private List<MoviesModel> seriesList = new ArrayList<>();
 
     public class myview extends RecyclerView.ViewHolder {
 
@@ -70,7 +64,7 @@ public class BindListSeries4Adapter extends RecyclerView.Adapter<BindListSeries4
         }
     }
 
-    public BindListSeries4Adapter(List<MoviesModel> moviesList, Context context) {
+    public BindListSeries4SubAdapter(List<MoviesModel> moviesList, Context context) {
         this.moviesList = moviesList;
         this.context = context;
         this.movielistFiltered = moviesList;
@@ -78,15 +72,15 @@ public class BindListSeries4Adapter extends RecyclerView.Adapter<BindListSeries4
 
     @NonNull
     @Override
-    public BindListSeries4Adapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindListSeries4SubAdapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gridview_list, parent, false);
 
-        return new myview(itemView);
+        return new BindListSeries4SubAdapter.myview(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindListSeries4Adapter.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull BindListSeries4SubAdapter.myview holder, final int position) {
 
         final MoviesModel movie = moviesList.get(position);
 
@@ -102,7 +96,6 @@ public class BindListSeries4Adapter extends RecyclerView.Adapter<BindListSeries4
             public void onClick(View v) {
                 itemposition = position;
                 new prepareMovieData().execute();
-
             }
         });
 
@@ -129,7 +122,7 @@ public class BindListSeries4Adapter extends RecyclerView.Adapter<BindListSeries4
 
                 Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
 
-                 Elements iframe = doc.getElementsByClass("float-left").first().getElementsByTag("iframe");
+                Elements iframe = doc.getElementsByClass("container").first().getElementsByTag("iframe");
                 String src = iframe.attr("src");
 
                 Log.e("body", src);
@@ -144,71 +137,11 @@ public class BindListSeries4Adapter extends RecyclerView.Adapter<BindListSeries4
 
         @Override
         protected void onPostExecute(Void result) {
-             /*Intent webIntent = new Intent(context, WebViewActivity.class);
+            Intent webIntent = new Intent(context, WebViewActivity.class);
             webIntent.putExtra("url", videoPath);
-            context.startActivity(webIntent);*/
-             new prepareSeriesData().execute();
+            context.startActivity(webIntent);
+
         }
     }
 
-
-    private class prepareSeriesData extends AsyncTask<Void, Void, Void> {
-        String desc;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-
-
-                Document doc = Jsoup.connect(videoPath).timeout(10000).maxBodySize(0).get();
-                Elements main = doc.select("nav[class=navbar navbar-fixed-top navbar-default second_nav]");
-                Elements ul = main.select("ul[class=nav navbar-nav]");
-                Elements li = ul.select("li");
-                seriesList.clear();
-                for(int i=0;i<li.size();i++)
-                {
-
-                    String url = li.get(i).select("a").attr("href");
-
-                    String episode = li.get(i).getElementsByTag("a").text();
-                    MoviesModel movie = new MoviesModel();
-
-                    movie.setUrl(url);
-                    movie.setTitle(episode);
-                    seriesList.add(movie);
-                }
-              /*  Elements iframe = doc.getElementsByClass("container").first().getElementsByTag("iframe");
-                String src = iframe.attr("src");
-
-
-
-                videoPath =  src;
-*/
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-           /*  Intent webIntent = new Intent(context, WebViewActivity.class);
-            webIntent.putExtra("url", videoPath);
-            context.startActivity(webIntent);*/
-
-            Intent sub = new Intent(context, SeriesActivityCatServer4.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("data", (Serializable) seriesList);
-            sub.putExtras(bundle);
-            context.startActivity(sub);
-
-
-        }
-    }
 }

@@ -1,6 +1,8 @@
 package evilkingmedia.cueserve.com.evilkingmedia.model;
 
-public class MoviesModel {
+import java.io.Serializable;
+
+public class MoviesModel implements Serializable{
 
     private String image;
     private String title;

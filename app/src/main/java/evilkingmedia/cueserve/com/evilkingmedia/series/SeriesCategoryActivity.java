@@ -27,7 +27,7 @@ public class SeriesCategoryActivity extends AppCompatActivity {
         rlMovies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SeriesCategoryActivity.this, SeriesActivityServer1.class);
+                Intent i = new Intent(SeriesCategoryActivity.this, SeriesActivityServer4.class);
                 startActivity(i);
             }
         });
@@ -50,7 +50,7 @@ public class SeriesCategoryActivity extends AppCompatActivity {
         rlMovies3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SeriesCategoryActivity.this, SeriesActivityServer4.class);
+                Intent i = new Intent(SeriesCategoryActivity.this, SeriesActivityServer1.class);
                 startActivity(i);
             }
         });

@@ -43,6 +43,7 @@
         >
 
         <LinearLayout
+            android:id="@+id/llsearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
