@@ -13,6 +13,15 @@ public class SportsModel implements Serializable{
     private String team2;
     private String title;
     private String currentUrl;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -98,6 +107,7 @@ public class SportsModel implements Serializable{
                 ", team2='" + team2 + '\'' +
                 ", title='" + title + '\'' +
                 ", currentUrl='" + currentUrl + '\'' +
+                ", id='" + id + '\'' +
                 '}';
     }
 }

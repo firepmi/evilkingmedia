@@ -21,11 +21,11 @@ import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer3;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.WebViewActivitySports3;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer5;
+import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
-public class BindListSports3Adapter extends RecyclerView.Adapter<BindListSports3Adapter.myview> {
+public class BindListSprtsWatchAdapter5 extends RecyclerView.Adapter<BindListSprtsWatchAdapter5.myview> {
     private List<SportsModel> sportsModelUrlList;
     private List<SportsModel> sportsModelList;
     Context context;
@@ -48,18 +48,15 @@ public class BindListSports3Adapter extends RecyclerView.Adapter<BindListSports3
             txtMovieTitle = view.findViewById(R.id.txtMovieTitle);
             txtMovieRating = view.findViewById(R.id.txtMovieRating);
             txtMovieYear = view.findViewById(R.id.txtMovieYear);
-            txtMovieYear.setTextSize(14);
             txtMovieDuration = view.findViewById(R.id.txtMovieDuration);
             view1 = view.findViewById(R.id.view1);
             view2 = view.findViewById(R.id.view2);
-            txtMovieRating.setVisibility(View.GONE);
-            txtMovieDuration.setVisibility(View.GONE);
             view1.setVisibility(View.GONE);
             view2.setVisibility(View.GONE);
         }
     }
 
-    public BindListSports3Adapter(List<SportsModel> sportsModelList, Context context, List<SportsModel> urlList) {
+    public BindListSprtsWatchAdapter5(List<SportsModel> sportsModelList, Context context, List<SportsModel> urlList) {
         this.sportsModelList = sportsModelList;
         this.context = context;
         this.sportsModelUrlList = urlList;
@@ -67,38 +64,53 @@ public class BindListSports3Adapter extends RecyclerView.Adapter<BindListSports3
 
     @NonNull
     @Override
-    public BindListSports3Adapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindListSprtsWatchAdapter5.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gridview_list, parent, false);
 
-        return new BindListSports3Adapter.myview(itemView);
+        return new BindListSprtsWatchAdapter5.myview(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final BindListSports3Adapter.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull final BindListSprtsWatchAdapter5.myview holder, final int position) {
 
         final SportsModel sportsModel = sportsModelList.get(position);
 
-        holder.txtMovieTitle.setText(sportsModel.getTime());
-        holder.txtMovieYear.setText(sportsModel.getTitle());
+        holder.txtMovieTitle.setText(sportsModel.getTeam1());
+        holder.txtMovieRating.setText(sportsModel.getTitle());
 
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemposition = position;
-                Intent i = new Intent(context, SportsActivityServer3.class);
+               /* Intent i = new Intent(context, SportsActivityServer5.class);
                 i.putExtra("url", sportsModelList.get(position).getUrl());
-                i.putExtra("categoryid", sportsModelList.get(position).getId());
                 i.putExtra("position", itemposition + 1);
-                context.startActivity(i);
-                //new prepareSportsData().execute();
+                context.startActivity(i);*/
+                new prepareSportsUrl(Constant.SPORTSURL5+sportsModelList.get(position).getUrl()).execute();
+            /*    Intent webIntent = new Intent(context, WebViewActivity.class);
+                webIntent.putExtra("url", Constant.SPORTSURL5+sportsModelList.get(position).getUrl());
+                context.startActivity(webIntent);*/
+
             }
         });
 
     }
 
-    private class prepareSportsData extends AsyncTask<Void, Void, Void> {
-        String desc;
+    @Override
+    public int getItemCount() {
+        return sportsModelList.size();
+    }
+
+    private class prepareSportsUrl extends AsyncTask<String, Void, Void> {
+        String mainurl;
+        String urldata;
+        boolean streaming = false;
+        public prepareSportsUrl(String mainurl) {
+
+            this.mainurl = mainurl;
+        }
+
 
         @Override
         protected void onPreExecute() {
@@ -107,36 +119,43 @@ public class BindListSports3Adapter extends RecyclerView.Adapter<BindListSports3
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(String... strings) {
+
+            //Movie1
             try {
 
-                String url = Constant.SPORTSURL3 + "/" + sportsModelList.get(itemposition).getUrl();
 
-                Document doc = Jsoup.connect(url).timeout(10000).maxBodySize(0).get();
+                Document doc  = Jsoup.connect(mainurl).timeout(10000).get();
+                //For Categories
+                Elements container = doc.select("div[class=container]");
+                Elements div = container.select("div[class=embed-responsive embed-responsive-16by9]");
+                Elements iframe = div.select("iframe[class=embed-responsive-item]");
+                urldata= iframe.attr("src");
 
-                Elements data = doc.select("tr[class=sectiontableentry2]").first().getElementsByTag("td").select("a");
-                videoPath = data.attr("href");
-                // System.out.print(data);
 
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
             return null;
         }
-
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute (Void result){
+            // Set description into TextView
 
-            Intent webIntent = new Intent(context, WebViewActivitySports3.class);
-            webIntent.putExtra("url", videoPath);
+            Intent webIntent = new Intent(context, WebViewActivity.class);
+            webIntent.putExtra("url", Constant.SPORTSURL5+urldata);
             context.startActivity(webIntent);
-        }
-    }
 
-    @Override
-    public int getItemCount() {
-        return sportsModelList.size();
+
+
+
+
+
+        }
+
     }
 
 }

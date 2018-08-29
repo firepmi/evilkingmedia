@@ -33,7 +33,7 @@ public class Constant {
     public static String SPORTSURL2 = "https://streamingsports.me/";
     //public static String EPGURL = "https://www.sorrisi.com/guidatv/canali-tv/";
     public static String EPGURL = "http://guidatv.quotidiano.net/";
-    public static String SPORTSURL3 = "http://www.jokerlivestream.com/";
+    public static String SPORTSURL3 = "http://www.sportcategory.com/webmasters/webmaster_iframe.php";
     public static String SPORTSURL4 = "http://www.rojadiracta.me/";
     public static String SPORTSURL5 = "http://toplive.info/";
 

@@ -31,8 +31,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
-
-
+import evilkingmedia.cueserve.com.evilkingmedia.series.WebViewActivitySeries2;
 
 
 public class BindListSeriesCat2Adapter extends RecyclerView.Adapter<BindListSeriesCat2Adapter.myview> {
@@ -150,7 +149,7 @@ public class BindListSeriesCat2Adapter extends RecyclerView.Adapter<BindListSeri
 
         @Override
         protected void onPostExecute(Void result) {
-            Intent webIntent = new Intent(context, WebViewActivity.class);
+            Intent webIntent = new Intent(context, WebViewActivityServer3.class);
             webIntent.putExtra("url", videoPath);
             context.startActivity(webIntent);
         }

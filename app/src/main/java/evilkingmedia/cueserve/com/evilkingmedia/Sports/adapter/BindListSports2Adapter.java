@@ -2,12 +2,11 @@ package evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +18,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityCatServer1;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer2;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
 public class BindListSports2Adapter extends RecyclerView.Adapter<BindListSports2Adapter.myview>  {
@@ -94,6 +91,7 @@ public class myview extends RecyclerView.ViewHolder {
 private class prepareSportsUrl extends AsyncTask<String, Void, Void> {
     String mainurl;
     String urldata;
+    String url;
     boolean streaming = false;
     public prepareSportsUrl(String mainurl) {
 
@@ -111,23 +109,34 @@ private class prepareSportsUrl extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... strings) {
 
         //Movie1
+        StringBuilder myName = new StringBuilder(mainurl);
+        myName.setCharAt(0, ' ');
+        url = Constant.SPORTSURL2 + myName;
+        Document doc = null;
         try {
-            StringBuilder myName = new StringBuilder(mainurl);
-            myName.setCharAt(0, ' ');
-            String url = Constant.SPORTSURL2+myName;
-            Document doc  = Jsoup.connect(url).timeout(10000).get();
-            //For Categories
+            doc = Jsoup.connect(url).timeout(10000).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //For Categories
             Elements container = doc.select("div[class=container mtb]");
             Elements table = container.select("table[class=table table-striped]");
-            Elements td = table.select("td[class=event-watch]");
-            String a = td.select("a").attr("href");
+            for(int i = 0 ;i<table.size();i++){
+                if(i==table.size() - 1){
+                    Elements td = table.get(i).select("td[class=event-watch]");
+                    Log.e("column data", td + "");
+                    String a = td.select("a").attr("href");
+                    streaming = true;
+                    if(a == null || a.isEmpty())
+                    {
+                        streaming = false;
+                        urldata = table.get(i).select("td").text();
+                    }
+                }
 
-            if(a == null || a.isEmpty())
-            {
-                streaming = false;
-                urldata = table.select("td").text();
             }
-            else
+
+          /*  else
             {
                 streaming = true;
                 Elements mElementUrl = td.select("a");
@@ -141,13 +150,8 @@ private class prepareSportsUrl extends AsyncTask<String, Void, Void> {
                 else
                 {
                     urldata = data;
-                }
-
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                }*/
+        //}
 
 
         return null;
@@ -155,7 +159,16 @@ private class prepareSportsUrl extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPostExecute (Void result){
         // Set description into TextView
-        if(streaming) {
+
+        if (streaming == false) {
+            Toast.makeText(context, urldata, Toast.LENGTH_LONG).show();
+        } else {
+            Intent i = new Intent(context, SportsActivityServer2.class);
+            i.putExtra("url", url);
+            context.startActivity(i);
+        }
+
+        /*if(streaming) {
             Intent webIntent = new Intent(context, WebViewActivity.class);
             String SpilString = urldata;
             String[] separated = urldata.split(",");
@@ -163,15 +176,13 @@ private class prepareSportsUrl extends AsyncTask<String, Void, Void> {
                 System.out.println("item = " + item);
             }
             urldata = separated[0];
-            //"https://www.youtube.com/embed/yfOTGQNZSOY?autoplay=1"
-            //http://www.youtube.com/embed/yfOTGQNZSOY?autoplay=1
             webIntent.putExtra("url", urldata);
             context.startActivity(webIntent);
         }
         else
         {
             Toast.makeText(context,urldata,Toast.LENGTH_LONG).show();
-        }
+        }*/
 
 
 

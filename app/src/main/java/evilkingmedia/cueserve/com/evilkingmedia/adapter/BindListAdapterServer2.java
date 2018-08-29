@@ -155,7 +155,7 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
         @Override
         protected void onPostExecute(Void result) {
 
-            Intent webIntent = new Intent(context, WebViewActivityServer3.class);
+            Intent webIntent = new Intent(context, BindListAdapterMovie2.class);
             webIntent.putExtra("url", videoPath);
             context.startActivity(webIntent);
         }

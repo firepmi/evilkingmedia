@@ -60,6 +60,7 @@ public class SportsActivityCatServer1 extends AppCompatActivity {
         for(int i=0;i<sportsModelUrlList.size();i++)
         {
             int category = Integer.parseInt(sportsModelUrlList.get(i).getCategory());
+
             if(category == pos)
             {
 

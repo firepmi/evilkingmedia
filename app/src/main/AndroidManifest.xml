@@ -193,9 +193,20 @@
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme" />
         <activity android:name=".Ebbok.EbbokActivity" />
-        <activity android:name=".Sports.WebViewActivitySports3"
+        <activity
+            android:name=".Sports.WebViewActivitySports3"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"></activity>
+            android:theme="@style/MyTheme" />
+        <activity android:name=".series.WebViewActivitySeries2"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" ></activity>
+
+        <activity android:name=".adapter.BindListAdapterMovie2"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" ></activity>
+
+
+        BindListAdapterMovie2
     </application>
 
 </manifest>

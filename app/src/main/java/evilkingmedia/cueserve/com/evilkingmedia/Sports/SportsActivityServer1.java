@@ -16,18 +16,10 @@ import android.widget.LinearLayout;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-
-import java.net.Proxy;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -127,25 +119,40 @@ public class SportsActivityServer1 extends AppCompatActivity {
                 {
                     Elements span = p.get(i).select("span");
 
+                    System.out.print(span);
+
                     Elements a = p.get(i).select("a");
-                    for(int j=0 ; j<span.size();j++)
+                    for (int j = 0; j < span.size(); j++)
                     {
-
-
-
-                        Node node = span.get(j).nextSibling();
-                        Log.e("Node",node.toString());
-                        String team = node.toString().replaceAll("&nbsp;","");
-                        Elements mElementUrl = a.get(j).select("a");
-                        String url = mElementUrl.attr("href");
-                        String category = String.valueOf(i);
-                        String channel = mElementUrl.text();
+                        String team = null, url = null, category = null, channel = null;
                         SportsModel sportsModelUrl = new SportsModel();
+                        //Log.e("data", a.get(j).attr("href"));
+
+                       // if (j <= 5) {
+                            Node node = span.get(j).nextSibling();
+                            Log.e("Node", node.toString());
+                            team = node.toString().replaceAll("&nbsp;", "");
+                            Elements mElementUrl = a.get(j).select("a");
+                            url = mElementUrl.attr("href");
+                            category = String.valueOf(i);
+                            channel = mElementUrl.text();
+
+                        //}
+                        /*else{
+                            Elements mElementUrl = a.get(j).select("a");
+                            url = mElementUrl.attr("href");
+                            category = String.valueOf(i);
+
+
+                        }*/
+
                         sportsModelUrl.setCategory(category);
                         sportsModelUrl.setUrl(url);
                         sportsModelUrl.setChannel(channel);
                         sportsModelUrl.setTeam1(team);
                         sportsModelUrlList.add(sportsModelUrl);
+
+
                     }
 
                 }

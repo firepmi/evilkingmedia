@@ -18,7 +18,7 @@ public class MusicActivityCategory extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_film_category);
+        setContentView(R.layout.activity_music_category);
 
         rlMovies = findViewById(R.id.rlMovies);
         rlMovies1 = findViewById(R.id.rlMovies1);

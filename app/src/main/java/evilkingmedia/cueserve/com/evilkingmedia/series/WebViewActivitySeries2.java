@@ -1,4 +1,4 @@
-package evilkingmedia.cueserve.com.evilkingmedia.film;
+package evilkingmedia.cueserve.com.evilkingmedia.series;
 
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
@@ -12,7 +12,7 @@ import android.webkit.WebViewClient;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 
-public class WebViewActivity extends AppCompatActivity {
+public class WebViewActivitySeries2 extends AppCompatActivity {
     String videoPath;
     private ProgressDialog mProgress;
 
@@ -23,7 +23,7 @@ public class WebViewActivity extends AppCompatActivity {
         int i = 0;
         videoPath = getIntent().getStringExtra("url");
         final WebView webView = findViewById(R.id.web_view);
-        mProgress = new ProgressDialog(WebViewActivity.this);
+        mProgress = new ProgressDialog(WebViewActivitySeries2.this);
 
       /*  webView.setVideoURI(Uri.parse(videoPath));
         webView.setBufferSize(2048);
@@ -47,15 +47,7 @@ public class WebViewActivity extends AppCompatActivity {
 
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-
-                // do your handling codes here, which url is the requested url
-                // probably you need to open that url rather than redirect:
-                if (url.contains(videoPath)) {
                     view.loadUrl(url);
-                }
-                else if(url.contains("episode") || url.contains("Stagioni") ){
-                    view.loadUrl(url);
-                }
 
                 return true; // then it is not handled by default action
             }

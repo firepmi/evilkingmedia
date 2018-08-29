@@ -44,7 +44,7 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/live" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/live" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -112,7 +112,7 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/live" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,7 +146,7 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/live" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -180,7 +180,7 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/live" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -214,7 +214,7 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/live" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -248,7 +248,7 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/live" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -282,7 +282,7 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/live" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -316,7 +316,7 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/live" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -350,7 +350,7 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/live" />
 
             <TextView
                 android:layout_width="wrap_content"

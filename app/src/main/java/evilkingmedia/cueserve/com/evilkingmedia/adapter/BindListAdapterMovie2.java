@@ -1,4 +1,4 @@
-package evilkingmedia.cueserve.com.evilkingmedia.film;
+package evilkingmedia.cueserve.com.evilkingmedia.adapter;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import android.webkit.WebViewClient;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 
-public class WebViewActivityServer3 extends AppCompatActivity {
+public class BindListAdapterMovie2 extends AppCompatActivity {
     String videoPath;
     private ProgressDialog mProgress;
 
@@ -25,7 +25,7 @@ public class WebViewActivityServer3 extends AppCompatActivity {
         videoPath = getIntent().getStringExtra("url");
         WebView webView = findViewById(R.id.web_view);
 
-        mProgress = new ProgressDialog(WebViewActivityServer3.this);
+        mProgress = new ProgressDialog(BindListAdapterMovie2.this);
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -36,7 +36,7 @@ public class WebViewActivityServer3 extends AppCompatActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-                if (i == 0) {
+                if (i == 0 || i ==1) {
                     videoPath = url;
                     i++;
                 }

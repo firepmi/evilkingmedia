@@ -15,7 +15,7 @@ public class SportsCategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_film_category);
+        setContentView(R.layout.activity_sports_category);
 
         rlSports = findViewById(R.id.rlMovies);
         rlSports1 = findViewById(R.id.rlMovies1);
