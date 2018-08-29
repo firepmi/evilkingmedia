@@ -39,31 +39,23 @@
         android:layout_below="@+id/categories"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/ll_search"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite">
 
-            <EditText
-                android:id="@+id/etMoviname"
+            <android.support.v7.widget.SearchView
+                android:id="@+id/searchView"
                 android:layout_width="match_parent"
-                android:layout_height="37dp"
-                android:layout_marginTop="5px"
-                android:layout_weight="1"
-                android:background="@color/colorWhite"
-                android:drawableLeft="@drawable/ic_search"
+                android:layout_height="wrap_content"
+                android:iconifiedByDefault="false"
+                android:queryHint="Search"
+                android:layout_centerHorizontal="true"
                 android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="Search your favourite movies" />
+                android:focusableInTouchMode="false"/>
 
-            <Button
-                android:id="@+id/btnMoviname"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:text="Search"
-                android:textAllCaps="false" />
-
-        </LinearLayout>
+        </android.support.v7.widget.Toolbar>
 
         <!--<android.support.v7.widget.SearchView
             android:id="@+id/search"

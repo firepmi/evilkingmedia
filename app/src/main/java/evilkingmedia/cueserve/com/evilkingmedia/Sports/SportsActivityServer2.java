@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -44,13 +46,15 @@ public class SportsActivityServer2 extends AppCompatActivity   {
     private ArrayList<String> timeArrayList = new ArrayList<>();
     private Map<String, String> urlStringMap = new HashMap<String, String>();
     private ProgressDialog mProgressDialog;
+
     private ImageView ivNext,ivPrev, ivUp, ivDown;
     private LinearLayout ll_search,ll_categories;
     private Button btnhome, btncategory;
     Boolean isNext, streaming;
     int i = 0;
     private String nexturl, urldata,category;
-
+    android.support.v7.widget.SearchView search;
+    SearchView searchview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,10 +74,20 @@ public class SportsActivityServer2 extends AppCompatActivity   {
         isNext = false;
         ivNext.setVisibility(View.GONE);
         ivPrev.setVisibility(View.GONE);
-        ll_search.setVisibility(View.GONE);
 
         category = getIntent().getStringExtra("category");
         nexturl = getIntent().getStringExtra("url");
+        searchview = findViewById(R.id.searchView);
+
+        searchview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                searchview.setFocusable(true);
+                searchview.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
 
         ivNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +124,20 @@ public class SportsActivityServer2 extends AppCompatActivity   {
 
                 Intent i = new Intent(SportsActivityServer2.this, SportsCategoryActivityServer2.class);
                 startActivity(i);
+            }
+        });
+
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                mAdapter.getFilter().filter(query);
+                return false;
             }
         });
     }

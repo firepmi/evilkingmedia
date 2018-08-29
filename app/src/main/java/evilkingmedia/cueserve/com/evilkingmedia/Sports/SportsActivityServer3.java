@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -43,6 +45,7 @@ public class SportsActivityServer3 extends AppCompatActivity {
     private ArrayList<String> timeArrayList = new ArrayList<>();
     private Map<String, String> urlStringMap = new HashMap<String, String>();
     private ProgressDialog mProgressDialog;
+    android.support.v7.widget.SearchView search;
     private ImageView ivNext, ivPrev, ivUp, ivDown;
     private LinearLayout ll_search, ll_categories;
     Boolean isNext, Category = false;
@@ -50,7 +53,7 @@ public class SportsActivityServer3 extends AppCompatActivity {
     int i = 0, position;
     private String previousurl, selectedid, categoryid;
     Button btnhome, btncategory;
-
+    SearchView searchview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,11 +125,36 @@ public class SportsActivityServer3 extends AppCompatActivity {
                 new prepareSportsData(Constant.SPORTSURL3).execute();
             }
         });
+        searchview = findViewById(R.id.searchView);
+
+        searchview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                searchview.setFocusable(true);
+                searchview.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
         if (previousurl == null) {
             new prepareSportsData(Constant.SPORTSURL3).execute();
         } else {
             new prepareSportsData(previousurl).execute();
         }
+
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+        });
 
 
     }

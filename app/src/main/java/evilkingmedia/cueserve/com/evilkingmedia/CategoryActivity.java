@@ -10,7 +10,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -20,7 +19,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import evilkingmedia.cueserve.com.evilkingmedia.EPG.EPGActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.Ebbok.EbbokActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.Livetv.LiveActivityCategory;
 import evilkingmedia.cueserve.com.evilkingmedia.Meteo.MeteoActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.Musica.MusicActivityCategory;
@@ -30,7 +28,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesCategoryActivity;
 
 public class CategoryActivity extends AppCompatActivity {
 
-    private TextView txtemail,txtBottom,txt_dt_time,txtlogout;
+    private TextView txtemail, txtBottom, txt_dt_time, txtlogout, txtsetting;
     private LinearLayout rlMovies, rlSeries, rlSports, rlMusic, rlMeteo, rlepg, rllive, rlebook;
 
     @Override
@@ -55,6 +53,7 @@ public class CategoryActivity extends AppCompatActivity {
         txt_dt_time = findViewById(R.id.dt_time);
         txtemail = findViewById(R.id.txtemail);
         txtlogout = findViewById(R.id.txtlogout);
+        txtsetting = findViewById(R.id.txtsetting);
 
         txtemail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +63,13 @@ public class CategoryActivity extends AppCompatActivity {
               //  emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Support");
              //   emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
+            }
+        });
+
+        txtsetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=co.wuffy.player")));
             }
         });
 
