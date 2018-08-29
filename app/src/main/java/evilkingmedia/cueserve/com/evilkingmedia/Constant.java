@@ -53,6 +53,7 @@ public class Constant {
     public static  String LIVETV9 = "http://supermyspace.xyz/EKM/ekm9.m3u";
     public static  String LIVETV10 = "http://supermyspace.xyz/EKM/ekm10.m3u";
 
-
     public static String METEOURL = "http://supermyspace.xyz/LISTE/meteoevil.m3u";
+
+    public static boolean isCategory = false;
 }

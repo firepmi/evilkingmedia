@@ -38,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
+import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListAdapter4UrlAdapter;
 import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListSeries4Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
@@ -45,6 +46,7 @@ public class SeriesActivityServer4 extends AppCompatActivity {
     private LinearLayout linearCategory;
     private RecyclerView recyclerView;
     private BindListSeries4Adapter mAdapter;
+    private BindListAdapter4UrlAdapter mAdapter1;
     private List<MoviesModel> movieList = new ArrayList<>();
     private List<MoviesModel> movieurlList = new ArrayList<>();
     private ProgressDialog mProgressDialog;
@@ -54,7 +56,7 @@ public class SeriesActivityServer4 extends AppCompatActivity {
     String Pageurl;
     ArrayList<String> arrayList = new ArrayList<>();
     private int elementsize;
-    Boolean isPrev, isNext, isSearch = false, isNextSearch = false, isMovieita = false;
+    Boolean isPrev, isNext, isSearch = false, isNextSearch = false, isMovieita = false,iscategory=false;
     int corePoolSize = 60;
     String Currenturl;
     Boolean pageavl = false;
@@ -156,6 +158,7 @@ public class SeriesActivityServer4 extends AppCompatActivity {
                 isMovieita = false;
                 i = 0;
                 etMoviename.setText("");
+                Constant.isCategory = false;
             }
         });
 
@@ -168,6 +171,7 @@ public class SeriesActivityServer4 extends AppCompatActivity {
                 isMovieita = false;
                 i = 0;
                 etMoviename.setText("");
+                Constant.isCategory = true;
             }
         });
 
@@ -281,16 +285,27 @@ public class SeriesActivityServer4 extends AppCompatActivity {
                     ivPrev.setVisibility(View.GONE);
                 }
             } else {
-                mAdapter = new BindListSeries4Adapter(movieList, SeriesActivityServer4.this);
-                // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer4.this, 3);
-                recyclerView.setLayoutManager(mLayoutManager);
-                //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(mAdapter);
-                //ivNext.setVisibility(View.VISIBLE);
+                if(Constant.isCategory) {
+                    mAdapter1 = new BindListAdapter4UrlAdapter(movieList, SeriesActivityServer4.this);
+                    // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer4.this, 3);
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerView.setAdapter(mAdapter1);
+                    //ivNext.setVisibility(View.VISIBLE);
 
-
+                }
+                else
+                {
+                    mAdapter = new BindListSeries4Adapter(movieList, SeriesActivityServer4.this);
+                    // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer4.this, 3);
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerView.setAdapter(mAdapter);
+                }
                 try {
                     if (isNext == true) {
                         ivPrev.setVisibility(View.VISIBLE);
