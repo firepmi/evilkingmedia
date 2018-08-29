@@ -337,7 +337,7 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             app:cardBackgroundColor="@color/colorRed"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="@dimen/_10sdp"
             android:layout_below="@+id/seriesCardView"
             android:layout_toRightOf="@+id/livetvCardView">
 
@@ -369,7 +369,7 @@
             android:id="@+id/catchUpCardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.8"
+            android:layout_weight="1.75"
             android:layout_marginRight="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_10sdp"
