@@ -10,6 +10,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 
 public class WebViewActivity extends AppCompatActivity {
@@ -133,5 +134,9 @@ public class WebViewActivity extends AppCompatActivity {
         videoView.start();*/
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Constant.isCategory = false;
+        super.onBackPressed();
+    }
 }

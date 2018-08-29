@@ -147,10 +147,8 @@ public class BindListSeries4Adapter extends RecyclerView.Adapter<BindListSeries4
              /*Intent webIntent = new Intent(context, WebViewActivity.class);
             webIntent.putExtra("url", videoPath);
             context.startActivity(webIntent);*/
-             //new prepareSeriesData().execute();
-            Intent webIntent = new Intent(context, WebViewActivity.class);
-            webIntent.putExtra("url", videoPath);
-            context.startActivity(webIntent);
+             new prepareSeriesData().execute();
+
         }
     }
 

@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
@@ -89,7 +90,7 @@ public class BindListAdapter4UrlAdapter extends RecyclerView.Adapter<BindListAda
         } else {
             Picasso.with(context).load(movie.getImage()).into(holder.imgcontent);
         }
-
+        Constant.isCategory=false;
         holder.txtMovieTitle.setText(movie.getTitle());
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override

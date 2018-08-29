@@ -10,6 +10,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -56,7 +57,7 @@ public class SeriesActivityServer4 extends AppCompatActivity {
     String Pageurl;
     ArrayList<String> arrayList = new ArrayList<>();
     private int elementsize;
-    Boolean isPrev, isNext, isSearch = false, isNextSearch = false, isMovieita = false,iscategory=false;
+    Boolean isPrev, isNext, isSearch = false, isNextSearch = false, isMovieita = false;
     int corePoolSize = 60;
     String Currenturl;
     Boolean pageavl = false;
@@ -674,6 +675,12 @@ public class SeriesActivityServer4 extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Constant.isCategory = false;
+        super.onBackPressed();
     }
 
 
