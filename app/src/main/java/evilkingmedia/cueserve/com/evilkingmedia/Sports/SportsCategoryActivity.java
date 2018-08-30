@@ -10,7 +10,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.R;
 
 public class SportsCategoryActivity extends AppCompatActivity {
 
-    LinearLayout rlSports, rlSports1, r2Sports2, r3Sports3, r4Movies4;
+    LinearLayout rlSports, rlSports1, r2Sports2, r3Sports3, rlEpg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +21,12 @@ public class SportsCategoryActivity extends AppCompatActivity {
         rlSports1 = findViewById(R.id.rlMovies1);
         r2Sports2 = findViewById(R.id.rlMovies2);
         r3Sports3 = findViewById(R.id.rlMovies3);
-        r4Movies4 = findViewById(R.id.rlMovies4);
+        rlEpg = findViewById(R.id.rlEpg);
 
         rlSports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SportsCategoryActivity.this, SportsActivityServer1.class);
+                Intent i = new Intent(SportsCategoryActivity.this, SportsActivityServer5.class);
                 startActivity(i);
             }
         });
@@ -34,7 +34,7 @@ public class SportsCategoryActivity extends AppCompatActivity {
         rlSports1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SportsCategoryActivity.this, SportsActivityServer2.class);
+                Intent i = new Intent(SportsCategoryActivity.this, SportsActivityServer1.class);
                 startActivity(i);
             }
         });
@@ -50,15 +50,15 @@ public class SportsCategoryActivity extends AppCompatActivity {
         r3Sports3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SportsCategoryActivity.this, SportsActivityServer4.class);
+                Intent i = new Intent(SportsCategoryActivity.this, SportsActivityServer2.class);
                 startActivity(i);
             }
         });
 
-        r4Movies4.setOnClickListener(new View.OnClickListener() {
+        rlEpg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SportsCategoryActivity.this, SportsActivityServer5.class);
+                Intent i = new Intent(SportsCategoryActivity.this, SportsActivityEPG.class);
                 startActivity(i);
             }
         });
