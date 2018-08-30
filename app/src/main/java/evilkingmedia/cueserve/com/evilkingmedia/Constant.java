@@ -36,7 +36,7 @@ public class Constant {
     public static String SPORTSURL3 = "http://www.sportcategory.com/webmasters/webmaster_iframe.php";
     public static String SPORTSURL4 = "http://www.rojadiracta.me/";
     public static String SPORTSURL5 = "http://toplive.info/";
-    public static String SPORTSEPGURL = "https://sporteventz.com/";
+    public static String SPORTSEPGURL = "https://www.diretta.it/";
 
     public static String MUSICURL1 = "https://pastebin.com/raw/PUJb9caE/.m3u";
     public static String MUSICURL2 = "http://supermyspace.xyz/LISTE/canalimusicalidoc.m3u";

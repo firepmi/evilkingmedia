@@ -7,13 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -22,13 +23,14 @@ import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSports1Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.SportsEPGAdapter;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
 public class SportsActivityEPG extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SportsEPGAdapter mAdapter;
+    private LinearLayout categories, ll_search;
+    private RelativeLayout rlnext;
     private ProgressDialog mProgressDialog;
     private List<SportsModel> sportsModelList = new ArrayList<>();
     String url ;
@@ -40,8 +42,15 @@ public class SportsActivityEPG extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_film);
         recyclerView = findViewById(R.id.recyclerview);
+        categories = findViewById(R.id.categories);
+        ll_search = findViewById(R.id.ll_search);
+        rlnext = findViewById(R.id.rlnext);
+        rlnext.setVisibility(View.GONE);
+        categories.setVisibility(View.GONE);
+        ll_search.setVisibility(View.GONE);
         if(getIntent().hasExtra("url")) {
             url = getIntent().getStringExtra("url");
+            url = "https://sporteventz.com" + url;
         }
         new prepareSportsData().execute();
     }
@@ -102,7 +111,7 @@ public class SportsActivityEPG extends AppCompatActivity {
                     System.out.print(doc);
 
 
-                    //For Categories
+                   /* //For Categories
                     Elements container = doc.select("div[class=jtable-main-container]");
                     Elements content = container.select("table[class=jtable]");
                     Elements li = content.select("li");
@@ -121,7 +130,7 @@ public class SportsActivityEPG extends AppCompatActivity {
                         sportsModelList.add(sportsModelUrl);
 
 
-                    }
+                    }*/
 
                     return null;
                 } catch (IOException e) {

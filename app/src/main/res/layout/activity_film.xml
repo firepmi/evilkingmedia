@@ -138,7 +138,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:id="@+id/rlnext">
 
         <ImageView
             android:id="@+id/ivNext"
