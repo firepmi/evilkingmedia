@@ -28,7 +28,6 @@ import java.util.Map;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSports2Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.adapter.BindListSportsCategory2Adapter;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
@@ -113,20 +112,25 @@ public class SportsCategoryActivityServer2 extends AppCompatActivity {
                 // Connect to the web site
                 Document doc = Jsoup.connect(url).timeout(10000).get();
 
-                SportsModel moviesurl = new SportsModel();
-                moviesurl.setCurrentUrl(url);
-                movieurlList.add(moviesurl);
-                //For Categories
-                Elements container = doc.getElementsByClass("navbar-collapse collapse navbar-right").select("li[class=menu]");
-                for (int i = 0; i < container.size(); i++) {
+                try {
 
-                    String title = container.get(i).getElementsByTag("a").text();
-                    String url = container.get(i).getElementsByTag("a").attr("href");
-                    Log.e("data", title + " " + url);
-                    SportsModel sports = new SportsModel();
-                    sports.setTitle(title);
-                    sports.setUrl(url);
-                    sportsModelList.add(sports);
+                    SportsModel moviesurl = new SportsModel();
+                    moviesurl.setCurrentUrl(url);
+                    movieurlList.add(moviesurl);
+                    //For Categories
+                    Elements container = doc.getElementsByClass("navbar-collapse collapse navbar-right").select("li[class=menu]");
+                    for (int i = 0; i < container.size(); i++) {
+
+                        String title = container.get(i).getElementsByTag("a").text();
+                        String url = container.get(i).getElementsByTag("a").attr("href");
+                        Log.e("data", title + " " + url);
+                        SportsModel sports = new SportsModel();
+                        sports.setTitle(title);
+                        sports.setUrl(url);
+                        sportsModelList.add(sports);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
 

@@ -123,13 +123,17 @@ public class BindListAdapter4UrlAdapter extends RecyclerView.Adapter<BindListAda
 
 
                 Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
+                try {
 
-                Elements iframe = doc.getElementsByClass("float-left").first().getElementsByTag("iframe");
-                String src = iframe.attr("src");
+                    Elements iframe = doc.getElementsByClass("float-left").first().getElementsByTag("iframe");
+                    String src = iframe.attr("src");
 
-                Log.e("body", src);
+                    Log.e("body", src);
 
-                videoPath =  src;
+                    videoPath = src;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();

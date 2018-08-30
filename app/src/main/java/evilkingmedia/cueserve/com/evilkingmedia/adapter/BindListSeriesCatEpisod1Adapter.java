@@ -117,7 +117,7 @@ public class BindListSeriesCatEpisod1Adapter extends RecyclerView.Adapter<BindLi
 
     private class prepareMovieData extends AsyncTask<Void, Void, Void> {
         String desc;
-
+        String fullurl;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -128,8 +128,9 @@ public class BindListSeriesCatEpisod1Adapter extends RecyclerView.Adapter<BindLi
         protected Void doInBackground(Void... params) {
             try {
 
+                fullurl = "http://hdpass.net/" + moviesList.get(itemposition).getUrl();
 
-                Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
+                Document doc = Jsoup.connect(fullurl).timeout(10000).maxBodySize(0).get();
 
 
                 Elements iframe = doc.getElementsByTag("iframe");
@@ -147,7 +148,7 @@ public class BindListSeriesCatEpisod1Adapter extends RecyclerView.Adapter<BindLi
         @Override
         protected void onPostExecute(Void result) {
             Intent i = new Intent(context, SeriesActivityEpisodServer1.class);
-            i.putExtra("url", videoPath);
+            i.putExtra("url", fullurl);
             context.startActivity(i);
         }
     }

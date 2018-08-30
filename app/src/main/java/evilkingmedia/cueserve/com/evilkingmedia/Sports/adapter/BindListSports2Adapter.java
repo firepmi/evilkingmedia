@@ -26,7 +26,6 @@ import java.util.List;
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer2;
-import evilkingmedia.cueserve.com.evilkingmedia.model.MeteoModel;
 import evilkingmedia.cueserve.com.evilkingmedia.model.SportsModel;
 
 public class BindListSports2Adapter extends RecyclerView.Adapter<BindListSports2Adapter.myview> implements Filterable {
@@ -197,36 +196,40 @@ private class prepareSportsUrl extends AsyncTask<String, Void, Void> {
 
     @Override
     public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
 
-                if (charString.equals("")) {
-                    sportsModelList = sportsModelUrlList;
-                } else {
-                    List<SportsModel> filteredList = new ArrayList<>();
-                    for (SportsModel row : sportsModelList) {
-                        if (row.getTeam1().toLowerCase().contains(charString.toLowerCase()) || row.getTeam2().toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(row);
+            return new Filter() {
+
+                @Override
+                protected FilterResults performFiltering(CharSequence charSequence) {
+                    String charString = charSequence.toString();
+
+
+                    if (charString.equals("")) {
+                        sportsModelList = sportsModelUrlList;
+                    } else {
+                        List<SportsModel> filteredList = new ArrayList<>();
+                        for (SportsModel row : sportsModelList) {
+                            if (row.getTeam1().toLowerCase().contains(charString.toLowerCase()) || row.getTeam2().toLowerCase().contains(charString.toLowerCase())) {
+                                filteredList.add(row);
+                            }
                         }
+
+                        sportsModelList = filteredList;
                     }
 
-                    sportsModelList = filteredList;
+                    FilterResults filterResults = new FilterResults();
+                    filterResults.values = sportsModelList;
+                    return filterResults;
+
                 }
 
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = sportsModelList;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                sportsModelList = (ArrayList<SportsModel>) filterResults.values;
-                notifyDataSetChanged();
+                @Override
+                protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                    sportsModelList = (ArrayList<SportsModel>) filterResults.values;
+                    notifyDataSetChanged();
 
 
-            }
-        };
+                }
+            };
     }
 }

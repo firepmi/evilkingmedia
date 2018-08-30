@@ -20,11 +20,11 @@ public class Constant {
     public static String MOVIEURL4 = "https://ilgeniodellostreaming.eu/film/";
     public static String MOVIESERACH4 = "https://ilgeniodellostreaming.eu/";
     public static String MOVIEURL4_SUBITA = "https://ilgeniodellostreaming.eu/genere/sub-ita/";
-    public static String SERIESURL1 = "http://www.seriehd.me/";
+    public static String SERIESURL1 = "http://www.seriehd.me/"; //for server4
     public static String SERIESURL1_SUB = "http://www.seriehd.me/serie-tv-streaming/";
     public static String SERIESURL2 = "https://streaminghd.fun/serietv/";
     public static String SERIESURL3 = "https://ilgeniodellostreaming.eu/serietv/";
-    public static String SERIESURL4 = "https://www.filmsenzalimiti.info/serie-tv/";
+    public static String SERIESURL4 = "https://www.filmsenzalimiti.info/serie-tv/";   //for server1
     public static String SERIESURL4_search = "https://www.filmsenzalimiti.info/";
     public static String SPORTSURL1 = "http://hdstreams.club/";
    /* public static String SPORTSURL2 = "http://www.sports-stream.net/";
