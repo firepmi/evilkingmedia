@@ -74,7 +74,7 @@ public class SeriesActivityEpisodServer1 extends AppCompatActivity {
         btncategory = findViewById(R.id.btncategory);
         isNext = false;
         url = getIntent().getStringExtra("url");
-        //url="http://hdpass.net/"+url;
+        //url="http:"+url;
 
             new prepareMovieData(url, "").execute();
 

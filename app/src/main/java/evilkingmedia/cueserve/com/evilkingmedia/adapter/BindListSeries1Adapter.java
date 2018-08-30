@@ -103,6 +103,7 @@ public class BindListSeries1Adapter extends RecyclerView.Adapter<BindListSeries1
 
                 Intent subCategory = new Intent(context, SeriesActivityServer1.class);
                 subCategory.putExtra("url",sub_url);
+                subCategory.putExtra("category", "true");
                 context.startActivity(subCategory);
 
 

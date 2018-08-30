@@ -56,7 +56,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
     private int elementsize;
     Boolean isPrev, isNext, isSearch = false, isNextSearch = false, isMovieita = false;
     int corePoolSize = 60;
-    String Currenturl;
+    String Currenturl, category;
     android.support.v7.widget.SearchView search;
     int i = 0;
     String Category = "", url = null;
@@ -87,6 +87,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
         ivPrev.setVisibility(View.GONE);
         isNext = false;
         url = getIntent().getStringExtra("url");
+        category = getIntent().getStringExtra("category");
         etMoviename = findViewById(R.id.etMoviname);
         btnMoviename = findViewById(R.id.btnMoviname);
 
@@ -223,8 +224,7 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                         movieList.add(movie);
 
                     }
-                } else {
-
+                } else if (url != null && category != null){
                     Elements link = doc.select("div[class=contenedor]");
                     //     Elements data = link.select("div[class=items]");
                     Elements image = link.select("div[class=imagen]");
@@ -244,8 +244,31 @@ public class SeriesActivityServer1 extends AppCompatActivity {
 
                     }
 
+                }
 
-                    /*Elements seasondata = doc.select("#series").select("li");
+                else{
+
+                   /* Elements link = doc.select("div[class=contenedor]");
+                    //     Elements data = link.select("div[class=items]");
+                    Elements image = link.select("div[class=imagen]");
+                    Elements name = image.select("h2");
+
+
+                    //Elements imagestr = image.select("img");
+                    for (int i = 0; i < image.size(); i++) {
+                        MoviesModel movie = new MoviesModel();
+                        String img_str = image.get(i).select("img").attr("src");
+                        String url = image.get(i).select("a").attr("href");
+                        String name_str = name.get(i).text();
+                        movie.setImage(img_str);
+                        movie.setTitle(name_str);
+                        movie.setUrl(url);
+                        movieList.add(movie);
+
+                    }*/
+
+
+                    Elements seasondata = doc.select("#series").select("li");
 
                     for (int i = 0; i < seasondata.size(); i++) {
 
@@ -256,7 +279,6 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                         movie.setTitle(title);
                         movieList.add(movie);
                     }
-*/
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -308,7 +330,38 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                 } else {
                     ivPrev.setVisibility(View.GONE);
                 }
-            } else {
+            }
+            else if (url != null && category != null){
+
+                mAdapter = new BindListSeriesCatSeason1Adapter(movieList, SeriesActivityServer1.this);
+                // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer1.this, 3);
+                recyclerView.setLayoutManager(mLayoutManager);
+                //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.invalidate();
+                recyclerView.setAdapter(mAdapter);
+                ivNext.setVisibility(View.VISIBLE);
+
+
+                try {
+                    if (isNext == true) {
+                        ivPrev.setVisibility(View.VISIBLE);
+                    } else {
+                        ivPrev.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    ivPrev.setVisibility(View.GONE);
+                }
+                if (i != 0) {
+
+                    ivPrev.setVisibility(View.VISIBLE);
+                } else {
+                    ivPrev.setVisibility(View.GONE);
+                }
+            }
+
+            else {
                 mAdapter2 = new BindListSeriesCatEpisod1Adapter(movieList, SeriesActivityServer1.this);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer1.this, 3);

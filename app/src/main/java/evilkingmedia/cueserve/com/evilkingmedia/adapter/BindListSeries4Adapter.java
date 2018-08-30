@@ -12,8 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,8 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityCatServer4;
 
@@ -155,10 +151,15 @@ public class BindListSeries4Adapter extends RecyclerView.Adapter<BindListSeries4
 
     private class prepareSeriesData extends AsyncTask<Void, Void, Void> {
         String desc;
-
+        String url;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setTitle("");
+            mProgressDialog.setMessage("Loading...");
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.show();
 
         }
 
@@ -168,14 +169,14 @@ public class BindListSeries4Adapter extends RecyclerView.Adapter<BindListSeries4
 
 
                 Document doc = Jsoup.connect(videoPath).timeout(10000).maxBodySize(0).get();
-                Elements main = doc.select("nav[class=navbar navbar-fixed-top navbar-default second_nav]");
+                Elements main = doc.select("nav[class=navbar navbar-fixed-top navbar-default nav1]");
                 Elements ul = main.select("ul[class=nav navbar-nav]");
                 Elements li = ul.select("li");
                 seriesList.clear();
                 for(int i=0;i<li.size();i++)
                 {
 
-                    String url = li.get(i).select("a").attr("href");
+                     url = li.get(i).select("a").attr("href");
 
                     String episode = li.get(i).getElementsByTag("a").text();
                     MoviesModel movie = new MoviesModel();
@@ -202,8 +203,12 @@ public class BindListSeries4Adapter extends RecyclerView.Adapter<BindListSeries4
            /*  Intent webIntent = new Intent(context, WebViewActivity.class);
             webIntent.putExtra("url", videoPath);
             context.startActivity(webIntent);*/
+            if (mProgressDialog != null) {
+                mProgressDialog.dismiss();
+            }
 
             Intent sub = new Intent(context, SeriesActivityCatServer4.class);
+            sub.putExtra("url", url);
             Bundle bundle = new Bundle();
             bundle.putSerializable("data", (Serializable) seriesList);
             sub.putExtras(bundle);

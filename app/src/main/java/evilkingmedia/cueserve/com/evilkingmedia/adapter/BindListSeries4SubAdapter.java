@@ -27,13 +27,14 @@ import java.util.List;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
+import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityCatServer4;
 
 public class BindListSeries4SubAdapter extends RecyclerView.Adapter<BindListSeries4SubAdapter.myview> {
     private List<MoviesModel> movielistFiltered;
     private List<MoviesModel> moviesList;
     Context context;
     private ProgressDialog mProgressDialog;
-    String videoPath;
+    String videoPath, episodeurl;
     private int itemposition;
     BindListAdapter adapter;
     private List<MoviesModel> seriesList = new ArrayList<>();
@@ -64,10 +65,11 @@ public class BindListSeries4SubAdapter extends RecyclerView.Adapter<BindListSeri
         }
     }
 
-    public BindListSeries4SubAdapter(List<MoviesModel> moviesList, Context context) {
+    public BindListSeries4SubAdapter(List<MoviesModel> moviesList, Context context, String episodeurl) {
         this.moviesList = moviesList;
         this.context = context;
         this.movielistFiltered = moviesList;
+        this.episodeurl = episodeurl;
     }
 
     @NonNull
@@ -95,7 +97,17 @@ public class BindListSeries4SubAdapter extends RecyclerView.Adapter<BindListSeri
             @Override
             public void onClick(View v) {
                 itemposition = position;
-                new prepareMovieData().execute();
+
+                if(episodeurl != null){
+                    Intent i = new Intent(context, SeriesActivityCatServer4.class);
+                    i.putExtra("episodeurl", episodeurl);
+                    context.startActivity(i);
+                }
+                else{
+                    new prepareMovieData().execute();
+                }
+
+
             }
         });
 

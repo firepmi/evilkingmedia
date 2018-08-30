@@ -167,85 +167,85 @@ public class SportsActivityServer2 extends AppCompatActivity   {
                 // Connect to the web site
                 doc = Jsoup.connect(url).timeout(10000).get();
 
-                SportsModel moviesurl = new SportsModel();
-                moviesurl.setCurrentUrl(url);
-                movieurlList.add(moviesurl);
+                try {
 
-                if (nexturl == null) {
-                    sportsModelList.clear();
-                    //For Categories
-                    Elements container = doc.select("div[class=container mtb]");
-                    // Elements content = container.select("div[class=col-lg-9]");
-                    Elements tbody = container.select("tbody");
-                    Elements tr = tbody.select("tr");
+                    SportsModel moviesurl = new SportsModel();
+                    moviesurl.setCurrentUrl(url);
+                    movieurlList.add(moviesurl);
 
-
-                    for (int i = 0; i < tr.size(); i++) {
-                        String url = tr.get(i).attr("data-href").toString();
-                        String td_time = tr.get(i).select("td[class=event-time]").text();
-                        String td_team1 = tr.get(i).select("td[class=event-home]").text();
-                        String td_team2 = tr.get(i).select("td[class=event-away]").text();
-                        SportsModel sportsModel = new SportsModel();
-                        sportsModel.setTime(td_time);
-                        sportsModel.setTeam1(td_team1);
-                        sportsModel.setTeam2(td_team2);
-                        sportsModel.setUrl(url);
-                        sportsModelList.add(sportsModel);
-                    }
-                }else if(nexturl != null && category != null){
-                    sportsModelList.clear();
-                    Elements container = doc.select("div[class=container mtb]");
-                    // Elements content = container.select("div[class=col-lg-9]");
-                    Elements tbody = container.select("tbody");
-                    Elements tr = tbody.select("tr");
+                    if (nexturl == null) {
+                        sportsModelList.clear();
+                        //For Categories
+                        Elements container = doc.select("div[class=container mtb]");
+                        // Elements content = container.select("div[class=col-lg-9]");
+                        Elements tbody = container.select("tbody");
+                        Elements tr = tbody.select("tr");
 
 
-                    for (int i = 0; i < tr.size(); i++) {
-                        String url = tr.get(i).attr("data-href").toString();
-                        String td_time = tr.get(i).select("td[class=event-time]").text();
-                        String td_team1 = tr.get(i).select("td[class=event-home]").text();
-                        String td_team2 = tr.get(i).select("td[class=event-away]").text();
-                        SportsModel sportsModel = new SportsModel();
-                        sportsModel.setTime(td_time);
-                        sportsModel.setTeam1(td_team1);
-                        sportsModel.setTeam2(td_team2);
-                        sportsModel.setUrl(url);
-                        sportsModelList.add(sportsModel);
-                    }
-                }
-
-                else {
-                    sportsModelList.clear();
-                    Elements container = doc.select("div[class=container mtb]");
-                    Elements table = container.select("table[class=table table-striped]");
-
-                    Elements td = table.select("td[class=event-watch]");
-                    String a = td.select("a").attr("href");
-
-                    if (a == null || a.isEmpty()) {
-                        streaming = false;
-                        urldata = table.select("td").text();
-                    } else {
-                        streaming = true;
-                        Elements mElementUrl = td.select("a");
-                        for (int i = 0; i < mElementUrl.size(); i++) {
-                            String url_str = mElementUrl.attr("href");
-                            String title = mElementUrl.attr("title");
-                            String url1[] = url_str.split("javascript:window.open\\(");
-                            String url2[] = url1[1].split("\\)");
-                            String data = url2[0].replace("'", "");
-                            if (data.contains("youtube")) {
-                                data = data.replace("http", "https");
-                            } else {
-                                data = data;
-                            }
+                        for (int i = 0; i < tr.size(); i++) {
+                            String url = tr.get(i).attr("data-href").toString();
+                            String td_time = tr.get(i).select("td[class=event-time]").text();
+                            String td_team1 = tr.get(i).select("td[class=event-home]").text();
+                            String td_team2 = tr.get(i).select("td[class=event-away]").text();
                             SportsModel sportsModel = new SportsModel();
-                            sportsModel.setUrl(data);
-                            sportsModel.setTitle(title);
+                            sportsModel.setTime(td_time);
+                            sportsModel.setTeam1(td_team1);
+                            sportsModel.setTeam2(td_team2);
+                            sportsModel.setUrl(url);
                             sportsModelList.add(sportsModel);
                         }
+                    } else if (nexturl != null && category != null) {
+                        sportsModelList.clear();
+                        Elements container = doc.select("div[class=container mtb]");
+                        // Elements content = container.select("div[class=col-lg-9]");
+                        Elements tbody = container.select("tbody");
+                        Elements tr = tbody.select("tr");
 
-                        Log.e("watchdata", sportsModelList + "");
+
+                        for (int i = 0; i < tr.size(); i++) {
+                            String url = tr.get(i).attr("data-href").toString();
+                            String td_time = tr.get(i).select("td[class=event-time]").text();
+                            String td_team1 = tr.get(i).select("td[class=event-home]").text();
+                            String td_team2 = tr.get(i).select("td[class=event-away]").text();
+                            SportsModel sportsModel = new SportsModel();
+                            sportsModel.setTime(td_time);
+                            sportsModel.setTeam1(td_team1);
+                            sportsModel.setTeam2(td_team2);
+                            sportsModel.setUrl(url);
+                            sportsModelList.add(sportsModel);
+                        }
+                    } else {
+                        sportsModelList.clear();
+                        Elements container = doc.select("div[class=container mtb]");
+                        Elements table = container.select("table[class=table table-striped]");
+
+                        Elements td = table.select("td[class=event-watch]");
+                        String a = td.select("a").attr("href");
+
+                        if (a == null || a.isEmpty()) {
+                            streaming = false;
+                            urldata = table.select("td").text();
+                        } else {
+                            streaming = true;
+                            Elements mElementUrl = td.select("a");
+                            for (int i = 0; i < mElementUrl.size(); i++) {
+                                String url_str = mElementUrl.attr("href");
+                                String title = mElementUrl.attr("title");
+                                String url1[] = url_str.split("javascript:window.open\\(");
+                                String url2[] = url1[1].split("\\)");
+                                String data = url2[0].replace("'", "");
+                                if (data.contains("youtube")) {
+                                    data = data.replace("http", "https");
+                                } else {
+                                    data = data;
+                                }
+                                SportsModel sportsModel = new SportsModel();
+                                sportsModel.setUrl(data);
+                                sportsModel.setTitle(title);
+                                sportsModelList.add(sportsModel);
+                            }
+
+                            Log.e("watchdata", sportsModelList + "");
 
 
                        /* if (data.contains("youtube")) {
@@ -253,7 +253,10 @@ public class SportsActivityServer2 extends AppCompatActivity   {
                         } else {
                             urldata = data;
                         }*/
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             } catch (IOException e) {
