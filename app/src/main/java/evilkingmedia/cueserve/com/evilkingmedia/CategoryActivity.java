@@ -8,6 +8,7 @@ import android.text.Html;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class CategoryActivity extends AppCompatActivity {
 
     private TextView txtemail, txtBottom, txt_dt_time, txtlogout, txtsetting;
     private LinearLayout rlMovies, rlSeries, rlSports, rlMusic, rlMeteo, rlepg, rllive, rlebook;
+    private ImageView download;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,14 @@ public class CategoryActivity extends AppCompatActivity {
         txtemail = findViewById(R.id.txtemail);
         txtlogout = findViewById(R.id.txtlogout);
         txtsetting = findViewById(R.id.txtsetting);
+        download = findViewById(R.id.download);
+
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.evilkingmedia.com/download/")));
+            }
+        });
 
         txtemail.setOnClickListener(new View.OnClickListener() {
             @Override
