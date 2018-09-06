@@ -12,7 +12,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.R;
 
 public class SportsCategoryActivity extends AppCompatActivity {
 
-    LinearLayout rlSports, rlSports1, r2Sports2, r3Sports3, rlEpg;
+    LinearLayout rlSports, rlSports1, r2Sports2, r3Sports3, rlEpg, rlDoc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,7 @@ public class SportsCategoryActivity extends AppCompatActivity {
         r2Sports2 = findViewById(R.id.rlMovies2);
         r3Sports3 = findViewById(R.id.rlMovies3);
         rlEpg = findViewById(R.id.rlEpg);
+        rlDoc = findViewById(R.id.rlSportByDoc);
 
         rlSports.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +62,15 @@ public class SportsCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(SportsCategoryActivity.this,WebViewActivitySports3.class);
+                i.putExtra("url",Constant.SPORTSEPGURL);
+                startActivity(i);
+            }
+        });
+
+        rlDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(SportsCategoryActivity.this,SportsActivityByDoc.class);
                 i.putExtra("url",Constant.SPORTSEPGURL);
                 startActivity(i);
             }

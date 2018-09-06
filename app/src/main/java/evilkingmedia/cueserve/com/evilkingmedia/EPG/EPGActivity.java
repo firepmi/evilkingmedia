@@ -48,6 +48,20 @@ public class EPGActivity extends AppCompatActivity {
         ivUp = findViewById(R.id.ivUp);
         ivDown = findViewById(R.id.ivDown);
         searchview = findViewById(R.id.searchView);
+        ivUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.smoothScrollBy(0, -200);
+            }
+        });
+
+        ivDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.smoothScrollBy(0, 200);
+
+            }
+        });
 
         searchview.setOnTouchListener(new View.OnTouchListener() {
             @Override

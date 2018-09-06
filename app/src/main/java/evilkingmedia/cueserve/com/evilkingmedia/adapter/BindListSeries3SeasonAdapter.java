@@ -78,7 +78,7 @@ public class BindListSeries3SeasonAdapter extends RecyclerView.Adapter<BindListS
     @Override
     public BindListSeries3SeasonAdapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.gridview_list, parent, false);
+                .inflate(R.layout.grid_list_series3, parent, false);
 
         return new myview(itemView);
     }
@@ -130,17 +130,24 @@ public class BindListSeries3SeasonAdapter extends RecyclerView.Adapter<BindListS
 
         @Override
         protected Void doInBackground(Void... params) {
+
             try {
 
 
                 Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
 
-                Elements iframe = doc.getElementsByTag("iframe");
-                String src = iframe.attr("src");
+                Elements data = doc.select("div[class=container-fluid]").select("div[class=nomargin]");
+                Elements em = data.tagName("p").select("em");
 
-                Log.e("body", src);
+                for(int i=0;i<em.size();i++)
+                {
 
-                videoPath =  src;
+                    if(em.get(i).select("a").size()>0)
+                    {
+                        videoPath= em.get(i).select("a").attr("href");
+                        break;
+                    }
+                }
 
 
             } catch (IOException e) {

@@ -33,16 +33,16 @@
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
                 android:src="@drawable/sports"
-                 android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="40dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_toRightOf="@+id/imgMovies"
                 android:text="Orari e Risultati"
                 android:textColor="@color/colorWhite"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginLeft="@dimen/_5sdp"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Server 1"
+                android:text="Top Live"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -103,14 +103,15 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/sports" />
+                android:src="@drawable/sports"
+                android:layout_marginLeft="20dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Server 2"
+                android:text="HD Streams"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -138,17 +139,18 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/sports" />
+                android:src="@drawable/sports"
+                android:layout_marginLeft="35dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Server 3"
+                android:text="Sport Category"
                 android:textColor="@color/colorWhite"
                 android:id="@+id/tvserver3"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginLeft="@dimen/_5sdp"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -174,17 +176,56 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/sports" />
+                android:src="@drawable/sports"
+                android:layout_marginLeft="45dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Server 4"
+                android:text="Streaming Sports"
                 android:textColor="@color/colorWhite"
                 android:id="@+id/tvserver4"
                 android:textStyle="bold" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/moviesCardView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:cardBackgroundColor="@color/colorRed"
+        app:cardCornerRadius="@dimen/_10sdp"
+        >
+
+        <LinearLayout
+            android:id="@+id/rlSportByDoc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:id="@+id/imgMovies3rSportByDoc"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:elevation="@dimen/_5sdp"
+                android:src="@drawable/sports"
+                android:layout_marginLeft="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imgMovies"
+                android:text="Sport By Doc"
+                android:textColor="@color/colorWhite"
+                android:id="@+id/tvSportByDoc"
+                android:textStyle="bold"
+                android:layout_marginLeft="@dimen/_5sdp"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

@@ -47,6 +47,7 @@ public class SeriesActivityServer3 extends AppCompatActivity {
     private BindListSeriesEpisod3Adapter mAdapter2;
     private List<MoviesModel> movieList = new ArrayList<>();
     private List<MoviesModel> movieurlList = new ArrayList<>();
+    private List<MoviesModel> movieTitleList = new ArrayList<>();
     private ProgressDialog mProgressDialog;
     ImageView ivNext, ivPrev, ivUp, ivDown;
     EditText etMoviename;
@@ -107,11 +108,11 @@ public class SeriesActivityServer3 extends AppCompatActivity {
             }
         });
 
-        if (Pageurl == null) {
+       /* if (Pageurl == null) {
             new prepareMovieData(Constant.SERIESURL3, "").execute();
         } else {
             new prepareMovieData(Pageurl, "").execute();
-        }
+        }*/
         if (url == null) {
             new prepareMovieData(Constant.SERIESURL3, "").execute();
         } else {
@@ -167,63 +168,75 @@ public class SeriesActivityServer3 extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(SeriesActivityServer3.this);
+          /*  mProgressDialog = new ProgressDialog(SeriesActivityServer3.this);
             mProgressDialog.setTitle("");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
-            mProgressDialog.show();
+            mProgressDialog.show();*/
         }
 
         @Override
         protected Void doInBackground(String... strings) {
 
-            //Movie1
-            try {
-                movieList.clear();
-                // Connect to the web site
-                doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
-                MoviesModel moviesurl = new MoviesModel();
-                moviesurl.setCurrenturl(mainurl + "" + movieUrl);
-                movieurlList.add(moviesurl);
+                //Movie1
+                try {
+                    movieList.clear();
+                    movieTitleList.clear();
+                    // Connect to the web site
+                    doc = Jsoup.connect(mainurl + "" + movieUrl).timeout(10000).get();
+                    MoviesModel moviesurl = new MoviesModel();
+                    moviesurl.setCurrenturl(mainurl + "" + movieUrl);
+                    movieurlList.add(moviesurl);
 
-                System.out.print(doc);
-
-                if (url == null) {
-                    Element data = doc.getElementById("dt_contenedor");
-                    Element data1 = data.getElementById("contenedor");
+                    if (url == null) {
+                        Elements data = doc.select("div[class=container-fluid]");
+                        Elements data1 = data.select("div[class=span12 filmbox]");
 
 
-                    Elements data2 = data1.select("#archive-content").first().select("article");
-                    Log.d("data size", data2.size() + "");
+                        Log.d("data size", data1.size() + "");
 
-                    for (int i = 0; i < data2.size(); i++) {
-                        Elements imageurl = data2.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
-                        String imagedata = imageurl.get(i).attr("src");
-                        String title = imageurl.get(i).attr("alt");
-                        String urldata = data2.get(i).getElementsByClass("poster").first().getElementsByTag("a").attr("href");
-                        MoviesModel movie = new MoviesModel();
-                        movie.setImage(imagedata);
-                        movie.setUrl(urldata);
-                        movie.setTitle(title);
-                        movieList.add(movie);
+                        for (int i = 0; i < data1.size(); i++) {
+
+                            String title = data1.get(i).select("div[class=span8]").select("h1").text();
+                            String image = data1.get(i).select("div[class=span4]").select("img").attr("src");
+                            String url = data1.get(i).select("div[class=span4]").select("a").attr("href");
+                            MoviesModel movie = new MoviesModel();
+                            movie.setImage(image);
+                            movie.setUrl(url);
+                            movie.setTitle(title);
+                            movieList.add(movie);
+                        }
+                    } else {
+                        String title,title1;
+                         Elements data = doc.select("div[class=container-fluid]");
+                        Elements data1 = data.select("div[class=span12 filmbox]").tagName("table").tagName("td");
+
+
+                        Log.d("data size", data1.size() + "");
+
+                        for (int i = 0; i < data1.size(); i++) {
+
+                            title = data1.get(i).select("div[class=sp-head unfolded]").text();
+                            title1 = null;
+                            if(title.isEmpty()) {
+                                title1 = data1.get(i).select("div[class=sp-head]").text();
+                            }
+
+                            MoviesModel movie = new MoviesModel();
+                            if(title.isEmpty()) {
+                                movie.setTitle(title1);
+                            }
+                            else
+                            {
+                                movie.setTitle(title);
+                            }
+                            movieTitleList.add(movie);
+                        }
                     }
-                } else {
-
-                    Elements bodydata = doc.getElementsByClass("row").select("[class=navbar navbar-fixed-top navbar-default nav1]").select("li");
-
-                    for (int i = 0; i < bodydata.size(); i++) {
-                        String title = bodydata.get(i).getElementsByTag("a").text();
-                        String url = bodydata.get(i).getElementsByTag("a").attr("href");
-                        MoviesModel movie = new MoviesModel();
-                        movie.setUrl(url);
-                        movie.setTitle(title);
-                        movieList.add(movie);
-                    }
-                    //System.out.print(bodydata);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
 
 
             return null;
@@ -232,9 +245,9 @@ public class SeriesActivityServer3 extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             // Set description into TextView
-            if (mProgressDialog != null) {
-                mProgressDialog.dismiss();
-            }
+
+         //    mProgressDialog.dismiss();
+
 
             Elements pagination = doc.getElementsByClass("pagination");
             if (pagination.size() != 0) {
@@ -271,7 +284,7 @@ public class SeriesActivityServer3 extends AppCompatActivity {
                     ivPrev.setVisibility(View.GONE);
                 }
             } else {
-                mAdapter2 = new BindListSeriesEpisod3Adapter(movieList, SeriesActivityServer3.this);
+                mAdapter2 = new BindListSeriesEpisod3Adapter(movieTitleList, SeriesActivityServer3.this);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer3.this, 3);
                 recyclerView.setLayoutManager(mLayoutManager);

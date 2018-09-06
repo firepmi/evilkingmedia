@@ -32,14 +32,15 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/movies"
+                android:layout_marginLeft="30dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Server 1"
+                android:text="Cinema Gratis"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -67,14 +68,15 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/movies"
+                android:layout_marginLeft="40dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Server 2"
+                android:text="Film Streaming"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -107,12 +109,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Server 3"
+                android:text="cb01"
                 android:textColor="@color/colorWhite"
                 android:id="@+id/tvserver3"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="@dimen/_5sdp"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -138,14 +141,15 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/movies" />
+                android:src="@drawable/movies"
+                android:layout_marginLeft="65dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Server 4"
+                android:text="Altadefinizione01"
                 android:textColor="@color/colorWhite"
                 android:id="@+id/tvserver4"
                 android:textStyle="bold" />

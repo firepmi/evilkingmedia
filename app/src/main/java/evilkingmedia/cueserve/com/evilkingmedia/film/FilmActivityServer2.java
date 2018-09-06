@@ -223,20 +223,24 @@ public class FilmActivityServer2 extends AppCompatActivity {
                 movieurlList.add(moviesurl);
 
                 Elements data = doc.select("#content").first().getElementsByClass("movie-poster");
+                if(data !=null) {
+                    Log.d("data size", data.size() + "");
+                    for (int i = 0; i < data.size(); i++) {
 
-                Log.d("data size", data.size() + "");
-                for (int i = 0; i < data.size(); i++) {
+                        Elements imageurl = data.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+                        if(imageurl != null) {
+                            String imagedata = imageurl.get(i).attr("src");
+                            String title = imageurl.get(i).attr("alt");
+                            Elements urldata = data.get(i).getElementsByTag("a");
+                            String url = urldata.attr("href");
 
-                    Elements imageurl = data.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
-                    String imagedata = imageurl.get(i).attr("src");
-                    String title = imageurl.get(i).attr("alt");
-                    Elements urldata = data.get(i).getElementsByTag("a");
-                    String url = urldata.attr("href");
-                    MoviesModel movie = new MoviesModel();
-                    movie.setImage(imagedata);
-                    movie.setUrl(url);
-                    movie.setTitle(title);
-                    movieList.add(movie);
+                            MoviesModel movie = new MoviesModel();
+                            movie.setImage(imagedata);
+                            movie.setUrl(url);
+                            movie.setTitle(title);
+                            movieList.add(movie);
+                        }
+                    }
                 }
 
 
@@ -667,22 +671,24 @@ public class FilmActivityServer2 extends AppCompatActivity {
                 movieList.clear();
 
                 Elements data = document.select("#content").first().getElementsByClass("movie-poster");
+                if(data != null) {
+                    Log.d("data size", data.size() + "");
+                    for (int i = 0; i < data.size(); i++) {
 
-                Log.d("data size", data.size() + "");
-                for (int i = 0; i < data.size(); i++) {
-
-                    Elements imageurl = data.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
-                    String imagedata = imageurl.get(i).attr("src");
-                    String title = imageurl.get(i).attr("alt");
-                    Elements urldata = data.get(i).getElementsByTag("a");
-                    String url = urldata.attr("href");
-                    MoviesModel movie = new MoviesModel();
-                    movie.setImage(imagedata);
-                    movie.setUrl(url);
-                    movie.setTitle(title);
-                    movieList.add(movie);
+                        Elements imageurl = data.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+                        if(imageurl != null) {
+                            String imagedata = imageurl.get(i).attr("src");
+                            String title = imageurl.get(i).attr("alt");
+                            Elements urldata = data.get(i).getElementsByTag("a");
+                            String url = urldata.attr("href");
+                            MoviesModel movie = new MoviesModel();
+                            movie.setImage(imagedata);
+                            movie.setUrl(url);
+                            movie.setTitle(title);
+                            movieList.add(movie);
+                        }
+                    }
                 }
-
 
                 Map<String, String> mapLoggedInCookies = responsePostLogin.cookies();
 

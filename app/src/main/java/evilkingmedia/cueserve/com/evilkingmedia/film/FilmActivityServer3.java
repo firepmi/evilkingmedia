@@ -205,18 +205,26 @@ public class FilmActivityServer3 extends AppCompatActivity {
 
                 Elements data = doc.getElementsByClass("container-fluid").select("div[class=span12 filmbox]");
                 Log.d("size", data.size() + "");
-                for (int i = 0; i < data.size(); i++) {
-                    Elements bodydata = data.get(i).select("div[class=span4]").first().getElementsByTag("a");
-                    String movieurl = bodydata.attr("href");
-                    Elements bodydata1 = data.get(i).select("div[class=span4]").first().getElementsByTag("p").first().select("img[src~=(?i)\\.(png|jpe?g|gif)]");
-                    String imageurl = bodydata1.attr("src");
-                    Elements bodydata2 = data.get(i).select("div[class=span8]").first().getElementsByTag("a").first().select("h1");
-                    String title=bodydata2.text();
-                    MoviesModel movie = new MoviesModel();
-                    movie.setImage(imageurl);
-                    movie.setUrl(movieurl);
-                    movie.setTitle(title);
-                    movieList.add(movie);
+                if(data!=null) {
+                    for (int i = 0; i < data.size(); i++) {
+                        MoviesModel movie = new MoviesModel();
+                        Elements bodydata = data.get(i).select("div[class=span4]").first().getElementsByTag("a");
+                        if(bodydata != null) {
+                            String movieurl = bodydata.attr("href");
+                            movie.setUrl(movieurl);
+                        }
+                        Elements bodydata1 = data.get(i).select("div[class=span4]").first().getElementsByTag("p").first().select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+                        if(bodydata1 != null) {
+                            String imageurl = bodydata1.attr("src");
+                            movie.setImage(imageurl);
+                        }
+                        Elements bodydata2 = data.get(i).select("div[class=span8]").first().getElementsByTag("a").first().select("h1");
+                        if(bodydata2 != null) {
+                            String title = bodydata2.text();
+                            movie.setTitle(title);
+                        }
+                        movieList.add(movie);
+                    }
                 }
 
 

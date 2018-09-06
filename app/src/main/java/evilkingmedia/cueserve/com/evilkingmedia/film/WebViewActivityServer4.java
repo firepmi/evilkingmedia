@@ -1,9 +1,7 @@
 package evilkingmedia.cueserve.com.evilkingmedia.film;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +11,7 @@ import android.webkit.WebViewClient;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 
-public class WebViewActivityServer3 extends AppCompatActivity {
+public class WebViewActivityServer4 extends AppCompatActivity {
     String videoPath;
     private ProgressDialog mProgress;
 
@@ -25,7 +23,7 @@ public class WebViewActivityServer3 extends AppCompatActivity {
         videoPath = getIntent().getStringExtra("url");
         WebView webView = findViewById(R.id.web_view);
 
-        mProgress = new ProgressDialog(WebViewActivityServer3.this);
+        mProgress = new ProgressDialog(WebViewActivityServer4.this);
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -36,19 +34,25 @@ public class WebViewActivityServer3 extends AppCompatActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-                if (i == 0) {
-                    videoPath = url;
-                    i++;
-                }
-                // do your handling codes here, which url is the requested url
-                // probably you need to open that url rather than redirect:
-                if(url.contains("https")&& !videoPath.contains("https")) {
 
-                    videoPath = videoPath.replace("http", "https");
-                }
-                if (url.equalsIgnoreCase(videoPath)) {
-                    view.loadUrl(url);
+                if(url.contains("http")|| url.contains("https")) {
 
+                        videoPath = url;
+                        i++;
+
+
+                    // do your handling codes here, which url is the requested url
+                    // probably you need to open that url rather than redirect:
+                    if (url.contains("https") && !videoPath.contains("https")) {
+
+                        videoPath = videoPath.replace("http", "https");
+                    }
+                    if (url.equalsIgnoreCase(videoPath)) {
+                        if(url.contains("Openload")|| url.contains("altadefinizione2")||url.contains("hdstreaming")) {
+                            view.loadUrl(url);
+                        }
+
+                    }
                 }
 
                 return true; // then it is not handled by default action
@@ -76,3 +80,5 @@ public class WebViewActivityServer3 extends AppCompatActivity {
 
     }
 }
+
+

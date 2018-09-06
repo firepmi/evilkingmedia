@@ -92,7 +92,7 @@ public class BindListSports3Adapter extends RecyclerView.Adapter<BindListSports3
                 Intent i = new Intent(context, SportsActivityServer3.class);
                 i.putExtra("url", sportsModelList.get(position).getUrl());
                 i.putExtra("categoryid", sportsModelList.get(position).getId());
-                i.putExtra("position", itemposition + 1);
+                i.putExtra("position", itemposition );
                 context.startActivity(i);
                 //new prepareSportsData().execute();
             }

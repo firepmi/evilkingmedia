@@ -27,9 +27,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.WebViewActivitySports3;
+import evilkingmedia.cueserve.com.evilkingmedia.film.FilmActivityServer4;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
+import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer4;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
+import evilkingmedia.cueserve.com.evilkingmedia.series.WebViewActivitySeries2;
 
 public class BindListAdapterServer4 extends RecyclerView.Adapter<BindListAdapterServer4.myview> {
     private List<MoviesModel> movielistFiltered;
@@ -124,6 +128,15 @@ public class BindListAdapterServer4 extends RecyclerView.Adapter<BindListAdapter
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            try{
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setTitle("");
+            mProgressDialog.setMessage("Loading...");
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         }
 
@@ -133,12 +146,14 @@ public class BindListAdapterServer4 extends RecyclerView.Adapter<BindListAdapter
 
 
                 Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
+                Elements data = doc.select("div[class=leftC]");
+                Elements video = data.select("div[class=filmcontent]").select("div[class=filmicerik]");
+                String src = video.select("iframe").attr("src");
+              /*  Elements iframe = doc.getElementsByTag("iframe");
 
-                Elements iframe = doc.getElementsByTag("iframe");
-                String src = iframe.attr("src");
 
                 Log.e("body", src);
-
+*/
                 videoPath =  src;
 
 
@@ -150,8 +165,11 @@ public class BindListAdapterServer4 extends RecyclerView.Adapter<BindListAdapter
 
         @Override
         protected void onPostExecute(Void result) {
-
-            Intent webIntent = new Intent(context, WebViewActivity.class);
+            if (mProgressDialog != null) {
+                mProgressDialog.dismiss();
+            }
+            Intent webIntent = new Intent(context, WebViewActivityServer4.class);
+           // webIntent.putExtra("url", "https://streaminghd.fun/embed/kiBCh34WrAM/Accusato_speciale_%5BHD%5D_%282012%29_Bluray_1080p.mp4");
             webIntent.putExtra("url", videoPath);
             context.startActivity(webIntent);
         }

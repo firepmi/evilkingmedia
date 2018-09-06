@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -40,15 +42,17 @@ import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListAdapterServer4;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
 public class FilmActivityServer4 extends AppCompatActivity {
-    private LinearLayout linearCategory;
+    private LinearLayout linearCategory, ll_right;
+    private RelativeLayout rl_bottom;
     private RecyclerView recyclerView;
     private BindListAdapterServer4 mAdapter;
     private List<MoviesModel> movieList = new ArrayList<>();
     private List<MoviesModel> movieurlList = new ArrayList<>();
     private ProgressDialog mProgressDialog;
-    ImageView ivNext, ivPrev, ivUp, ivDown;
-    EditText etMoviename;
-    Button btnMoviename;
+    private ImageView ivNext, ivPrev, ivUp, ivDown;
+    private EditText etMoviename;
+    private Button btnMoviename;
+    private TextView txt_nodata;
     private int elementsize;
     Boolean isPrev, isNext, isSearch = false, isNextSearch = false, isMovieita = false;
     int corePoolSize = 60;
@@ -75,8 +79,8 @@ public class FilmActivityServer4 extends AppCompatActivity {
         //  setContentView(R.layout.gridview_list);
         linearCategory = findViewById(R.id.categories);
         recyclerView = findViewById(R.id.recyclerview);
-        btnhome = findViewById(R.id.btnhome);
-        btnsubita = findViewById(R.id.btnsubita);
+      //  btnhome = findViewById(R.id.btnhome);
+     //   btnsubita = findViewById(R.id.btnsubita);
         ivNext = findViewById(R.id.ivNext);
         ivPrev = findViewById(R.id.ivPrev);
         ivUp = findViewById(R.id.ivUp);
@@ -87,6 +91,9 @@ public class FilmActivityServer4 extends AppCompatActivity {
 
         etMoviename = findViewById(R.id.etMoviname);
         btnMoviename = findViewById(R.id.btnMoviname);
+        rl_bottom = findViewById(R.id.rl_bottom);
+        ll_right = findViewById(R.id.ll_right);
+        txt_nodata = findViewById(R.id.txt_nodata);
 
         etMoviename.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -141,7 +148,7 @@ public class FilmActivityServer4 extends AppCompatActivity {
         });
 
 
-        btnhome.setOnClickListener(new View.OnClickListener() {
+      /*  btnhome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -169,7 +176,7 @@ public class FilmActivityServer4 extends AppCompatActivity {
                 i = 0;
                 etMoviename.setText("");
             }
-        });
+        });*/
     }
 
 
@@ -186,11 +193,15 @@ public class FilmActivityServer4 extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(FilmActivityServer4.this);
-            mProgressDialog.setTitle("");
-            mProgressDialog.setMessage("Loading...");
-            mProgressDialog.setIndeterminate(false);
-            mProgressDialog.show();
+            try {
+                mProgressDialog = new ProgressDialog(FilmActivityServer4.this);
+                mProgressDialog.setTitle("");
+                mProgressDialog.setMessage("Loading...");
+                mProgressDialog.setIndeterminate(false);
+                mProgressDialog.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -199,29 +210,42 @@ public class FilmActivityServer4 extends AppCompatActivity {
             //Movie1
             try {
                 // Connect to the web site
-                Document doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
-
+                Document doc = Jsoup.connect(mainurl + "" + movieUrl).timeout(10000).get();
+                movieurlList.clear();
                 MoviesModel moviesurl = new MoviesModel();
-                moviesurl.setCurrenturl(mainurl + "" + movieUrl);
-                movieurlList.add(moviesurl);
-
-                Element data = doc.getElementById("dt_contenedor");
-                Element data1 = data.getElementById("contenedor");
 
 
-                Elements data2 = data1.select("#archive-content").first().select("article");
-                Log.d("data size", data2.size() + "");
+                Elements data = doc.select("div[class=leftC]");
+                if (data != null ) {
 
-                for (int i = 0; i < data2.size(); i++) {
-                    Elements imageurl = data2.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
-                    String imagedata = imageurl.get(i).attr("src");
-                    String title = imageurl.get(i).attr("alt");
-                    String urldata = data2.get(i).getElementsByClass("poster").first().getElementsByTag("a").attr("href");
-                    MoviesModel movie = new MoviesModel();
-                    movie.setImage(imagedata);
-                    movie.setUrl(urldata);
-                    movie.setTitle(title);
-                    movieList.add(movie);
+                    Elements data1 = data.select("div[class=filmcontent]").select("div[class=moviefilm]");
+                    moviesurl.setCurrenturl(mainurl + "" + movieUrl);
+                    movieurlList.add(moviesurl);
+                    if (data1 != null && !data1.isEmpty()) {
+                        ViewVisibility(View.VISIBLE, View.GONE);
+
+                     //   Elements data2 = data1.select("#archive-content").first().select("article");
+                        Log.d("data size", data1.size() + "");
+
+                        if (data1 != null) {
+                            for (int i = 0; i < data1.size(); i++) {
+
+                                String urldata = data1.get(i).select("a").attr("href");
+                                String imagedata = data1.get(i).select("a").select("img").attr("src");
+                                String title =data1.get(i).select("div[class=movief]").select("a").text();
+                                MoviesModel movie = new MoviesModel();
+                                movie.setImage(imagedata);
+                                movie.setUrl(urldata);
+                                movie.setTitle(title);
+                                movieList.add(movie);
+                            }
+                        }
+                    } else {
+                        ViewVisibility(View.GONE, View.VISIBLE);
+                    }
+                }
+                else {
+                    ViewVisibility(View.GONE, View.VISIBLE);
                 }
 
             } catch (IOException e) {
@@ -248,7 +272,7 @@ public class FilmActivityServer4 extends AppCompatActivity {
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.invalidate();
                 recyclerView.setAdapter(mAdapter);
-                ivNext.setVisibility(View.VISIBLE);
+             //   ivNext.setVisibility(View.VISIBLE);
 
 
                 try {
@@ -274,7 +298,7 @@ public class FilmActivityServer4 extends AppCompatActivity {
                 //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(mAdapter);
-                ivNext.setVisibility(View.VISIBLE);
+              //  ivNext.setVisibility(View.VISIBLE);
 
 
                 try {
@@ -298,6 +322,18 @@ public class FilmActivityServer4 extends AppCompatActivity {
 
         }
 
+    }
+
+    private void ViewVisibility(final int status, final int visible) {
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                ivNext.setVisibility(status);
+                ivPrev.setVisibility(status);
+                ivUp.setVisibility(status);
+                ivDown.setVisibility(status);
+                txt_nodata.setVisibility(visible);
+            }
+        });
     }
 
 
@@ -328,20 +364,23 @@ public class FilmActivityServer4 extends AppCompatActivity {
                 for (int i = 0; i < movieurlList.size(); i++) {
 
                     newurl = movieurlList.get(i).getCurrenturl();
+
                 }
                 doc = Jsoup.connect(newurl).timeout(10000).get();
                 movieurlList.clear();
-                for (Element urls : doc.getElementsByClass("pagination")) {
-                    //perform your data extractions here.
-                    for (Element urlss : urls.getElementsByTag("a")) {
-                        result = urlss != null ? urlss.absUrl("href") : null;
-                        Log.d("Urls", String.valueOf(urlss));
-                        NextPageUrl = urlss.attr("href");
-                        Log.d("Urls", NextPageUrl);
-                        MoviesModel movieurl = new MoviesModel();
-                        movieurl.setCurrenturl(NextPageUrl);
-                        movieurlList.add(movieurl);
 
+                for (Element urls : doc.getElementsByClass("wp-pagenavi")) {
+                    //perform your data extractions here.
+                    for (Element urlss : urls.getElementsByClass("nextpostslink")) {
+                        for (Element nexturl : urlss.getElementsByTag("a")) {
+                            result = urlss != null ? urlss.absUrl("href") : null;
+                            Log.d("Urls", String.valueOf(nexturl));
+                            NextPageUrl = nexturl.attr("href");
+                            Log.d("Urls", NextPageUrl);
+                            MoviesModel movieurl = new MoviesModel();
+                            movieurl.setCurrenturl(NextPageUrl);
+                            movieurlList.add(movieurl);
+                        }
                     }
                 }
 
@@ -410,28 +449,28 @@ public class FilmActivityServer4 extends AppCompatActivity {
                 isNext = true;
                 String result;
                 Document doc = null;
+
                 for (int i = 0; i < movieurlList.size(); i++) {
 
                     newurl = movieurlList.get(i).getCurrenturl();
+
                 }
                 doc = Jsoup.connect(newurl).timeout(10000).get();
                 movieurlList.clear();
-                for (Element urls : doc.getElementsByClass("pagination")) {
+                for (Element urls : doc.getElementsByClass("wp-pagenavi")) {
                     //perform your data extractions here.
-                    for (Element urlss : urls.getElementsByTag("a")) {
-                        result = urlss != null ? urlss.absUrl("href") : null;
-                        Log.d("Urls", String.valueOf(urlss));
-                        PrevPageUrl = urlss.attr("href");
-                        Log.d("Urls", PrevPageUrl);
-                        MoviesModel movieurl = new MoviesModel();
-                        movieurl.setCurrenturl(PrevPageUrl);
-                        movieurlList.add(movieurl);
-
-                        break;
+                    for (Element urlss : urls.getElementsByClass("previouspostslink")) {
+                        for (Element nexturl : urlss.getElementsByTag("a")) {
+                            result = urlss != null ? urlss.absUrl("href") : null;
+                            Log.d("Urls", String.valueOf(nexturl));
+                            PrevPageUrl = nexturl.attr("href");
+                            Log.d("Urls", PrevPageUrl);
+                            MoviesModel movieurl = new MoviesModel();
+                            movieurl.setCurrenturl(PrevPageUrl);
+                            movieurlList.add(movieurl);
+                        }
                     }
-                    break;
                 }
-
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -538,24 +577,41 @@ public class FilmActivityServer4 extends AppCompatActivity {
                     System.out.println("HTTP Status Code: " + responsePostLogin.statusCode());
 
                     //parse the document from response
-                    Document document = responsePostLogin.parse();
+                    Document doc = responsePostLogin.parse();
 
 
                     movieList.clear();
 
-                    Elements data = document.getElementsByClass("result-item");
+                    Elements data = doc.select("div#home_cont");
+                    if (data != null ) {
+                        Elements data1 = data.select("div[class=home_tall_box]");
 
-                    for (int i = 0; i < data.size(); i++) {
-                        String image = data.get(i).getElementsByClass("thumbnail animation-2").first().select("img[src~=(?i)\\.(png|jpe?g|gif)]").attr("src");
-                        String title = data.get(i).getElementsByClass("thumbnail animation-2").first().select("img[src~=(?i)\\.(png|jpe?g|gif)]").attr("alt");
-                        String url = data.get(i).getElementsByTag("a").attr("href");
-                        MoviesModel movie = new MoviesModel();
-                        movie.setImage(image);
-                        movie.setUrl(url);
-                        movie.setTitle(title);
-                        movieList.add(movie);
+                        if (data1 != null && !data1.isEmpty()) {
+                            ViewVisibility(View.VISIBLE, View.GONE);
+
+                            //   Elements data2 = data1.select("#archive-content").first().select("article");
+                            Log.d("data size", data1.size() + "");
+
+                            if (data1 != null) {
+                                for (int i = 0; i < data1.size(); i++) {
+
+                                    String urldata = data1.get(i).select("a").attr("href");
+                                    String imagedata = data1.get(i).select("a").select("img").attr("src");
+                                    String title =data1.get(i).select("h3").text();
+                                    MoviesModel movie = new MoviesModel();
+                                    movie.setImage(imagedata);
+                                    movie.setUrl(urldata);
+                                    movie.setTitle(title);
+                                    movieList.add(movie);
+                                }
+                            }
+                        } else {
+                            ViewVisibility(View.GONE, View.VISIBLE);
+                        }
                     }
-
+                    else {
+                        ViewVisibility(View.GONE, View.VISIBLE);
+                    }
 
                     Map<String, String> mapLoggedInCookies = responsePostLogin.cookies();
                 } else {
@@ -654,22 +710,26 @@ public class FilmActivityServer4 extends AppCompatActivity {
                 movieurlList.add(moviesurl);
 
                 Element data = doc.getElementById("dt_contenedor");
-                Element data1 = data.getElementById("contenedor");
+                if (data != null) {
+                    Element data1 = data.getElementById("contenedor");
+                    if (data1 != null) {
 
-
-                Elements data2 = data1.getElementsByClass("items").first().select("article");
-                Log.d("data size", data2.size() + "");
-
-                for (int i = 0; i < data2.size(); i++) {
-                    Elements imageurl = data2.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
-                    String imagedata = imageurl.get(i).attr("src");
-                    String title = imageurl.get(i).attr("alt");
-                    String urldata = data2.get(i).getElementsByClass("poster").first().getElementsByTag("a").attr("href");
-                    MoviesModel movie = new MoviesModel();
-                    movie.setImage(imagedata);
-                    movie.setUrl(urldata);
-                    movie.setTitle(title);
-                    movieList.add(movie);
+                        Elements data2 = data1.getElementsByClass("items").first().select("article");
+                        Log.d("data size", data2.size() + "");
+                        if (data2 != null) {
+                            for (int i = 0; i < data2.size(); i++) {
+                                Elements imageurl = data2.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+                                String imagedata = imageurl.get(i).attr("src");
+                                String title = imageurl.get(i).attr("alt");
+                                String urldata = data2.get(i).getElementsByClass("poster").first().getElementsByTag("a").attr("href");
+                                MoviesModel movie = new MoviesModel();
+                                movie.setImage(imagedata);
+                                movie.setUrl(urldata);
+                                movie.setTitle(title);
+                                movieList.add(movie);
+                            }
+                        }
+                    }
                 }
 
 
@@ -697,7 +757,7 @@ public class FilmActivityServer4 extends AppCompatActivity {
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.invalidate();
                 recyclerView.setAdapter(mAdapter);
-                ivNext.setVisibility(View.VISIBLE);
+             //   ivNext.setVisibility(View.VISIBLE);
 
 
                 try {

@@ -38,7 +38,7 @@ public class MeteoAdapter extends RecyclerView.Adapter<MeteoAdapter.myview> impl
     private List<MeteoModel> meteoList;
     private List<MeteoModel> meteofilterList;
 
-    public MeteoAdapter(List<MeteoModel> meteolist, MeteoActivity meteoActivity) {
+    public MeteoAdapter(List<MeteoModel> meteolist, Context meteoActivity) {
         this.meteoList=meteolist;
         this.context=meteoActivity;
         this.meteofilterList = meteolist;

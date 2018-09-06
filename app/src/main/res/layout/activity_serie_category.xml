@@ -32,14 +32,15 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/series" />
+                android:src="@drawable/series"
+                android:layout_marginLeft="40dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Server 1"
+                android:text="Filmsenzalimiti"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -67,14 +68,15 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/series" />
+                android:src="@drawable/series"
+                android:layout_marginLeft="35dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Server 2"
+                android:text="Streaming HD"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -102,17 +104,19 @@
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:elevation="@dimen/_5sdp"
-                android:src="@drawable/series" />
+                android:src="@drawable/series"
+                android:layout_marginLeft="20dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Server 3"
+                android:text="cb01"
                 android:textColor="@color/colorWhite"
                 android:id="@+id/tvserver3"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="40dp"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -145,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Server 4"
+                android:text="Serie HD"
                 android:textColor="@color/colorWhite"
                 android:id="@+id/tvserver4"
                 android:textStyle="bold" />
