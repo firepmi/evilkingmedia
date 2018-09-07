@@ -114,6 +114,20 @@ public class SportsActivityByDoc extends AppCompatActivity {
         });
         new  prepareMovieData(Constant.SPORTSBYDOCURL, "").execute();
 
+        ivUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.smoothScrollBy(0, -200);
+            }
+        });
+
+        ivDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.smoothScrollBy(0, 200);
+
+            }
+        });
 
     }
 
@@ -157,7 +171,7 @@ public class SportsActivityByDoc extends AppCompatActivity {
 
                 for (int i = 0; i < allURls.size(); i++) {
 
-                    if (allURls.get(i).toString().contains(".mp4")) {
+                    if (allURls.get(i).toString().contains(".mp4")|| allURls.get(i).toString().contains(".m3u8")) {
 
                         allURl.add(allURls.get(i).toString());
                     }
@@ -170,9 +184,11 @@ public class SportsActivityByDoc extends AppCompatActivity {
 
                                 title = separated[1];
 
-                                alltitle.add(title);
+
                             }
+                            alltitle.add(title);
                         }
+
                     }
 
                 }
