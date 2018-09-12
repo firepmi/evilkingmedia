@@ -1,13 +1,17 @@
 package evilkingmedia.cueserve.com.evilkingmedia.Sports;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
+import evilkingmedia.cueserve.com.evilkingmedia.Livetv.LiveActivityCategory;
+import evilkingmedia.cueserve.com.evilkingmedia.Musica.MusicActivityCategory;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 
 public class SportsCategoryActivity extends AppCompatActivity {
@@ -70,12 +74,15 @@ public class SportsCategoryActivity extends AppCompatActivity {
         rlDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SportsCategoryActivity.this,SportsActivityByDoc.class);
+                Constant.playInWuffy(SportsCategoryActivity.this,Constant.SPORTSBYDOCURL);
+              /*  Intent i = new Intent(SportsCategoryActivity.this,SportsActivityByDoc.class);
                 i.putExtra("url",Constant.SPORTSEPGURL);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
 
 
     }
+
+
 }

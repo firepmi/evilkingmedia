@@ -66,6 +66,19 @@ public class SportsActivityServer1 extends AppCompatActivity {
         ll_search.setVisibility(View.GONE);
         ll_categories.setVisibility(View.GONE);
 
+        ivUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.smoothScrollBy(0, -200);
+            }
+        });
+
+        ivDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.smoothScrollBy(0, 200);
+            }
+        });
         new prepareSportsData().execute();
     }
 

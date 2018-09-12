@@ -1,12 +1,15 @@
 package evilkingmedia.cueserve.com.evilkingmedia.Livetv;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Constant;
+import evilkingmedia.cueserve.com.evilkingmedia.Musica.MusicActivityCategory;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
 import evilkingmedia.cueserve.com.evilkingmedia.adapter.MusicAdapterServer1;
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmActivity;
@@ -38,90 +41,102 @@ public class LiveActivityCategory extends AppCompatActivity {
         rlMovies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
+                Constant.playInWuffy(LiveActivityCategory.this,Constant.LIVETV1);
+               /* Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
                 i.putExtra("url", Constant.LIVETV1);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
         rlMovies1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
+                Constant.playInWuffy(LiveActivityCategory.this,Constant.LIVETV2);
+               /* Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
                 i.putExtra("url", Constant.LIVETV2);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
 
         rlMovies2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
+                Constant.playInWuffy(LiveActivityCategory.this,Constant.LIVETV3);
+                /*Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
                 i.putExtra("url", Constant.LIVETV3);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
 
         rlMovies3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(LiveActivityCategory.this,LiveActivityServer1.class);
+                Constant.playInWuffy(LiveActivityCategory.this,Constant.LIVETV4);
+               /* Intent i=new Intent(LiveActivityCategory.this,LiveActivityServer1.class);
                 i.putExtra("url", Constant.LIVETV4);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
         r1Movies4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
+                Constant.playInWuffy(LiveActivityCategory.this,Constant.LIVETV5);
+                /*Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
                 i.putExtra("url", Constant.LIVETV5);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
 
         rlMovies5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
+                Constant.playInWuffy(LiveActivityCategory.this,Constant.LIVETV6);
+               /* Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
                 i.putExtra("url", Constant.LIVETV6);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
         rlMovies6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
+                Constant.playInWuffy(LiveActivityCategory.this,Constant.LIVETV7);
+               /* Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
                 i.putExtra("url", Constant.LIVETV7);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
 
         rlMovies7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
+                Constant.playInWuffy(LiveActivityCategory.this,Constant.LIVETV8);
+             /*   Intent i = new Intent(LiveActivityCategory.this, LiveActivityServer1.class);
                 i.putExtra("url", Constant.LIVETV8);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
 
         rlMovies8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(LiveActivityCategory.this,LiveActivityServer1.class);
+                Constant.playInWuffy(LiveActivityCategory.this,Constant.LIVETV9);
+                /*Intent i=new Intent(LiveActivityCategory.this,LiveActivityServer1.class);
                 i.putExtra("url", Constant.LIVETV9);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
 
         r1Movies9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(LiveActivityCategory.this,LiveActivityServer1.class);
+                Constant.playInWuffy(LiveActivityCategory.this,Constant.LIVETV10);
+               /* Intent i=new Intent(LiveActivityCategory.this,LiveActivityServer1.class);
                 i.putExtra("url", Constant.LIVETV10);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
 
     }
+
+
 }
 

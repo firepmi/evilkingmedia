@@ -253,189 +253,111 @@ public class FilmActivity extends AppCompatActivity {
                 // Connect to the web site
                 Document doc = Jsoup.connect(mainurl + "/" + movieUrl).timeout(10000).get();
 
-                MoviesModel moviesurl = new MoviesModel();
-                moviesurl.setCurrenturl(mainurl + "" + movieUrl);
-                movieurlList.add(moviesurl);
-                //For Categories
-                Elements categoryUl = doc.select("#main_container div.menu-menu-1-container > ul");
-                Log.e("categoryUl", "" + categoryUl.size());
-                Elements category = categoryUl.select("li");
-                Log.e("category", "" + category.size());
-               /* final Button button[] = new Button[category.size()];
-                btn = new Button[category.size()];*/
-               /* if (mainurl == Constant.MOVIEURL1 && movieUrl == "") {
-                    for (int k = 0; k < category.size(); k++) {
-                        Elements mElementUrl = category.get(k).getElementsByTag("a");
-                        String url = mElementUrl.text();
-                        Log.e("categoty_list", url);
+                try {
+                    MoviesModel moviesurl = new MoviesModel();
+                    moviesurl.setCurrenturl(mainurl + "" + movieUrl);
+                    movieurlList.add(moviesurl);
+                    //For Categories
+                    Elements categoryUl = doc.select("#main_container div.menu-menu-1-container > ul");
+                    Log.e("categoryUl", "" + categoryUl.size());
+                    Elements category = categoryUl.select("li");
+                    Log.e("category", "" + category.size());
 
-                        if (url.equals("Home") || url.equals("Film Al Cinema") || url.equals("Film Sub ITA")  || url.equals("Lista Film A/Z")) {
+                    if (Category == Constant.MOVIEURL1_ATOZ) {
+                        String movieTitle = null;
+                        Elements trdata = doc.select("tr[class^=mlnew]");
 
-                            button[k] = new Button(FilmActivity.this);
-                            button[k].setText(url);
-                            button[k].setTextColor(getResources().getColor(R.color.colorWhite));
-                            button[k].setPadding(5, 5, 5, 5);
-                            button[k].setBackgroundColor(getResources().getColor(R.color.colorBlack));
-                            button[k].setTextSize(12);
-                            button[k].setOnClickListener(onClickButton);
+                        Log.e("table size", trdata.size() + "");
 
-                            final int finalK = k;
-                            runOnUiThread(new Runnable() {
-
-                                @Override
-                                public void run() {
-
-                                    linearCategory.addView(button[finalK]);
-
-
-                                }
-                            });
-
-
-                        }
-
-
-                    }
-
-
-                }*/
-                // Using Elements to get the Meta data
-
-                //getting atoz data
-                if (Category == Constant.MOVIEURL1_ATOZ) {
-                    String movieTitle = null;
-                    Elements trdata = doc.select("tr[class^=mlnew]");
-
-                    Log.e("table size", trdata.size() + "");
-
-                    for (int i = 1; i < trdata.size(); i++) { //first row is the col names so skip it.
+                        for (int i = 1; i < trdata.size(); i++) { //first row is the col names so skip it.
                       /*  Element row = rows.get(i);
                         Elements cols = row.select("td");*/
-                        Log.e("data", trdata + "");
+                            Log.e("data", trdata + "");
 
-                    }
-                    Elements image = doc.getElementsByClass("mlnh-thumb");
-                    for (int i = 1; i < image.size(); i++) {
-                        String imagesrcatoz = image.get(i).getElementsByTag("img").attr("src");
-                        Log.e("imagename", imagesrcatoz);
-                        MoviesModel movie = new MoviesModel();
-                        /*  movie.setImage(imagesrcatoz);*/
-                        movieTitle = image.get(i).getElementsByTag("img").attr("title");
-                        Log.d("movieTitle", movieTitle);
-                        Elements year = doc.getElementsByClass("mlnh-3");
-                        String movieyear = year.get(i).text();
-                        Log.e("year", movieyear);
-                        String urls = image.get(i).getElementsByTag("a").attr("href");
-                        Log.e("data url", urls);
-                        movie.setUrl(urls);
-                        movie.setTitle(movieTitle);
-                        movie.setYear(movieyear);
-                        movieList.add(movie);
-                    }
-
-
-                    Log.d("movielist", movieList + "");
-
-
-                } else {
-                    Elements title = doc.select("#dle-content p[class=h4]");
-                    int titleSize = title.size();
-                    Elements images = doc.select("#dle-content img[src~=(?i)\\.(png|jpe?g|gif)]");
-                    elementsize = images.size();
-                    Elements rating = doc.select("#dle-content span[class=ml-imdb]");
-                    int ratingSize = rating.size();
-                    Elements mElementYear = doc.select("#dle-content span[class=ml-label]");
-                    int yearSize = mElementYear.size();
-                    Elements mElementurl = doc.select("#dle-content a[href]");
-                    for (int j = 0; j < yearSize; j++) {
-                        if (mElementYear.get(j).text().contains("min")) {
-                            durationArrayList.add(mElementYear.get(j).text());
-                        } else {
-                            yearArrayList.add(mElementYear.get(j).text());
+                        }
+                        Elements image = doc.getElementsByClass("mlnh-thumb");
+                        for (int i = 1; i < image.size(); i++) {
+                            String imagesrcatoz = image.get(i).getElementsByTag("img").attr("src");
+                            Log.e("imagename", imagesrcatoz);
+                            MoviesModel movie = new MoviesModel();
+                            /*  movie.setImage(imagesrcatoz);*/
+                            movieTitle = image.get(i).getElementsByTag("img").attr("title");
+                            Log.d("movieTitle", movieTitle);
+                            Elements year = doc.getElementsByClass("mlnh-3");
+                            String movieyear = year.get(i).text();
+                            Log.e("year", movieyear);
+                            String urls = image.get(i).getElementsByTag("a").attr("href");
+                            Log.e("data url", urls);
+                            movie.setUrl(urls);
+                            movie.setTitle(movieTitle);
+                            movie.setYear(movieyear);
+                            movieList.add(movie);
                         }
 
+
+                        Log.d("movielist", movieList + "");
+
+
+                    } else {
+                        Elements title = doc.select("#dle-content p[class=h4]");
+                        int titleSize = title.size();
+                        Elements images = doc.select("#dle-content img[src~=(?i)\\.(png|jpe?g|gif)]");
+                        elementsize = images.size();
+                        Elements rating = doc.select("#dle-content span[class=ml-imdb]");
+                        int ratingSize = rating.size();
+                        Elements mElementYear = doc.select("#dle-content span[class=ml-label]");
+                        int yearSize = mElementYear.size();
+                        Elements mElementurl = doc.select("#dle-content a[href]");
+                        for (int j = 0; j < yearSize; j++) {
+                            if (mElementYear.get(j).text().contains("min")) {
+                                durationArrayList.add(mElementYear.get(j).text());
+                            } else {
+                                yearArrayList.add(mElementYear.get(j).text());
+                            }
+
+                        }
+                        for (int i = 0; i < elementsize; i++) {
+                            Elements mElementImage = doc.select("#dle-content img[src~=(?i)\\.(png|jpe?g|gif)]");
+                            String image = mElementImage.get(i).attr("src");
+                            Log.d("image", image);
+                            MoviesModel movie = new MoviesModel();
+                            movie.setImage(image);
+
+                            //For Movie Title
+                            Elements mElementTitle = doc.select("#dle-content p[class=h4]");
+                            String movieTitle = mElementTitle.get(i).text();
+                            Log.d("movieTitle", movieTitle);
+                            movie.setTitle(movieTitle);
+
+                            //For Rating
+                            Elements mElementRating = doc.select("#dle-content span[class=ml-imdb]");
+                            String movieRating = mElementRating.get(i).text();
+                            movie.setRating(movieRating);
+
+                            //For year
+                            movie.setYear(yearArrayList.get(i));
+
+                            //For duration
+                            movie.setDuration(durationArrayList.get(i));
+
+                            //For Url
+                            Elements mElementH2 = doc.select("#dle-content h2");
+                            Elements mElementUrl = mElementH2.get(i).getElementsByTag("a");
+                            String url = mElementUrl.attr("href");
+                            Log.d("href", url);
+                            movie.setUrl(url);
+                            movieList.add(movie);
+
+                        }
                     }
-                    for (int i = 0; i < elementsize; i++) {
-                        Elements mElementImage = doc.select("#dle-content img[src~=(?i)\\.(png|jpe?g|gif)]");
-                        String image = mElementImage.get(i).attr("src");
-                        Log.d("image", image);
-                        MoviesModel movie = new MoviesModel();
-                        movie.setImage(image);
-
-                        //For Movie Title
-                        Elements mElementTitle = doc.select("#dle-content p[class=h4]");
-                        String movieTitle = mElementTitle.get(i).text();
-                        Log.d("movieTitle", movieTitle);
-                        movie.setTitle(movieTitle);
-
-                        //For Rating
-                        Elements mElementRating = doc.select("#dle-content span[class=ml-imdb]");
-                        String movieRating = mElementRating.get(i).text();
-                        movie.setRating(movieRating);
-
-                        //For year
-                        movie.setYear(yearArrayList.get(i));
-
-                        //For duration
-                        movie.setDuration(durationArrayList.get(i));
-
-                        //For Url
-                        Elements mElementH2 = doc.select("#dle-content h2");
-                        Elements mElementUrl = mElementH2.get(i).getElementsByTag("a");
-                        String url = mElementUrl.attr("href");
-                        Log.d("href", url);
-                        movie.setUrl(url);
-                        movieList.add(movie);
-
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-           //Movie2
-          /*  try {
-                // Connect to the web site
-                Document doc = Jsoup.connect(Constant.MOVIEURL2+"/").timeout(10000).get();
-                // Using Elements to get the Meta data
-                Elements title = doc.select("div.row wracontindexpost");
-                int titleSize = title.size();
-                for (int i = 0; i < titleSize; i++) {
-                    Elements mElementImage = doc.select("div.row wracontindexpost");
-                    String image = mElementImage.get(i).getElementsByClass("div.container-index-post col-xs-4 col-sm-3 col-md-2-5 col-lg-2").text();
-                    Log.d("image", image);
-                    MoviesModel movie = new MoviesModel();
-                    movie.setImage(image);
 
-                    //For Movie Title
-                    Elements mElementTitle = doc.select("#dle-content p[class=h4]");
-                    String movieTitle = mElementTitle.get(i).text();
-                    Log.d("movieTitle", movieTitle);
-                    movie.setTitle(movieTitle);
-
-                    //For Rating
-                    Elements mElementRating = doc.select("#dle-content span[class=ml-imdb]");
-                    String movieRating = mElementRating.get(i).text();
-                    movie.setRating(movieRating);
-
-                    //For year
-                    movie.setYear(yearArrayList.get(i));
-
-                    //For duration
-                    movie.setDuration(durationArrayList.get(i));
-
-                    //For Url
-                    Elements mElementH2 = doc.select("#dle-content h2");
-                    Elements mElementUrl =  mElementH2.get(i).getElementsByTag("a");
-                    String url = mElementUrl.attr("href");
-                    Log.d("href", url);
-                    movie.setUrl(url);
-                    movieList.add(movie);
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
             return null;
         }
 

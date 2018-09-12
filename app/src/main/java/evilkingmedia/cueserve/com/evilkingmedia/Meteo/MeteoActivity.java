@@ -64,8 +64,8 @@ public class MeteoActivity extends AppCompatActivity {
         ivUp = findViewById(R.id.ivUp);
         ivDown = findViewById(R.id.ivDown);
 
-
-        new prepareMovieData(Constant.METEOURL).execute();
+        Constant.playInWuffy(MeteoActivity.this,Constant.MUSICURL4);
+       // new prepareMovieData(Constant.METEOURL).execute();
 
         ivUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,6 +221,10 @@ public class MeteoActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
 
 

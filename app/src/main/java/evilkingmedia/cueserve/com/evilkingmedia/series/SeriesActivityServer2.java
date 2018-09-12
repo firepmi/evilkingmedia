@@ -203,25 +203,29 @@ public class SeriesActivityServer2 extends AppCompatActivity {
                 movieList.clear();
                 // Connect to the web site
                 doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
-                MoviesModel moviesurl = new MoviesModel();
-                moviesurl.setCurrenturl(mainurl + "" + movieUrl);
-                movieurlList.add(moviesurl);
+                try {
+                    MoviesModel moviesurl = new MoviesModel();
+                    moviesurl.setCurrenturl(mainurl + "" + movieUrl);
+                    movieurlList.add(moviesurl);
 
-                Elements bodydata = doc.getElementsByClass("items");
-                Elements articledata = doc.getElementsByClass("poster");
-                Log.e("size", articledata.size() + "");
-                // System.out.print(bodydata);
+                    Elements bodydata = doc.getElementsByClass("items");
+                    Elements articledata = doc.getElementsByClass("poster");
+                    Log.e("size", articledata.size() + "");
+                    // System.out.print(bodydata);
 
-                for (int i = 0; i < articledata.size(); i++) {
-                    String image = articledata.get(i).select("img").attr("src");
-                    String url = articledata.get(i).select("a").attr("href");
-                    String title = articledata.get(i).select("img").attr("alt");
-                    Log.e("image", title);
-                    MoviesModel movie = new MoviesModel();
-                    movie.setImage(image);
-                    movie.setTitle(title);
-                    movie.setUrl(url);
-                    movieList.add(movie);
+                    for (int i = 0; i < articledata.size(); i++) {
+                        String image = articledata.get(i).select("img").attr("src");
+                        String url = articledata.get(i).select("a").attr("href");
+                        String title = articledata.get(i).select("img").attr("alt");
+                        Log.e("image", title);
+                        MoviesModel movie = new MoviesModel();
+                        movie.setImage(image);
+                        movie.setTitle(title);
+                        movie.setUrl(url);
+                        movieList.add(movie);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             } catch (IOException e) {
                 e.printStackTrace();

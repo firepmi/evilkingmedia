@@ -1,14 +1,18 @@
 package evilkingmedia.cueserve.com.evilkingmedia.Musica;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsCategoryActivity;
 
 public class MusicActivityCategory extends AppCompatActivity {
     LinearLayout rlMovies, rlMovies1, rlMovies2, rlMovies3, r1Movies4;
@@ -41,33 +45,39 @@ public class MusicActivityCategory extends AppCompatActivity {
         rlMovies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MusicActivityCategory.this, MusicaActivityServer1.class);
-                startActivity(i);
+                Constant.playInWuffy(MusicActivityCategory.this,Constant.MUSICURL1);
+               /* Intent i = new Intent(MusicActivityCategory.this, MusicaActivityServer1.class);
+                startActivity(i);*/
             }
         });
         rlMovies1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MusicActivityCategory.this, MusicaActivityServer2.class);
-                startActivity(i);
+                Constant.playInWuffy(MusicActivityCategory.this,Constant.MUSICURL2);
+             /*   Intent i = new Intent(MusicActivityCategory.this, MusicaActivityServer2.class);
+                startActivity(i);*/
             }
         });
 
         rlMovies2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MusicActivityCategory.this, MusicaActivityServer3.class);
-                startActivity(i);
+                Constant.playInWuffy(MusicActivityCategory.this,Constant.MUSICURL3);
+                /*Intent i = new Intent(MusicActivityCategory.this, MusicaActivityServer3.class);
+                startActivity(i);*/
             }
         });
 
         rlMovies3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MusicActivityCategory.this, MusicaActivityServer4.class);
-                startActivity(i);
+                Constant.playInWuffy(MusicActivityCategory.this,Constant.MUSICURL4);
+              /*  Intent i = new Intent(MusicActivityCategory.this, MusicaActivityServer4.class);
+                startActivity(i);*/
             }
         });
     }
+
+
 }
 

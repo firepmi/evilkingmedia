@@ -201,52 +201,53 @@ public class SeriesActivityServer1 extends AppCompatActivity {
             try {
                 // Connect to the web site
                  doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
-                MoviesModel moviesurl = new MoviesModel();
-                moviesurl.setCurrenturl(mainurl + "" + movieUrl);
-                movieurlList.add(moviesurl);
 
-                if (url == null) {
-                    Elements link = doc.select("div[class=contenedor]");
-                    //     Elements data = link.select("div[class=items]");
-                    Elements image = link.select("div[class=imagen]");
-                    Elements name = image.select("h2");
+                try {
+                    MoviesModel moviesurl = new MoviesModel();
+                    moviesurl.setCurrenturl(mainurl + "" + movieUrl);
+                    movieurlList.add(moviesurl);
 
-
-                    //Elements imagestr = image.select("img");
-                    for (int i = 0; i < image.size(); i++) {
-                        MoviesModel movie = new MoviesModel();
-                        String img_str = image.get(i).select("img").attr("src");
-                        String url = image.get(i).select("a").attr("href");
-                        String name_str = name.get(i).text();
-                        movie.setImage(img_str);
-                        movie.setTitle(name_str);
-                        movie.setUrl(url);
-                        movieList.add(movie);
-
-                    }
-                } else if (url != null && category != null){
-                    Elements link = doc.select("div[class=contenedor]");
-                    //     Elements data = link.select("div[class=items]");
-                    Elements image = link.select("div[class=imagen]");
-                    Elements name = image.select("h2");
+                    if (url == null) {
+                        Elements link = doc.select("div[class=contenedor]");
+                        //     Elements data = link.select("div[class=items]");
+                        Elements image = link.select("div[class=imagen]");
+                        Elements name = image.select("h2");
 
 
-                    //Elements imagestr = image.select("img");
-                    for (int i = 0; i < image.size(); i++) {
-                        MoviesModel movie = new MoviesModel();
-                        String img_str = image.get(i).select("img").attr("src");
-                        String url = image.get(i).select("a").attr("href");
-                        String name_str = name.get(i).text();
-                        movie.setImage(img_str);
-                        movie.setTitle(name_str);
-                        movie.setUrl(url);
-                        movieList.add(movie);
+                        //Elements imagestr = image.select("img");
+                        for (int i = 0; i < image.size(); i++) {
+                            MoviesModel movie = new MoviesModel();
+                            String img_str = image.get(i).select("img").attr("src");
+                            String url = image.get(i).select("a").attr("href");
+                            String name_str = name.get(i).text();
+                            movie.setImage(img_str);
+                            movie.setTitle(name_str);
+                            movie.setUrl(url);
+                            movieList.add(movie);
 
-                    }
+                        }
 
-                }
+                    } else if (url != null && category != null) {
+                        Elements link = doc.select("div[class=contenedor]");
+                        //     Elements data = link.select("div[class=items]");
+                        Elements image = link.select("div[class=imagen]");
+                        Elements name = image.select("h2");
 
-                else{
+
+                        //Elements imagestr = image.select("img");
+                        for (int i = 0; i < image.size(); i++) {
+                            MoviesModel movie = new MoviesModel();
+                            String img_str = image.get(i).select("img").attr("src");
+                            String url = image.get(i).select("a").attr("href");
+                            String name_str = name.get(i).text();
+                            movie.setImage(img_str);
+                            movie.setTitle(name_str);
+                            movie.setUrl(url);
+                            movieList.add(movie);
+
+                        }
+
+                    } else {
 
                    /* Elements link = doc.select("div[class=contenedor]");
                     //     Elements data = link.select("div[class=items]");
@@ -268,17 +269,21 @@ public class SeriesActivityServer1 extends AppCompatActivity {
                     }*/
 
 
-                    Elements seasondata = doc.select("#series").select("li");
+                        Elements seasondata = doc.select("#series").select("li");
 
-                    for (int i = 0; i < seasondata.size(); i++) {
+                        for (int i = 0; i < seasondata.size(); i++) {
 
-                        String title = seasondata.get(i).getElementsByTag("a").text();
-                        String url = seasondata.get(i).getElementsByTag("a").attr("href");
-                        MoviesModel movie = new MoviesModel();
-                        movie.setUrl(url);
-                        movie.setTitle(title);
-                        movieList.add(movie);
+                            String title = seasondata.get(i).getElementsByTag("a").text();
+                            String url = seasondata.get(i).getElementsByTag("a").attr("href");
+                            MoviesModel movie = new MoviesModel();
+                            movie.setUrl(url);
+                            movie.setTitle(title);
+                            movieList.add(movie);
+                        }
+
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             } catch (IOException e) {
                 e.printStackTrace();

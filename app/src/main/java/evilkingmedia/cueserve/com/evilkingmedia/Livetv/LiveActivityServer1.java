@@ -1,6 +1,8 @@
 package evilkingmedia.cueserve.com.evilkingmedia.Livetv;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -257,13 +260,38 @@ public class LiveActivityServer1 extends AppCompatActivity {
                 mProgressDialog.dismiss();
             }
 
-            mAdapter = new BindListLivetvAdapter(meteolist, LiveActivityServer1.this);
+            if(!appInstalledOrNot("co.wuffy.player")){
+                Toast.makeText(LiveActivityServer1.this, "Installed Wuffy Player To Play This Video",
+                        Toast.LENGTH_LONG).show();
+            }else{
+                Bundle bnd = new Bundle();
+                bnd.putString("path",mainurl);
+             //   bnd.putString("name", meteolist.get(position).getTitle());
+                Intent intent = new Intent();
+                intent.setClassName("co.wuffy.player", "org.wuffy.videoplayer.WuffyPlayer");
+                intent.putExtras(bnd);
+                 startActivity(intent);
+            }
+           /*  mAdapter = new BindListLivetvAdapter(meteolist, LiveActivityServer1.this);
             RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(LiveActivityServer1.this, 2);
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.invalidate();
-            recyclerView.setAdapter(mAdapter);
+            recyclerView.setAdapter(mAdapter);*/
         }
+    }
+
+    private boolean appInstalledOrNot(String uri) {
+        PackageManager pm =  getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        }
+        return app_installed;
     }
 
 }

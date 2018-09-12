@@ -36,7 +36,8 @@
                 android:paddingTop="2dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/title"
-                android:gravity="center"/>
+                android:gravity="center"
+                />
 
 
 

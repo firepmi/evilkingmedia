@@ -4,13 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -208,31 +206,35 @@ public class SeriesActivityServer4 extends AppCompatActivity {
                 movieList.clear();
                 // Connect to the web site
                 doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10*1000).get();
-                MoviesModel moviesurl = new MoviesModel();
-                moviesurl.setCurrenturl(mainurl + "" + movieUrl);
-                movieurlList.add(moviesurl);
+                try {
+                    MoviesModel moviesurl = new MoviesModel();
+                    moviesurl.setCurrenturl(mainurl + "" + movieUrl);
+                    movieurlList.add(moviesurl);
 
-                        String title = null;
-                        Elements maincol = doc.select("#main_col").first().getElementsByClass("mediaWrap mediaWrapAlt");
+                    String title = null;
+                    Elements maincol = doc.select("#main_col").first().getElementsByClass("mediaWrap mediaWrapAlt");
 
-                        for (int i = 0; i < maincol.size(); i++) {
+                    for (int i = 0; i < maincol.size(); i++) {
 
-                            String image = maincol.get(i).getElementsByTag("a").select("img").attr("src");
-                            String url = maincol.get(i).getElementsByTag("a").attr("href");
-                            if (Pageurl == null) {
-                                title = maincol.get(i).getElementsByTag("a").attr("title");
-                            } else {
-                                title = maincol.get(i).getElementsByClass("title-film").first().getElementsByTag("a").first().getElementsByTag("p").text();
-                            }
-
-                            Log.e("image", image);
-                            MoviesModel movie = new MoviesModel();
-                            movie.setImage(image);
-                            movie.setUrl(url);
-                            movie.setTitle(title);
-                            movieList.add(movie);
-
+                        String image = maincol.get(i).getElementsByTag("a").select("img").attr("src");
+                        String url = maincol.get(i).getElementsByTag("a").attr("href");
+                        if (Pageurl == null) {
+                            title = maincol.get(i).getElementsByTag("a").attr("title");
+                        } else {
+                            title = maincol.get(i).getElementsByClass("title-film").first().getElementsByTag("a").first().getElementsByTag("p").text();
                         }
+
+                        Log.e("image", image);
+                        MoviesModel movie = new MoviesModel();
+                        movie.setImage(image);
+                        movie.setUrl(url);
+                        movie.setTitle(title);
+                        movieList.add(movie);
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -248,84 +250,86 @@ public class SeriesActivityServer4 extends AppCompatActivity {
                 mProgressDialog.dismiss();
             }
 
-            if(pageavl == false){
+            if (pageavl == false) {
 
                 Elements pagination = doc.getElementsByClass("nextpostslink");
-                if (pagination.size() != 0) {
-                    ivNext.setVisibility(View.VISIBLE);
-                } else {
-                    ivNext.setVisibility(View.GONE);
-                }
-            }
-
-            if (!movieUrl.isEmpty()) {
-                mAdapter = new BindListSeries4Adapter(movieList, SeriesActivityServer4.this);
-                // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer4.this, 3);
-                recyclerView.setLayoutManager(mLayoutManager);
-                //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.invalidate();
-                recyclerView.setAdapter(mAdapter);
-                ivNext.setVisibility(View.VISIBLE);
-
-
                 try {
-                    if (isNext == true) {
-                        ivPrev.setVisibility(View.VISIBLE);
+                    if (pagination.size() != 0) {
+                        ivNext.setVisibility(View.VISIBLE);
                     } else {
-                        ivPrev.setVisibility(View.GONE);
+                        ivNext.setVisibility(View.GONE);
                     }
                 } catch (Exception e) {
-                    ivPrev.setVisibility(View.GONE);
+                    e.printStackTrace();
                 }
-                if (i != 0) {
 
-                    ivPrev.setVisibility(View.VISIBLE);
-                } else {
-                    ivPrev.setVisibility(View.GONE);
-                }
-            } else {
-                if(Constant.isCategory) {
-                    mAdapter1 = new BindListAdapter4UrlAdapter(movieList, SeriesActivityServer4.this);
-                    // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer4.this, 3);
-                    recyclerView.setLayoutManager(mLayoutManager);
-                    //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-                    recyclerView.setAdapter(mAdapter1);
-                    //ivNext.setVisibility(View.VISIBLE);
-
-                }
-                else
-                {
+                if (!movieUrl.isEmpty()) {
                     mAdapter = new BindListSeries4Adapter(movieList, SeriesActivityServer4.this);
                     // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer4.this, 3);
                     recyclerView.setLayoutManager(mLayoutManager);
                     //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerView.invalidate();
                     recyclerView.setAdapter(mAdapter);
-                }
-                try {
-                    if (isNext == true) {
+                    ivNext.setVisibility(View.VISIBLE);
+
+
+                    try {
+                        if (isNext == true) {
+                            ivPrev.setVisibility(View.VISIBLE);
+                        } else {
+                            ivPrev.setVisibility(View.GONE);
+                        }
+                    } catch (Exception e) {
+                        ivPrev.setVisibility(View.GONE);
+                    }
+                    if (i != 0) {
+
                         ivPrev.setVisibility(View.VISIBLE);
                     } else {
                         ivPrev.setVisibility(View.GONE);
                     }
-                } catch (Exception e) {
-                    ivPrev.setVisibility(View.GONE);
-                }
-                if (i != 0) {
-
-                    ivPrev.setVisibility(View.VISIBLE);
                 } else {
-                    ivPrev.setVisibility(View.GONE);
+                    if (Constant.isCategory) {
+                        mAdapter1 = new BindListAdapter4UrlAdapter(movieList, SeriesActivityServer4.this);
+                        // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer4.this, 3);
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(mAdapter1);
+                        //ivNext.setVisibility(View.VISIBLE);
+
+                    } else {
+                        mAdapter = new BindListSeries4Adapter(movieList, SeriesActivityServer4.this);
+                        // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(SeriesActivityServer4.this, 3);
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        //  recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(mAdapter);
+                    }
+                    try {
+                        if (isNext == true) {
+                            ivPrev.setVisibility(View.VISIBLE);
+                        } else {
+                            ivPrev.setVisibility(View.GONE);
+                        }
+                    } catch (Exception e) {
+                        ivPrev.setVisibility(View.GONE);
+                    }
+                    if (i != 0) {
+
+                        ivPrev.setVisibility(View.VISIBLE);
+                    } else {
+                        ivPrev.setVisibility(View.GONE);
+                    }
+
                 }
+
 
             }
-
-
         }
 
     }

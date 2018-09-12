@@ -138,7 +138,7 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
 
 
                 Elements iframe = doc.getElementsByTag("iframe");
-                String src = iframe.attr("src");
+                String src = iframe.get(1).attr("src");
 
                 Log.e("body", src);
                 videoPath =  src;

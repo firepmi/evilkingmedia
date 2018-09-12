@@ -88,6 +88,19 @@ public class SportsActivityServer5 extends AppCompatActivity {
                 new PreviousPagedata().execute();
             }
         });
+        ivUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.smoothScrollBy(0, -200);
+            }
+        });
+
+        ivDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.smoothScrollBy(0, 200);
+            }
+        });
         if (previousurl == null) {
             new prepareSportsData(Constant.SPORTSURL5).execute();
         } else {

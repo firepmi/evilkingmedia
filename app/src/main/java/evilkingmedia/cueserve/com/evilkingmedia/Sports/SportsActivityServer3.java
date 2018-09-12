@@ -1,6 +1,7 @@
 package evilkingmedia.cueserve.com.evilkingmedia.Sports;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -77,7 +78,16 @@ public class SportsActivityServer3 extends AppCompatActivity {
         if (categoryid == null) {
             categoryid = "t1";
         }
-        selectedid = categoryid + "-content";
+        if(categoryid.contains("-content"))
+        {
+            selectedid = categoryid;
+        }
+        else
+        {
+            selectedid = categoryid + "-content";
+        }
+
+
         previousurl = getIntent().getStringExtra("url");
         position = getIntent().getIntExtra("position", 0);
 
@@ -114,7 +124,10 @@ public class SportsActivityServer3 extends AppCompatActivity {
         btnhome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new prepareSportsData(Constant.SPORTSURL3).execute();
+
+                Intent newIntent = new Intent(SportsActivityServer3.this,SportsActivityServer3.class);
+                startActivity(newIntent);
+
             }
         });
 
@@ -224,19 +237,26 @@ public class SportsActivityServer3 extends AppCompatActivity {
                             for (int i = 0; i < rowdata.size(); i++) {
 
                                 String title = rowdata.get(i).getElementsByClass("name").text();
+
                                 SportsModel sports = new SportsModel();
                                 sports.setTitle(title);
                                 // sports.setTime(time);
                                 sports.setUrl(url);
+                                sports.setId(selectedid);
                                 //Log.e("title", time + " " + title);
                                 sportsModelList.add(sports);
                             }
 
                         } else {
                             sportsModelList.clear();
-                            Elements data = doc.getElementsByClass("slide");
+                            Elements data = doc.getElementsByClass("content").select("#" + selectedid);
 
-                            Elements videourl = data.get(position).getElementsByClass("slide_content").select(".link");
+                            System.out.print(data);
+
+                            Elements rowdata = data.select(".slide");
+                           // Elements data = doc.getElementsByClass("slide");
+
+                            Elements videourl = rowdata.get(position).getElementsByClass("slide_content").select(".link");
 
                             Log.e("sizeofurl", videourl.size() + "");
 

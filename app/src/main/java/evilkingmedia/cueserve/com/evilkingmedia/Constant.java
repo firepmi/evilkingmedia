@@ -1,5 +1,13 @@
 package evilkingmedia.cueserve.com.evilkingmedia;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.widget.Toast;
+
+import evilkingmedia.cueserve.com.evilkingmedia.Musica.MusicActivityCategory;
+
 public class Constant {
 
     public static String MOVIEURL1 = "http://www.altadefinizione01.zone";
@@ -63,4 +71,33 @@ public class Constant {
     public static String METEOURL = "http://supermyspace.xyz/LISTE/meteoevil.m3u";
 
     public static boolean isCategory = false;
+
+
+    public static void playInWuffy(Context ctx, String url) {
+        if(!appInstalledOrNot(ctx,"co.wuffy.player")){
+            Toast.makeText(ctx, "Installed Wuffy Player To Play This Video",
+                    Toast.LENGTH_LONG).show();
+        }else{
+            Bundle bnd = new Bundle();
+            bnd.putString("path",url);
+            //   bnd.putString("name", meteolist.get(position).getTitle());
+            Intent intent = new Intent();
+            intent.setClassName("co.wuffy.player", "org.wuffy.videoplayer.WuffyPlayer");
+            intent.putExtras(bnd);
+            ctx.startActivity(intent);
+        }
+    }
+
+    public static boolean appInstalledOrNot(Context ctx,String uri) {
+        PackageManager pm = ctx.getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        }
+        return app_installed;
+    }
 }

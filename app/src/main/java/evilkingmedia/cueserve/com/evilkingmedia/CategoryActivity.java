@@ -154,8 +154,9 @@ public class CategoryActivity extends AppCompatActivity {
        rlMeteo.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               Intent i =new Intent(CategoryActivity.this, MeteoActivity.class);
-               startActivity(i);
+               Constant.playInWuffy(CategoryActivity.this,Constant.METEOURL );
+              /* Intent i =new Intent(CategoryActivity.this, MeteoActivity.class);
+               startActivity(i);*/
            }
        });
 

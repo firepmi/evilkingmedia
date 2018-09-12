@@ -104,6 +104,20 @@ public class SportsActivityServer2 extends AppCompatActivity   {
                 new PreviousPagedata().execute();
             }
         });
+
+        ivUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.smoothScrollBy(0, -200);
+            }
+        });
+
+        ivDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.smoothScrollBy(0, 200);
+            }
+        });
         if (nexturl == null) {
             new prepareSportsData(Constant.SPORTSURL2).execute();
         } else {
@@ -229,20 +243,22 @@ public class SportsActivityServer2 extends AppCompatActivity   {
                             streaming = true;
                             Elements mElementUrl = td.select("a");
                             for (int i = 0; i < mElementUrl.size(); i++) {
-                                String url_str = mElementUrl.attr("href");
-                                String title = mElementUrl.attr("title");
-                                String url1[] = url_str.split("javascript:window.open\\(");
-                                String url2[] = url1[1].split("\\)");
-                                String data = url2[0].replace("'", "");
-                                if (data.contains("youtube")) {
-                                    data = data.replace("http", "https");
-                                } else {
-                                    data = data;
+                                if(mElementUrl.get(i).attr("href").contains("javascript")) {
+                                    String url_str = mElementUrl.get(i).attr("href");
+                                    String title = mElementUrl.get(i).attr("title");
+                                    String url1[] = url_str.split("javascript:window.open\\(");
+                                    String url2[] = url1[1].split("\\)");
+                                    String data = url2[0].replace("'", "");
+                                    if (data.contains("youtube")) {
+                                        data = data.replace("http", "https");
+                                    } else {
+                                        data = data;
+                                    }
+                                    SportsModel sportsModel = new SportsModel();
+                                    sportsModel.setUrl(data);
+                                    sportsModel.setTitle(title);
+                                    sportsModelList.add(sportsModel);
                                 }
-                                SportsModel sportsModel = new SportsModel();
-                                sportsModel.setUrl(data);
-                                sportsModel.setTitle(title);
-                                sportsModelList.add(sportsModel);
                             }
 
                             Log.e("watchdata", sportsModelList + "");
