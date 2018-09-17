@@ -1,9 +1,13 @@
 package evilkingmedia.cueserve.com.evilkingmedia;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import evilkingmedia.cueserve.com.evilkingmedia.Musica.MusicActivityCategory;
@@ -36,7 +40,8 @@ public class Constant {
     public static String SERIESURL2 = "https://streaminghd.fun/serietv/";
     //public static String SERIESURL3 = "https://ilgeniodellostreaming.eu/serietv/";
   //   public static String SERIESURL3 = "https://www.tantifilm.uno/serie-tv/";
-     public static String SERIESURL3 = "https://www.cb01.zone/serietv/";
+  //   public static String SERIESURL3 = "https://www.cb01.zone/serietv/";
+     public static String SERIESURL3 = "https://www.cb01.news/serietv/";
     public static String SPORTSBYDOCURL = "http://supermyspace.xyz/EKM/sportbydoc.m3u";
     public static String SERIESURL4 = "https://www.filmsenzalimiti.info/serie-tv/";   //for server1
     public static String SERIESURL4_search = "https://www.filmsenzalimiti.info/";
@@ -70,8 +75,12 @@ public class Constant {
 
     public static String METEOURL = "http://supermyspace.xyz/LISTE/meteoevil.m3u";
 
-    public static boolean isCategory = false;
+    public static String CARTOONURL1 = "http://www.animehdita.org/";
+    public static String CARTOONURL2 = "https://www.tantifilm.gratis/watch-genre/cartoni-animati";
 
+    public static boolean isCategory = false;
+    public static String EVILKINGMOVIEURL = "https://www.evilkingmedia.com/film/";
+    public static String EVILKINGSERIESURL = "https://www.evilkingmedia.com/serie-tv/";
 
     public static void playInWuffy(Context ctx, String url) {
         if(!appInstalledOrNot(ctx,"co.wuffy.player")){
@@ -100,4 +109,45 @@ public class Constant {
         }
         return app_installed;
     }
+
+    public static void openWVCapp(Context ctx, String url)
+    {
+        ClipboardManager clipboard = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("",url);
+        clipboard.setPrimaryClip(clip);
+        Intent launchIntent = ctx.getPackageManager().getLaunchIntentForPackage("com.instantbits.cast.webvideo");
+        ctx.startActivity( launchIntent );
+    }
+
+    public static void alertDialogWVC(final Context ctx, final String url)
+    {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
+        alertDialog.setTitle("");
+        alertDialog.setMessage("Il tuo indirizzo internet è stato copiato. Ora puoi incollarlo su Web Video Caster");
+
+
+        //This will not allow to close dialogbox until user selects an option
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Sì", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+               openWVCapp(ctx,url);
+            }
+        });
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //  Action for 'NO' Button
+
+                dialog.cancel();
+            }
+        });
+
+        //Creating dialog box
+        AlertDialog alert = alertDialog.create();
+        //Setting the title manually
+        //alert.setTitle("AlertDialogExample");
+        alert.show();
+
+    }
+
+
 }

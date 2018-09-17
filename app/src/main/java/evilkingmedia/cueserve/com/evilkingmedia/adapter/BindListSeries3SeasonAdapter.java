@@ -137,7 +137,7 @@ public class BindListSeries3SeasonAdapter extends RecyclerView.Adapter<BindListS
                 Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
 
                 Elements data = doc.select("div[class=container-fluid]").select("div[class=nomargin]");
-                Elements em = data.tagName("p").select("em");
+                Elements em = data.tagName("li").select("em");
 
                 for(int i=0;i<em.size();i++)
                 {

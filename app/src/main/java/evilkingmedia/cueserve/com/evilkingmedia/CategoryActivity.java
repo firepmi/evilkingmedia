@@ -19,6 +19,8 @@ import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import evilkingmedia.cueserve.com.evilkingmedia.Cartoon.CartoonActivityServer1;
+import evilkingmedia.cueserve.com.evilkingmedia.Cartoon.CartoonCategoryActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.EPG.EPGActivity;
 import evilkingmedia.cueserve.com.evilkingmedia.Livetv.LiveActivityCategory;
 import evilkingmedia.cueserve.com.evilkingmedia.Meteo.MeteoActivity;
@@ -30,7 +32,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesCategoryActivity;
 public class CategoryActivity extends AppCompatActivity {
 
     private TextView txtemail, txtBottom, txt_dt_time, txtlogout, txtsetting;
-    private LinearLayout rlMovies, rlSeries, rlSports, rlMusic, rlMeteo, rlepg, rllive, rlebook;
+    private LinearLayout rlMovies, rlCartoon, rlSports, rlMusic, rlMeteo, rlepg, rllive, rlebook;
     private ImageView download;
 
     @Override
@@ -45,7 +47,7 @@ public class CategoryActivity extends AppCompatActivity {
         String styledText = "Sito Ufficiale: evilkingmedia.com - Assistenza Web: androidaba.com - Assistenza Telegram:<font color='blue'> https://t.me/evilkingmedia</font> ";
         txtBottom.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);
         rlMovies = findViewById(R.id.rlMovies);
-        rlSeries = findViewById(R.id.rlSeries);
+        rlCartoon = findViewById(R.id.rlCartoon);
         rlSports = findViewById(R.id.rlSports);
         rlepg = findViewById(R.id.rlepg);
         rlMusic = findViewById(R.id.rlMusic);
@@ -119,10 +121,10 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
-        rlSeries.setOnClickListener(new View.OnClickListener() {
+        rlCartoon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(CategoryActivity.this, SeriesCategoryActivity.class);
+                Intent i = new Intent(CategoryActivity.this, CartoonCategoryActivity.class);
                 startActivity(i);
             }
         });

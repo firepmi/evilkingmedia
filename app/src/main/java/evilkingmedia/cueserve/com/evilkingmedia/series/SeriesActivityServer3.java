@@ -209,7 +209,7 @@ public class SeriesActivityServer3 extends AppCompatActivity {
                     } else {
                         String title,title1;
                          Elements data = doc.select("div[class=container-fluid]");
-                        Elements data1 = data.select("div[class=span12 filmbox]").tagName("table").tagName("td");
+                        Elements data1 = data.select("div[class=span12 filmbox]").tagName("table").select("div[class=sp-wrap sp-wrap-default]");
 
 
                         Log.d("data size", data1.size() + "");

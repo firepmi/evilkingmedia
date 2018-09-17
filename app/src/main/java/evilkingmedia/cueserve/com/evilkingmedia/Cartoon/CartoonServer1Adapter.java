@@ -1,12 +1,14 @@
-package evilkingmedia.cueserve.com.evilkingmedia.adapter;
+package evilkingmedia.cueserve.com.evilkingmedia.Cartoon;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,15 +26,19 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsActivityServer2;
+import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListAdapter;
+import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListAdapterMovie2;
+import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListAdapterServer2;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
 
-public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapterServer2.myview> implements Filterable {
+public class CartoonServer1Adapter extends RecyclerView.Adapter<CartoonServer1Adapter.myview> implements Filterable {
     private List<MoviesModel> movielistFiltered;
     private List<MoviesModel> moviesList;
     Context context;
@@ -40,7 +46,8 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
     String videoPath;
     private int itemposition;
     BindListAdapter adapter;
-
+    private ArrayList<String> urlArrayList = new ArrayList<>();
+    private boolean isSubcategory = false;
 
     public class myview extends RecyclerView.ViewHolder {
 
@@ -48,6 +55,7 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
         private ImageView imgcontent;
         private TextView txtMovieTitle, txtMovieRating, txtMovieYear, txtMovieDuration;
         View view1, view2;
+
 
         public myview(View view) {
             super(view);
@@ -69,7 +77,7 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
         }
     }
 
-    public BindListAdapterServer2(List<MoviesModel> moviesList, Context context) {
+    public CartoonServer1Adapter(List<MoviesModel> moviesList, Context context) {
         this.moviesList = moviesList;
         this.context = context;
         this.movielistFiltered = moviesList;
@@ -77,25 +85,27 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
 
     @NonNull
     @Override
-    public BindListAdapterServer2.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CartoonServer1Adapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.gridview_list, parent, false);
 
-        return new myview(itemView);
+        return new CartoonServer1Adapter.myview(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindListAdapterServer2.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull CartoonServer1Adapter.myview holder, final int position) {
 
         final MoviesModel movie = moviesList.get(position);
 
-        if (movie.getImage() == "") {
-           holder.imgcontent.setImageResource(R.color.colorWhite);
+        if (movie.getImage()!=null) {
+            holder.imgcontent.setVisibility(View.VISIBLE);
+            Picasso.with(context).load(movie.getImage()).into(holder.imgcontent);
             //Picasso.with(context).load(R.drawable.ic_image).into(holder.imgcontent);
         } else {
-            Picasso.with(context).load(movie.getImage()).into(holder.imgcontent);
-        }
+            holder.imgcontent.setVisibility(View.GONE);
 
+        }
+        holder.txtMovieTitle.setGravity(View.TEXT_ALIGNMENT_CENTER);
         holder.txtMovieTitle.setText(movie.getTitle());
        /* holder.txtMovieRating.setText(movie.getRating());
         holder.txtMovieYear.setText(movie.getYear());
@@ -104,11 +114,9 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent webIntent = new Intent(context, WebViewActivity.class);
-                webIntent.putExtra("url", "https://speedvideo.net/embed-nalqx7svhsmq-607x360.html");
-                context.startActivity(webIntent);*/
-                itemposition = position;
-                new prepareMovieData().execute();
+
+                    itemposition = position;
+                    new  prepareMovieData().execute();
 
             }
         });
@@ -126,6 +134,11 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setTitle("");
+            mProgressDialog.setMessage("Loading...");
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.show();
 
         }
 
@@ -137,16 +150,27 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
                 Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
 
 
-                Elements iframe = doc.getElementsByTag("iframe");
-                String src = iframe.get(1).attr("src");
+                    moviesList.clear();
+                    isSubcategory = true;
+                    Elements data = doc.select("div[class=container]").select("table[class=table-ep]");
+                    Elements td_title = data.select("td[class=td-numero]");
+                    Elements td_url = data.select("td[class=td-link]");
+                /*for (int j=0;j<td_url.size();j++)
+                {
 
-     /*           Elements data = doc.select("div[class=video-content]").select("div#cn-content");
-                Elements iframe = data.select("iframe");
-                String src = iframe.get(0).attr("src");*/
+                }*/
+                    for (int i = 0; i < td_url.size(); i++) {
+                        String title = null;
+                        if(td_title.size()>0) {
+                            title = td_title.get(i).text();
+                        }
+                        String url = td_url.get(i).select("a").get(1).attr("href");
+                        MoviesModel movie = new MoviesModel();
 
-                Log.e("body", src);
-                videoPath =  src;
-
+                        movie.setUrl(url);
+                        movie.setTitle(title);
+                        moviesList.add(movie);
+                    }
 
 
 
@@ -158,10 +182,18 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
 
         @Override
         protected void onPostExecute(Void result) {
+            if(mProgressDialog!=null)
+            {
+                mProgressDialog.dismiss();
+            }
 
-            Intent webIntent = new Intent(context, BindListAdapterMovie2.class);
-            webIntent.putExtra("url", videoPath);
-            context.startActivity(webIntent);
+
+                Intent i = new Intent(context, CartoonActivitySubServer1.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("urldata", (Serializable) moviesList);
+                i.putExtras(bundle);
+                context.startActivity(i);
+
         }
     }
 

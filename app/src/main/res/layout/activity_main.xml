@@ -139,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_toRightOf="@+id/imgMovies"
-                    android:text="FILM"
+                    android:text="CINEMA"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -317,7 +317,7 @@
             android:layout_toRightOf="@+id/livetvCardView">
 
             <LinearLayout
-                android:id="@+id/rlSeries"
+                android:id="@+id/rlCartoon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center">
@@ -326,11 +326,11 @@
                     android:id="@+id/imgSeries"
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
-                    android:src="@drawable/series" />
+                    android:src="@drawable/cartoon" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SERIE TV"
+                    android:text="CARTOONS"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
                     android:layout_toRightOf="@+id/imgMovies"

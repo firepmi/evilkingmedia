@@ -197,29 +197,56 @@
             android:name=".Sports.WebViewActivitySports3"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme" />
-        <activity android:name=".series.WebViewActivitySeries2"
+        <activity
+            android:name=".series.WebViewActivitySeries2"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"></activity>
-        <activity android:name=".series.SeriesActivityCatServer4"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".series.SeriesActivityCatServer4"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme">
-            android:theme="@style/MyTheme" ></activity>
-
-        <activity android:name=".adapter.BindListAdapterMovie2"
+            android:theme="@style/MyTheme" >
+        </activity>
+        <activity
+            android:name=".adapter.BindListAdapterMovie2"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme" ></activity>
-
-
-         <activity android:name=".Sports.SportsActivityEPG"
-             android:screenOrientation="landscape"
-             android:theme="@style/MyTheme"/>
-
-        <activity android:name=".Sports.SportsActivityByDoc"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Sports.SportsActivityEPG"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"/>
-        <activity android:name=".film.WebViewActivityServer4"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Sports.SportsActivityByDoc"
             android:screenOrientation="landscape"
-            android:theme="@style/MyTheme"/>
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".film.WebViewActivityServer4"
+            android:screenOrientation="landscape"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Cartoon.CartoonCategoryActivity"
+            android:theme="@style/MyTheme"
+            android:screenOrientation="landscape"></activity>
+
+        <activity android:name=".Cartoon.CartoonActivitySubServer1"
+            android:theme="@style/MyTheme"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".Cartoon.CartoonActivityServer1"
+            android:theme="@style/MyTheme"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".Cartoon.CartoonActivityServer2"
+            android:theme="@style/MyTheme"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".Cartoon.CartoonActivityServer3"
+            android:theme="@style/MyTheme"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".Cartoon.CartoonActivityServer4"
+            android:theme="@style/MyTheme"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>
