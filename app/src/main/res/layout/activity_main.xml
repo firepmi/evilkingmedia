@@ -31,7 +31,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-      >
+      android:layout_weight="1">
 
         <!--Logo-->
         <ImageView
@@ -43,26 +43,18 @@
             android:scaleType="fitStart"
             android:src="@drawable/logo" />
 
-        <TextView
-            android:id="@+id/dt_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="14:36 July 24, 2018"
-            android:textColor="@color/colorWhite"
-            android:textSize="15dp"
-            android:gravity="right"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp" />
+
 
         <ImageView
             android:id="@+id/download"
-            android:layout_width="@dimen/_15sdp"
+            android:layout_width="@dimen/_1sdp"
             android:layout_height="@dimen/_20sdp"
             android:gravity="center"
             android:layout_weight="0.5"
             android:scaleType="fitStart"
             android:src="@drawable/download"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"/>
         <!--User-->
         <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
             android:id="@+id/txtemail"
@@ -71,7 +63,9 @@
             android:gravity="center_vertical"
             android:text="@string/fa_icon_user"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_20sdp"/>
+            android:textSize="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"/>
 
         <!--Setting-->
         <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
@@ -81,8 +75,29 @@
             android:gravity="center_vertical"
             android:drawableStart="@drawable/ic_play"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_20sdp"/>
-
+            android:textSize="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"/>
+        <ImageView
+            android:id="@+id/wvc"
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:scaleType="fitStart"
+            android:src="@drawable/wvc"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:id="@+id/dns"
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:scaleType="fitStart"
+            android:src="@drawable/dnset"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"/>
         <!--Log off-->
         <evilkingmedia.cueserve.com.evilkingmedia.utility.FontAwesome
             android:id="@+id/txtlogout"
@@ -91,12 +106,24 @@
             android:gravity="center_vertical"
             android:text="@string/fa_icon_off"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_20sdp"/>
+            android:textSize="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"/>
 
     </LinearLayout>
     <!--End of Top View-->
 
-
+        <TextView
+            android:id="@+id/dt_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="14:36 July 24, 2018"
+            android:textColor="@color/colorWhite"
+            android:textSize="15dp"
+            android:gravity="right"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="20dp"
+            />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -264,7 +291,7 @@
             android:id="@+id/recordingCardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="4.2"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"

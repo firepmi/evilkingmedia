@@ -105,39 +105,40 @@ public class SeriesActivityEpisodServer3 extends AppCompatActivity {
         protected Void doInBackground(String... strings) {
 
             //Movie1
-            try {
-                // Connect to the web site
-                doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
-                MoviesModel moviesurl = new MoviesModel();
-                moviesurl.setCurrenturl(mainurl + "" + movieUrl);
-                movieurlList.add(moviesurl);
+            if(mainurl!=null) {
+                try {
+                    // Connect to the web site
+                    doc = Jsoup.connect(mainurl + "" + movieUrl).ignoreContentType(true).ignoreHttpErrors(true).timeout(10000).get();
+                    MoviesModel moviesurl = new MoviesModel();
+                    moviesurl.setCurrenturl(mainurl + "" + movieUrl);
+                    movieurlList.add(moviesurl);
 
-                Elements bodydata = doc.getElementsByClass("row").select("[class=navbar navbar-fixed-top navbar-default second_nav]").select("li");
+                    Elements bodydata = doc.getElementsByClass("row").select("[class=navbar navbar-fixed-top navbar-default second_nav]").select("li");
 
-                for (int i = 0; i < bodydata.size(); i++) {
-                    String title = bodydata.get(i).getElementsByTag("a").text();
-                    String url = bodydata.get(i).getElementsByTag("a").attr("href");
-                    MoviesModel movie = new MoviesModel();
-                    movie.setUrl(url);
-                    movie.setTitle(title);
-                    movieList.add(movie);
+                    for (int i = 0; i < bodydata.size(); i++) {
+                        String title = bodydata.get(i).getElementsByTag("a").text();
+                        String url = bodydata.get(i).getElementsByTag("a").attr("href");
+                        MoviesModel movie = new MoviesModel();
+                        movie.setUrl(url);
+                        movie.setTitle(title);
+                        movieList.add(movie);
+                    }
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
-
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-
-
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
             // Set description into TextView
-            if (mProgressDialog != null) {
+
                 mProgressDialog.dismiss();
-            }
+
 
 
             mAdapter = new BindListSeries3Adapter(movieList, SeriesActivityEpisodServer3.this);

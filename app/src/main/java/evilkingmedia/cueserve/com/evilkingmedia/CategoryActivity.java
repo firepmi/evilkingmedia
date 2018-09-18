@@ -33,7 +33,7 @@ public class CategoryActivity extends AppCompatActivity {
 
     private TextView txtemail, txtBottom, txt_dt_time, txtlogout, txtsetting;
     private LinearLayout rlMovies, rlCartoon, rlSports, rlMusic, rlMeteo, rlepg, rllive, rlebook;
-    private ImageView download;
+    private ImageView download,wvc,dns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,22 @@ public class CategoryActivity extends AppCompatActivity {
         txtlogout = findViewById(R.id.txtlogout);
         txtsetting = findViewById(R.id.txtsetting);
         download = findViewById(R.id.download);
+        wvc = findViewById(R.id.wvc);
+        dns = findViewById(R.id.dns);
+
+        wvc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constant.WVC_playstore)));
+            }
+        });
+
+        dns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.androidaba.com/dnset-cambia-dns-su-android-senza-avere-il-root/")));
+            }
+        });
 
         download.setOnClickListener(new View.OnClickListener() {
             @Override

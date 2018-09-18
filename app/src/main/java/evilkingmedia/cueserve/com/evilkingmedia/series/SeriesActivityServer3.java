@@ -168,17 +168,18 @@ public class SeriesActivityServer3 extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-          /*  mProgressDialog = new ProgressDialog(SeriesActivityServer3.this);
+           mProgressDialog = new ProgressDialog(SeriesActivityServer3.this);
             mProgressDialog.setTitle("");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
-            mProgressDialog.show();*/
+            mProgressDialog.show();
         }
 
         @Override
         protected Void doInBackground(String... strings) {
 
                 //Movie1
+            if(mainurl!=null) {
                 try {
                     movieList.clear();
                     movieTitleList.clear();
@@ -207,8 +208,8 @@ public class SeriesActivityServer3 extends AppCompatActivity {
                             movieList.add(movie);
                         }
                     } else {
-                        String title,title1;
-                         Elements data = doc.select("div[class=container-fluid]");
+                        String title, title1;
+                        Elements data = doc.select("div[class=container-fluid]");
                         Elements data1 = data.select("div[class=span12 filmbox]").tagName("table").select("div[class=sp-wrap sp-wrap-default]");
 
 
@@ -218,16 +219,14 @@ public class SeriesActivityServer3 extends AppCompatActivity {
 
                             title = data1.get(i).select("div[class=sp-head unfolded]").text();
                             title1 = null;
-                            if(title.isEmpty()) {
+                            if (title.isEmpty()) {
                                 title1 = data1.get(i).select("div[class=sp-head]").text();
                             }
 
                             MoviesModel movie = new MoviesModel();
-                            if(title.isEmpty()) {
+                            if (title.isEmpty()) {
                                 movie.setTitle(title1);
-                            }
-                            else
-                            {
+                            } else {
                                 movie.setTitle(title);
                             }
                             movieTitleList.add(movie);
@@ -237,7 +236,7 @@ public class SeriesActivityServer3 extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
+            }
 
             return null;
         }
@@ -246,14 +245,15 @@ public class SeriesActivityServer3 extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             // Set description into TextView
 
-         //    mProgressDialog.dismiss();
+              mProgressDialog.dismiss();
 
-
-            Elements pagination = doc.getElementsByClass("pagination");
-            if (pagination.size() != 0) {
-                ivNext.setVisibility(View.VISIBLE);
-            } else {
-                ivNext.setVisibility(View.GONE);
+            if(doc!=null) {
+                Elements pagination = doc.getElementsByClass("pagination");
+                if (pagination.size() != 0) {
+                    ivNext.setVisibility(View.VISIBLE);
+                } else {
+                    ivNext.setVisibility(View.GONE);
+                }
             }
 
             if (url == null) {
@@ -346,23 +346,24 @@ public class SeriesActivityServer3 extends AppCompatActivity {
 
                     newurl = movieurlList.get(i).getCurrenturl();
                 }
-                doc = Jsoup.connect(newurl).timeout(10000).get();
-                movieurlList.clear();
-                for (Element urls : doc.getElementsByClass("pagination")) {
-                    //perform your data extractions here.
-                    for (Element urlss : urls.getElementsByTag("a")) {
-                        result = urlss != null ? urlss.absUrl("href") : null;
-                        Log.d("Urls", String.valueOf(urlss));
-                        NextPageUrl = urlss.attr("href");
-                        Log.d("Urls", NextPageUrl);
-                        MoviesModel movieurl = new MoviesModel();
-                        movieurl.setCurrenturl(NextPageUrl);
-                        movieurlList.add(movieurl);
+                if(doc!=null) {
+                    doc = Jsoup.connect(newurl).timeout(10000).get();
+                    movieurlList.clear();
+                    for (Element urls : doc.getElementsByClass("pagination")) {
+                        //perform your data extractions here.
+                        for (Element urlss : urls.getElementsByTag("a")) {
+                            result = urlss != null ? urlss.absUrl("href") : null;
+                            Log.d("Urls", String.valueOf(urlss));
+                            NextPageUrl = urlss.attr("href");
+                            Log.d("Urls", NextPageUrl);
+                            MoviesModel movieurl = new MoviesModel();
+                            movieurl.setCurrenturl(NextPageUrl);
+                            movieurlList.add(movieurl);
 
+                        }
                     }
+
                 }
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -431,22 +432,25 @@ public class SeriesActivityServer3 extends AppCompatActivity {
 
                     newurl = movieurlList.get(i).getCurrenturl();
                 }
-                doc = Jsoup.connect(newurl).timeout(10000).get();
-                movieurlList.clear();
-                for (Element urls : doc.getElementsByClass("pagination")) {
-                    //perform your data extractions here.
-                    for (Element urlss : urls.getElementsByTag("a")) {
-                        result = urlss != null ? urlss.absUrl("href") : null;
-                        Log.d("Urls", String.valueOf(urlss));
-                        PrevPageUrl = urlss.attr("href");
-                        Log.d("Urls", PrevPageUrl);
-                        MoviesModel movieurl = new MoviesModel();
-                        movieurl.setCurrenturl(PrevPageUrl);
-                        movieurlList.add(movieurl);
 
+                if(doc!=null) {
+                    doc = Jsoup.connect(newurl).timeout(10000).get();
+                    movieurlList.clear();
+                    for (Element urls : doc.getElementsByClass("pagination")) {
+                        //perform your data extractions here.
+                        for (Element urlss : urls.getElementsByTag("a")) {
+                            result = urlss != null ? urlss.absUrl("href") : null;
+                            Log.d("Urls", String.valueOf(urlss));
+                            PrevPageUrl = urlss.attr("href");
+                            Log.d("Urls", PrevPageUrl);
+                            MoviesModel movieurl = new MoviesModel();
+                            movieurl.setCurrenturl(PrevPageUrl);
+                            movieurlList.add(movieurl);
+
+                            break;
+                        }
                         break;
                     }
-                    break;
                 }
 
             } catch (IOException e) {
@@ -495,12 +499,13 @@ public class SeriesActivityServer3 extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
             mProgressDialog = new ProgressDialog(SeriesActivityServer3.this);
             mProgressDialog.setTitle("");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.show();
+            super.onPreExecute();
+
         }
 
         @Override

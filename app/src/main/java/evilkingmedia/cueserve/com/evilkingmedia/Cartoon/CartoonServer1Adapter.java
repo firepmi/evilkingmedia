@@ -161,10 +161,13 @@ public class CartoonServer1Adapter extends RecyclerView.Adapter<CartoonServer1Ad
                 }*/
                     for (int i = 0; i < td_url.size(); i++) {
                         String title = null;
+                        String url = null;
                         if(td_title.size()>0) {
                             title = td_title.get(i).text();
                         }
-                        String url = td_url.get(i).select("a").get(1).attr("href");
+                        if(td_url.get(i).select("a").size()>1) {
+                            url  = td_url.get(i).select("a").get(1).attr("href");
+                        }
                         MoviesModel movie = new MoviesModel();
 
                         movie.setUrl(url);

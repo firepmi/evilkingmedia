@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         app:cardBackgroundColor="@color/colorRed"
         app:cardCornerRadius="@dimen/_10sdp"
         android:layout_weight="1">
@@ -277,7 +277,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/imgMovies"
-                android:text="Evilking"
+                android:text="Sport Web Caster"
                 android:textColor="@color/colorWhite"
                 android:id="@+id/tvEvilking"
                 android:textStyle="bold"

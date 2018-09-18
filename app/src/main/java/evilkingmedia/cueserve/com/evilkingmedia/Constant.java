@@ -84,8 +84,10 @@ public class Constant {
     public static String EVILKINGSERIESURL = "https://www.evilkingmedia.com/serie-tv/";
     public static String EVILKINGSPORTSURL = "https://www.evilkingmedia.com/sport/";
     public static String EVILKINGCARTOONURL = "https://www.evilkingmedia.com/cartoons/";
+    public static String EVILKINGLIVETVURL = "https://www.evilkingmedia.com/livetv/";
 
     public static String WVC_packageName = "com.instantbits.cast.webvideo";
+    public static String WVC_playstore = "https://play.google.com/store/apps/details?id=com.instantbits.cast.webvideo";
 
 
 
@@ -120,7 +122,7 @@ public class Constant {
 
     public static void openWVCapp(Context ctx, String url)
     {
-        if(!appInstalledOrNot(ctx,"com.instantbits.cast.webvideo")){
+        if(!appInstalledOrNot(ctx,WVC_packageName)){
             alertDialogWVC(ctx);
 
         }else {

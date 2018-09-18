@@ -19,7 +19,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.film.FilmActivityServer4;
 import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
 
 public class LiveActivityCategory extends AppCompatActivity {
-    LinearLayout rlMovies, rlMovies1, rlMovies2, rlMovies3, r1Movies4,rlMovies5, rlMovies6, rlMovies7, rlMovies8, r1Movies9;
+    LinearLayout rlMovies, rlMovies1, rlMovies2, rlMovies3, r1Movies4,rlMovies5, rlMovies6, rlMovies7, rlMovies8, r1Movies9, rlMovies10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +35,7 @@ public class LiveActivityCategory extends AppCompatActivity {
         rlMovies7 = findViewById(R.id.rlMovies7);
         rlMovies8 = findViewById(R.id.rlMovies8);
         r1Movies9 = findViewById(R.id.rlMovies9);
+        rlMovies10 = findViewById(R.id.rlMovies10);
 
 
 
@@ -132,6 +133,13 @@ public class LiveActivityCategory extends AppCompatActivity {
                /* Intent i=new Intent(LiveActivityCategory.this,LiveActivityServer1.class);
                 i.putExtra("url", Constant.LIVETV10);
                 startActivity(i);*/
+            }
+        });
+
+        rlMovies10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Constant.openWVCapp(LiveActivityCategory.this,Constant.EVILKINGLIVETVURL);
             }
         });
 
