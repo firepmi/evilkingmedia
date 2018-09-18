@@ -13,7 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
+import evilkingmedia.cueserve.com.evilkingmedia.Sports.SportsCategoryActivity;
 
 public class CartoonCategoryActivity extends AppCompatActivity {
     LinearLayout rlMovies, rlMovies1, rlMovies2, rlMovies3, r1Movies4;
@@ -42,17 +44,8 @@ public class CartoonCategoryActivity extends AppCompatActivity {
         rlMovies1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("", "https://www.evilkingmedia.com/serie-tv/");
-                clipboard.setPrimaryClip(clip);
-                Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.instantbits.cast.webvideo");
+                Constant.openWVCapp(CartoonCategoryActivity.this,Constant.EVILKINGCARTOONURL);
 
-                    startActivity(launchIntent);//null pointer check in case package name was not found
-
-            //    "https://www.evilkingmedia.com/serie-tv/"
-
-               /* Intent i = new Intent(CartoonCategoryActivity.this, CartoonActivityServer2.class);
-                startActivity(i);*/
             }
         });
 

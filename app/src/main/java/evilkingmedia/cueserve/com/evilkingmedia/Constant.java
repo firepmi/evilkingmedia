@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
@@ -81,6 +82,13 @@ public class Constant {
     public static boolean isCategory = false;
     public static String EVILKINGMOVIEURL = "https://www.evilkingmedia.com/film/";
     public static String EVILKINGSERIESURL = "https://www.evilkingmedia.com/serie-tv/";
+    public static String EVILKINGSPORTSURL = "https://www.evilkingmedia.com/sport/";
+    public static String EVILKINGCARTOONURL = "https://www.evilkingmedia.com/cartoons/";
+
+    public static String WVC_packageName = "com.instantbits.cast.webvideo";
+
+
+
 
     public static void playInWuffy(Context ctx, String url) {
         if(!appInstalledOrNot(ctx,"co.wuffy.player")){
@@ -112,25 +120,39 @@ public class Constant {
 
     public static void openWVCapp(Context ctx, String url)
     {
-        ClipboardManager clipboard = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("",url);
-        clipboard.setPrimaryClip(clip);
-        Intent launchIntent = ctx.getPackageManager().getLaunchIntentForPackage("com.instantbits.cast.webvideo");
-        ctx.startActivity( launchIntent );
+        if(!appInstalledOrNot(ctx,"com.instantbits.cast.webvideo")){
+            alertDialogWVC(ctx);
+
+        }else {
+            ClipboardManager clipboard = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("", url);
+            clipboard.setPrimaryClip(clip);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri videoUri = Uri.parse(url);
+            intent.setDataAndType(videoUri, "application/x-mpegURL");
+            intent.setPackage(WVC_packageName);
+            intent.setClassName(WVC_packageName, "com.instantbits.cast.webvideo.WebBrowser");
+            ctx.startActivity(intent);
+        }
     }
 
-    public static void alertDialogWVC(final Context ctx, final String url)
+    public static void alertDialogWVC(final Context ctx)
     {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(ctx);
         alertDialog.setTitle("");
-        alertDialog.setMessage("Il tuo indirizzo internet è stato copiato. Ora puoi incollarlo su Web Video Caster");
+        alertDialog.setMessage("Installa l'applicazione Web Video Caster per aprire questo link");
 
 
         //This will not allow to close dialogbox until user selects an option
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("Sì", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-               openWVCapp(ctx,url);
+                try {
+                    ctx.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + WVC_packageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    ctx.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + WVC_packageName)));
+                }
             }
         });
         alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

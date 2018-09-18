@@ -87,7 +87,7 @@ public class FilmCategoryActivity extends AppCompatActivity {
         rlMovies4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Constant.alertDialogWVC(FilmCategoryActivity.this,Constant.EVILKINGMOVIEURL);
+                Constant.openWVCapp(FilmCategoryActivity.this,Constant.EVILKINGMOVIEURL);
 
 
             }
@@ -96,7 +96,7 @@ public class FilmCategoryActivity extends AppCompatActivity {
         r1Series4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Constant.alertDialogWVC(FilmCategoryActivity.this,Constant.EVILKINGSERIESURL);
+                Constant.openWVCapp(FilmCategoryActivity.this,Constant.EVILKINGSERIESURL);
             }
         });
     }

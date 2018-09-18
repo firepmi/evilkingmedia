@@ -13,10 +13,11 @@ import evilkingmedia.cueserve.com.evilkingmedia.Constant;
 import evilkingmedia.cueserve.com.evilkingmedia.Livetv.LiveActivityCategory;
 import evilkingmedia.cueserve.com.evilkingmedia.Musica.MusicActivityCategory;
 import evilkingmedia.cueserve.com.evilkingmedia.R;
+import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
 
 public class SportsCategoryActivity extends AppCompatActivity {
 
-    LinearLayout rlSports, rlSports1, r2Sports2, r3Sports3, rlEpg, rlDoc;
+    LinearLayout rlSports, rlSports1, r2Sports2, r3Sports3, rlEpg, rlDoc, rlEvilking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class SportsCategoryActivity extends AppCompatActivity {
         r3Sports3 = findViewById(R.id.rlMovies3);
         rlEpg = findViewById(R.id.rlEpg);
         rlDoc = findViewById(R.id.rlSportByDoc);
+        rlEvilking = findViewById(R.id.rlEvilking);
 
         rlSports.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +80,13 @@ public class SportsCategoryActivity extends AppCompatActivity {
               /*  Intent i = new Intent(SportsCategoryActivity.this,SportsActivityByDoc.class);
                 i.putExtra("url",Constant.SPORTSEPGURL);
                 startActivity(i);*/
+            }
+        });
+
+        rlEvilking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Constant.openWVCapp(SportsCategoryActivity.this,Constant.EVILKINGSPORTSURL);
             }
         });
 
