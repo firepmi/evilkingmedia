@@ -79,8 +79,9 @@ public class FilmCategoryActivity extends AppCompatActivity {
         r1Series3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(FilmCategoryActivity.this,SeriesActivityServer3.class);
-                startActivity(i);
+                Constant.openWVCapp(FilmCategoryActivity.this,Constant.EVILKINGCB01TVURL);
+              /*  Intent i=new Intent(FilmCategoryActivity.this,SeriesActivityServer3.class);
+                startActivity(i);*/
             }
         });
 

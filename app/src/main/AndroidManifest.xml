@@ -32,7 +32,7 @@
             android:theme="@style/MyTheme" />
         <activity
             android:name=".film.WebViewActivity"
-            android:screenOrientation="landscape"
+
             android:theme="@style/MyTheme" />
         <activity
             android:name=".film.FilmCategoryActivity"
@@ -48,7 +48,7 @@
             android:theme="@style/MyTheme" />
         <activity
             android:name=".film.WebViewActivityServer3"
-            android:screenOrientation="landscape"
+
             android:theme="@style/MyTheme" />
         <activity
             android:name=".film.FilmActivityServer4"
@@ -195,11 +195,11 @@
         <activity android:name=".Ebbok.EbbokActivity" />
         <activity
             android:name=".Sports.WebViewActivitySports3"
-            android:screenOrientation="landscape"
+
             android:theme="@style/MyTheme" />
         <activity
             android:name=".series.WebViewActivitySeries2"
-            android:screenOrientation="landscape"
+
             android:theme="@style/MyTheme" />
         <activity
             android:name=".series.SeriesActivityCatServer4"
@@ -221,7 +221,7 @@
             android:theme="@style/MyTheme" />
         <activity
             android:name=".film.WebViewActivityServer4"
-            android:screenOrientation="landscape"
+
             android:theme="@style/MyTheme" />
         <activity
             android:name=".Cartoon.CartoonCategoryActivity"
@@ -245,6 +245,10 @@
             android:screenOrientation="landscape"/>
 
         <activity android:name=".Cartoon.CartoonActivityServer4"
+            android:theme="@style/MyTheme"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".series.SeriesActivityCatServer3"
             android:theme="@style/MyTheme"
             android:screenOrientation="landscape"/>
     </application>

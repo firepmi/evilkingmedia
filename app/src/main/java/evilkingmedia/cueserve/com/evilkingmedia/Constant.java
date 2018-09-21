@@ -42,7 +42,8 @@ public class Constant {
     //public static String SERIESURL3 = "https://ilgeniodellostreaming.eu/serietv/";
   //   public static String SERIESURL3 = "https://www.tantifilm.uno/serie-tv/";
   //   public static String SERIESURL3 = "https://www.cb01.zone/serietv/";
-     public static String SERIESURL3 = "https://www.cb01.news/serietv/";
+    public static String SERIESURL3 = "https://www.cinemasubito.org/serie";
+     //public static String SERIESURL3 = "https://www.italia-film.io/category/serie-tv-netflix/";
     public static String SPORTSBYDOCURL = "http://supermyspace.xyz/EKM/sportbydoc.m3u";
     public static String SERIESURL4 = "https://www.filmsenzalimiti.info/serie-tv/";   //for server1
     public static String SERIESURL4_search = "https://www.filmsenzalimiti.info/";
@@ -57,6 +58,7 @@ public class Constant {
     public static String SPORTSURL4 = "http://www.rojadiracta.me/";
     public static String SPORTSURL5 = "http://toplive.info/";
     public static String SPORTSEPGURL = "https://www.diretta.it/";
+    public static String SPORTSURL6 = "https://www.goalsarena.org/en/video";
 
     public static String MUSICURL1 = "https://pastebin.com/raw/PUJb9caE/.m3u";
     public static String MUSICURL2 = "http://supermyspace.xyz/LISTE/canalimusicalidoc.m3u";
@@ -85,6 +87,7 @@ public class Constant {
     public static String EVILKINGSPORTSURL = "https://www.evilkingmedia.com/sport/";
     public static String EVILKINGCARTOONURL = "https://www.evilkingmedia.com/cartoons/";
     public static String EVILKINGLIVETVURL = "https://www.evilkingmedia.com/livetv/";
+    public static String EVILKINGCB01TVURL = "https://www.cb01.zone/serietv/";
 
     public static String WVC_packageName = "com.instantbits.cast.webvideo";
     public static String WVC_playstore = "https://play.google.com/store/apps/details?id=com.instantbits.cast.webvideo";

@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -112,7 +113,7 @@ public class SportsActivityByDoc extends AppCompatActivity {
 
             }
         });
-        new  prepareMovieData(Constant.SPORTSBYDOCURL, "").execute();
+        new  prepareMovieData(Constant.SPORTSURL6, "").execute();
 
         ivUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +158,30 @@ public class SportsActivityByDoc extends AppCompatActivity {
         protected Void doInBackground(String... strings) {
             try {
 
-                URL urls = new URL(mainurl);
+                Document doc = Jsoup.connect(Constant.SPORTSURL6).timeout(10000).get();
+                Elements data = doc.select("div[class=page-content]").select("div[class=container]").select("div[class=wrapper]").select("div#mainbodycont").select("table");
+                Elements data1= data.get(1).select("tbody").select("tr").select("td");
+                Elements data2= data1.get(0).select("d1[class=tabs]").select("dd");
+                Elements sports = data2.get(0).select("div[class=videolistdivintabs]");
+
+                for(int i=0;i<sports.size();i++)
+                {
+                    Elements all = sports.get(i).select("table").select("tr");
+                    Elements all_data = all.get(1).select("td");
+                    Elements td = all.get(1).select("tr");
+                    Elements tr = td.get(0).select("td");
+                    String url = tr.get(0).select("a").attr("href");
+                    String img = tr.get(0).select("a").select("img").attr("src");
+                    String title = tr.get(1).select("a").text();
+
+
+                    MeteoModel meteo = new MeteoModel();
+                    meteo.setTitle(title);
+                    meteo.setUrl(url);
+                    meteo.setImage(img);
+                    meteolist.add(meteo);
+                }
+    /*            URL urls = new URL(mainurl);
                 BufferedReader in = new BufferedReader(new InputStreamReader(urls
                         .openStream()));
                 String str;
@@ -204,7 +228,7 @@ public class SportsActivityByDoc extends AppCompatActivity {
                 //meteo.setUrl(videourl);
 
                 Log.e("data", allURls + "");
-                in.close();
+                in.close();*/
 
             } catch (IOException e) {
                 e.printStackTrace();

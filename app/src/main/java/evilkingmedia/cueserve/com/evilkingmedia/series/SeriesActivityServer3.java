@@ -189,7 +189,21 @@ public class SeriesActivityServer3 extends AppCompatActivity {
                     moviesurl.setCurrenturl(mainurl + "" + movieUrl);
                     movieurlList.add(moviesurl);
 
-                    if (url == null) {
+                    Elements data = doc.select("div[class=container-fluid]").select("div[class=row]").select("ul[class=iconB]").select("li");
+                    for(int i=0;i<data.size();i++)
+                    {
+                        String title =data.get(i).select("a").select("img").attr("title");
+                        String image = data.get(i).select("a").select("img").attr("src");
+                        String url = data.get(i).select("a").attr("href");
+                        MoviesModel movie = new MoviesModel();
+                        movie.setImage("https://www.cinemasubito.org/"+image);
+                        movie.setUrl("https://www.cinemasubito.org/"+url);
+                        movie.setTitle(title);
+                        movieList.add(movie);
+                    }
+
+
+                 /*   if (url == null) {
                         Elements data = doc.select("div[class=container-fluid]");
                         Elements data1 = data.select("div[class=span12 filmbox]");
 
@@ -231,7 +245,7 @@ public class SeriesActivityServer3 extends AppCompatActivity {
                             }
                             movieTitleList.add(movie);
                         }
-                    }
+                    }*/
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_toRightOf="@+id/imgMovies"
-                    android:text="CINEMA"
+                    android:text="VIDEOTECA"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
             </LinearLayout>

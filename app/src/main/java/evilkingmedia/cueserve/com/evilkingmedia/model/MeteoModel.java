@@ -4,6 +4,7 @@ public class MeteoModel {
 
     private String Title;
     private String Url;
+    private String image;
 
     public MeteoModel() {
     }
@@ -24,11 +25,20 @@ public class MeteoModel {
         Url = url;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "MeteoModel{" +
                 "Title='" + Title + '\'' +
                 ", Url='" + Url + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

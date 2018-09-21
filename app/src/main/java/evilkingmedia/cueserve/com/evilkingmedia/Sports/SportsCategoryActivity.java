@@ -17,7 +17,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
 
 public class SportsCategoryActivity extends AppCompatActivity {
 
-    LinearLayout rlSports, rlSports1, r2Sports2, r3Sports3, rlEpg, rlDoc, rlEvilking;
+    LinearLayout rlSports, rlSports1, r2Sports2, r3Sports3, rlEpg, rlDoc, rlEvilking,r2Sports6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class SportsCategoryActivity extends AppCompatActivity {
         rlSports1 = findViewById(R.id.rlMovies1);
         r2Sports2 = findViewById(R.id.rlMovies2);
         r3Sports3 = findViewById(R.id.rlMovies3);
+        r2Sports6 = findViewById(R.id.rlSportServer6);
         rlEpg = findViewById(R.id.rlEpg);
         rlDoc = findViewById(R.id.rlSportByDoc);
         rlEvilking = findViewById(R.id.rlEvilking);
@@ -89,7 +90,13 @@ public class SportsCategoryActivity extends AppCompatActivity {
                 Constant.openWVCapp(SportsCategoryActivity.this,Constant.EVILKINGSPORTSURL);
             }
         });
-
+        r2Sports6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(SportsCategoryActivity.this,SportsActivityByDoc.class);
+                startActivity(i);
+            }
+        });
 
     }
 

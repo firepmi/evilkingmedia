@@ -1,4 +1,4 @@
-package evilkingmedia.cueserve.com.evilkingmedia.adapter;
+package evilkingmedia.cueserve.com.evilkingmedia.series;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,8 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,18 +23,16 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import evilkingmedia.cueserve.com.evilkingmedia.R;
+import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListAdapter;
+import evilkingmedia.cueserve.com.evilkingmedia.adapter.BindListSeries3SeasonAdapter;
 import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivity;
-import evilkingmedia.cueserve.com.evilkingmedia.film.WebViewActivityServer3;
 import evilkingmedia.cueserve.com.evilkingmedia.model.MoviesModel;
-import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityCatServer3;
-import evilkingmedia.cueserve.com.evilkingmedia.series.SeriesActivityServer3;
 
-public class BindListSeries3SeasonAdapter extends RecyclerView.Adapter<BindListSeries3SeasonAdapter.myview> {
-    private List<MoviesModel> movielistFiltered;
+public class BindListSeries3SubAdapter extends RecyclerView.Adapter<BindListSeries3SubAdapter.myview> {
+    private List<MoviesModel> episode_list;
     private List<MoviesModel> moviesList;
     Context context;
     private ProgressDialog mProgressDialog;
@@ -71,23 +67,23 @@ public class BindListSeries3SeasonAdapter extends RecyclerView.Adapter<BindListS
         }
     }
 
-    public BindListSeries3SeasonAdapter(List<MoviesModel> moviesList, Context context) {
+    public BindListSeries3SubAdapter(List<MoviesModel> moviesList, Context context,List<MoviesModel> episode_list) {
         this.moviesList = moviesList;
         this.context = context;
-        this.movielistFiltered = moviesList;
+        this.episode_list = moviesList;
     }
 
     @NonNull
     @Override
-    public BindListSeries3SeasonAdapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindListSeries3SubAdapter.myview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.grid_list_series3, parent, false);
 
-        return new myview(itemView);
+        return new BindListSeries3SubAdapter.myview(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindListSeries3SeasonAdapter.myview holder, final int position) {
+    public void onBindViewHolder(@NonNull BindListSeries3SubAdapter.myview holder, final int position) {
 
         final MoviesModel movie = moviesList.get(position);
 
@@ -106,10 +102,15 @@ public class BindListSeries3SeasonAdapter extends RecyclerView.Adapter<BindListS
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent webIntent = new Intent(context, WebViewActivity.class);
-                webIntent.putExtra("url", "https://speedvideo.net/embed-nalqx7svhsmq-607x360.html");
-                context.startActivity(webIntent);*/
+               /*  Intent webIntent = new Intent(context, WebViewActivity.class);
+                webIntent.putExtra("url",  moviesList.get(position).getUrl());
+                context.startActivity(webIntent);
                 itemposition = position;
+                Intent i = new Intent(context, SeriesActivityCatServer3.class);
+                Bundle b = new Bundle();
+                b.putSerializable("episode", (Serializable) episode_list);
+                i.putExtras(b);
+                context.startActivity(i);*/
                 new prepareMovieData().execute();
 
             }
@@ -139,14 +140,36 @@ public class BindListSeries3SeasonAdapter extends RecyclerView.Adapter<BindListS
 
                 Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
 
-                Elements data = doc.select("div[class=container-fluid]").select("div[class=row]").select("div[class=col-md-8]").select("div[class=vital]").select("div[class=video1]");
-                String url = data.select("div[class=video-container]").select("iframe").attr("src");
+              /*  Elements data = doc.select("div[class=container-fluid]").select("div[class=nomargin]");
+                Elements em = data.tagName("li").select("em");*/
+                String url = doc.select("div[class=container]").select("p").select("a").attr("href");
+                /*Elements data1 = data.select("div[class=span12 filmbox]").tagName("table").select("div[class=sp-wrap sp-wrap-default]");
+                Elements data2 = data1.get(itemposition).select("div[class=sp-body]").select("strong");
 
-                videoPath=url;
+                moviesList.clear();
+                Log.d("data size", data1.size() + "");
 
-              /*  Elements em = data.tagName("li").select("em");
+                for (int i = 0; i <data2.size(); i++) {
 
-                for(int i=0;i<em.size();i++)
+                    String title = data1.get(i).select("div[class=sp-head unfolded]").text();
+                    String title1 = null;
+                    if (title.isEmpty()) {
+                        title1 = data1.get(i).select("div[class=sp-head]").text();
+                    }
+
+                    MoviesModel movie = new MoviesModel();
+                    if(!title.contains("SUB")) {
+                        if (title.isEmpty()) {
+                            movie.setTitle(title1);
+                        } else {
+                            movie.setTitle(title);
+                        }
+                    }
+
+                    moviesList.add(movie);
+                }*/
+
+             /*   for(int i=0;i<em.size();i++)
                 {
 
                     if(em.get(i).select("a").size()>0)
@@ -154,8 +177,8 @@ public class BindListSeries3SeasonAdapter extends RecyclerView.Adapter<BindListS
                         videoPath= em.get(i).select("a").attr("href");
                         break;
                     }
-                }
-*/
+                }*/
+            videoPath = url;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -168,10 +191,8 @@ public class BindListSeries3SeasonAdapter extends RecyclerView.Adapter<BindListS
             Intent webIntent = new Intent(context, WebViewActivity.class);
             webIntent.putExtra("url", videoPath);
             context.startActivity(webIntent);
-           /* Intent i = new Intent(context, SeriesActivityCatServer3.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("episode", (Serializable) moviesList);
-            i.putExtras(bundle);
+          /*  Intent i = new Intent(context, SeriesActivityCatServer3.class);
+            i.putExtra("url", videoPath);
             context.startActivity(i);*/
         }
     }
