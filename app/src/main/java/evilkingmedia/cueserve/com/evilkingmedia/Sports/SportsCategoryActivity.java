@@ -37,8 +37,11 @@ public class SportsCategoryActivity extends AppCompatActivity {
         rlSports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SportsCategoryActivity.this, SportsActivityServer5.class);
+                Intent i = new Intent(SportsCategoryActivity.this,WebViewActivitySports3.class);
+                i.putExtra("url",Constant.SPORTSURL5);
                 startActivity(i);
+               /* Intent i = new Intent(SportsCategoryActivity.this, SportsActivityServer5.class);
+                startActivity(i);*/
             }
         });
 
