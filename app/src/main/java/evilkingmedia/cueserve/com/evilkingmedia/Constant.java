@@ -88,6 +88,7 @@ public class Constant {
     public static String EVILKINGCARTOONURL = "https://www.evilkingmedia.com/cartoons/";
     public static String EVILKINGLIVETVURL = "https://www.evilkingmedia.com/livetv/";
     public static String EVILKINGCB01TVURL = "https://www.cb01.zone/serietv/";
+    public static String EVILKINGWORLDURL = "http://supermyspace.xyz/EKM/world.m3u";
 
     public static String WVC_packageName = "com.instantbits.cast.webvideo";
     public static String WVC_playstore = "https://play.google.com/store/apps/details?id=com.instantbits.cast.webvideo";
