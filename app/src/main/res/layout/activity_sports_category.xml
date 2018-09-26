@@ -273,13 +273,13 @@
                     android:layout_height="@dimen/_35sdp"
                     android:elevation="@dimen/_5sdp"
                     android:src="@drawable/sports"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_marginLeft="50dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/imgMovies"
-                    android:text="Goals Arena"
+                    android:text="Highlights Calcio"
                     android:textColor="@color/colorWhite"
                     android:id="@+id/tv"
                     android:textStyle="bold"
