@@ -59,6 +59,7 @@ public class Constant {
     public static String SPORTSURL5 = "http://toplive.info/";
     public static String SPORTSEPGURL = "https://www.diretta.it/";
     public static String SPORTSURL6 = "https://www.goalsarena.org/en/video";
+    public static String SPORTSURL7 = "https://sporteventz.com/en/";
 
     public static String MUSICURL1 = "https://pastebin.com/raw/PUJb9caE/.m3u";
     public static String MUSICURL2 = "http://supermyspace.xyz/LISTE/canalimusicalidoc.m3u";

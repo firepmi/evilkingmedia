@@ -17,7 +17,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
 
 public class SportsCategoryActivity extends AppCompatActivity {
 
-    LinearLayout rlSports, rlSports1, r2Sports2, r3Sports3, rlEpg, rlDoc, rlEvilking,r2Sports6;
+    LinearLayout rlSports, rlSports1, r2Sports2, r3Sports3, llSportsServer1, rlDoc, rlEvilking,r2Sports6,r2Sports7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,8 @@ public class SportsCategoryActivity extends AppCompatActivity {
         r2Sports2 = findViewById(R.id.rlMovies2);
         r3Sports3 = findViewById(R.id.rlMovies3);
         r2Sports6 = findViewById(R.id.rlSportServer6);
-        rlEpg = findViewById(R.id.rlEpg);
+        r2Sports7 = findViewById(R.id.rlSportServer7);
+        llSportsServer1 = findViewById(R.id.llSportsServer1);
         rlDoc = findViewById(R.id.rlSportByDoc);
         rlEvilking = findViewById(R.id.rlEvilking);
 
@@ -65,7 +66,7 @@ public class SportsCategoryActivity extends AppCompatActivity {
             }
         });
 
-        rlEpg.setOnClickListener(new View.OnClickListener() {
+        llSportsServer1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(SportsCategoryActivity.this,WebViewActivitySports3.class);
@@ -93,7 +94,17 @@ public class SportsCategoryActivity extends AppCompatActivity {
         r2Sports6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SportsCategoryActivity.this,SportsActivityByDoc.class);
+                Intent i = new Intent(SportsCategoryActivity.this,WebViewActivitySports3.class);
+                i.putExtra("url",Constant.SPORTSURL6);
+                startActivity(i);
+            }
+        });
+
+        r2Sports7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SportsCategoryActivity.this,WebViewActivitySports3.class);
+                i.putExtra("url",Constant.SPORTSURL7);
                 startActivity(i);
             }
         });
