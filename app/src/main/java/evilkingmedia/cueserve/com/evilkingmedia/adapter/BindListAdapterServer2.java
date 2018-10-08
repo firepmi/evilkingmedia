@@ -135,10 +135,10 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
 
 
                 Document doc = Jsoup.connect(moviesList.get(itemposition).getUrl()).timeout(10000).maxBodySize(0).get();
+                Elements data = doc.select("div[class=center-container]");
 
-
-                Elements iframe = doc.getElementsByTag("iframe");
-                String src = iframe.get(1).attr("src");
+                Elements iframe = data.select("iframe");
+                String src = iframe.attr("src");
 
      /*           Elements data = doc.select("div[class=video-content]").select("div#cn-content");
                 Elements iframe = data.select("iframe");
@@ -159,7 +159,8 @@ public class BindListAdapterServer2 extends RecyclerView.Adapter<BindListAdapter
         @Override
         protected void onPostExecute(Void result) {
 
-            Intent webIntent = new Intent(context, BindListAdapterMovie2.class);
+           // Intent webIntent = new Intent(context, BindListAdapterMovie2.class);
+            Intent webIntent = new Intent(context, WebViewActivityServer3.class);
             webIntent.putExtra("url", videoPath);
             context.startActivity(webIntent);
         }

@@ -32,7 +32,7 @@
             android:theme="@style/MyTheme" />
         <activity
             android:name=".film.WebViewActivity"
-
+            android:screenOrientation="landscape"
             android:theme="@style/MyTheme" />
         <activity
             android:name=".film.FilmCategoryActivity"
@@ -48,7 +48,7 @@
             android:theme="@style/MyTheme" />
         <activity
             android:name=".film.WebViewActivityServer3"
-
+            android:screenOrientation="landscape"
             android:theme="@style/MyTheme" />
         <activity
             android:name=".film.FilmActivityServer4"
@@ -110,7 +110,7 @@
             android:name=".series.SeriesActivityEpisodServer3"
             android:screenOrientation="landscape"
             android:theme="@style/MyTheme" />
-        android:theme="@style/MyTheme"/>
+
         <activity
             android:name=".Sports.SportsActivityServer2"
             android:screenOrientation="landscape"
@@ -199,7 +199,7 @@
             android:theme="@style/MyTheme" />
         <activity
             android:name=".series.WebViewActivitySeries2"
-
+            android:screenOrientation="landscape"
             android:theme="@style/MyTheme" />
         <activity
             android:name=".series.SeriesActivityCatServer4"
