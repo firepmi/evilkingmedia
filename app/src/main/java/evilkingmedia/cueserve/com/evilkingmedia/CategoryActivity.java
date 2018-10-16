@@ -5,9 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.BaseInputConnection;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -61,6 +63,7 @@ public class CategoryActivity extends AppCompatActivity {
         download = findViewById(R.id.download);
         wvc = findViewById(R.id.wvc);
         dns = findViewById(R.id.dns);
+
 
         wvc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,5 +196,12 @@ public class CategoryActivity extends AppCompatActivity {
                 startActivity(browserIntent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        rlMovies.requestFocus();
     }
 }

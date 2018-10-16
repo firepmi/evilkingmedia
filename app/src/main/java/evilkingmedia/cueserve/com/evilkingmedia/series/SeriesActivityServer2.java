@@ -241,14 +241,14 @@ public class SeriesActivityServer2 extends AppCompatActivity {
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
-
-            Elements pagination = doc.getElementsByClass("pagination");
-            if (pagination.size() != 0) {
-                ivNext.setVisibility(View.VISIBLE);
-            } else {
-                ivNext.setVisibility(View.GONE);
+            if(doc !=null) {
+                Elements pagination = doc.getElementsByClass("pagination");
+                if (pagination.size() != 0) {
+                    ivNext.setVisibility(View.VISIBLE);
+                } else {
+                    ivNext.setVisibility(View.GONE);
+                }
             }
-
             if (!movieUrl.isEmpty()) {
                 mAdapter = new BindListSeries2Adapter(movieList, SeriesActivityServer2.this);
                 // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
