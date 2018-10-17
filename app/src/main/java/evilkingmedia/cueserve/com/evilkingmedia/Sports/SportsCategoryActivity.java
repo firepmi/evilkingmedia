@@ -17,7 +17,7 @@ import evilkingmedia.cueserve.com.evilkingmedia.film.FilmCategoryActivity;
 
 public class SportsCategoryActivity extends AppCompatActivity {
 
-    LinearLayout rlSports, rlSports1, r2Sports2, r3Sports3, llSportsServer1, rlDoc, rlEvilking,r2Sports6,r2Sports7;
+    LinearLayout rlSports, rlSports1, r2Sports2, r3Sports3, llSportsServer1, rlDoc, rlEvilking,r2Sports6,r2Sports7,rlSportServer10,rlSportServer11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,8 @@ public class SportsCategoryActivity extends AppCompatActivity {
         llSportsServer1 = findViewById(R.id.llSportsServer1);
         rlDoc = findViewById(R.id.rlSportByDoc);
         rlEvilking = findViewById(R.id.rlEvilking);
+        rlSportServer10 = findViewById(R.id.rlSportServer10);
+        rlSportServer11 = findViewById(R.id.rlSportByDoc11);
 
         rlSports.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +112,20 @@ public class SportsCategoryActivity extends AppCompatActivity {
                 Intent i = new Intent(SportsCategoryActivity.this,WebViewActivitySports3.class);
                 i.putExtra("url",Constant.SPORTSURL7);
                 startActivity(i);
+            }
+        });
+
+        rlSportServer10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Constant.playInWuffy(SportsCategoryActivity.this,Constant.SPORTSURL8);
+            }
+        });
+
+        rlSportServer11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Constant.playInWuffy(SportsCategoryActivity.this,Constant.SPORTSURL9);
             }
         });
 
