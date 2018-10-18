@@ -60,8 +60,10 @@ public class Constant {
     public static String SPORTSEPGURL = "https://www.diretta.it/";
     public static String SPORTSURL6 = "https://www.goalsarena.org/en/video";
     public static String SPORTSURL7 = "https://sporteventz.com/en/";
-    public static String SPORTSURL8 = "https://www.dropbox.com/referrer_cleansing_redirect?hmac=zQCr4Jy8oTR3Rs6nhcux1kUwBlz4JdOoLcw708ipmkk%3D&url=https%3A%2F%2Fwww.dropbox.com%2Fs%2Fontzpg9k60kf7eh%2FS24_COPPE.m3u";
-    public static String SPORTSURL9 = "https://www.dropbox.com/referrer_cleansing_redirect?hmac=pSnU%2B4dUHvyDJO85wXTMR7tgx7Cv2zKxq2P1%2BMNHXBs%3D&url=https%3A%2F%2Fwww.dropbox.com%2Fs%2Fswawfpl2gccqdxg%2FS24_SERIE_A.m3u";
+    //public static String SPORTSURL8 = "http://supermyspace.xyz/EKM/wacoppe.m3u";
+    public static String SPORTSURL8 = "http://supermyspace.xyz/watchapp/S24_COPPE.m3u";
+  //  public static String SPORTSURL9 = "http://supermyspace.xyz/EKM/waseriea.m3u";
+    public static String SPORTSURL9 = "http://supermyspace.xyz/watchapp/S24_SERIE_A.m3u";
 
     public static String MUSICURL1 = "https://pastebin.com/raw/PUJb9caE/.m3u";
     public static String MUSICURL2 = "http://supermyspace.xyz/LISTE/canalimusicalidoc.m3u";
