@@ -5,7 +5,7 @@
     android:layout_margin="10dp"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -13,7 +13,9 @@
         card_view:cardCornerRadius="4dp"
         android:layout_margin="@dimen/card_margin"
         android:elevation="3dp"
-        card_view:cardBackgroundColor="@color/colorWhite">
+        card_view:cardBackgroundColor="@color/colorWhite"
+        android:foreground="@drawable/card_view_foreground"
+        android:focusable="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,20 +23,17 @@
             android:orientation="vertical"
             android:layout_gravity="center">
 
-
             <TextView
                 android:id="@+id/txtMovieTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/title"
+                android:textSize="20sp"
                 android:layout_gravity="center"
                 android:textAlignment="center"/>
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
-
-
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>
 

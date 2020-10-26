@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".film.FilmCategoryActivity"
+    tools:context=".demand.FilmCategoryActivity"
     android:orientation="vertical"
     android:layout_gravity="center"
     android:gravity="center"
     android:background="@drawable/background">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/moviesCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,9 +44,9 @@
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/moviesCardView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,9 +80,9 @@
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/moviesCardView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -118,9 +118,9 @@
                 android:textStyle="bold"
                 android:layout_marginRight="40dp"/>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/moviesCardView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -154,9 +154,9 @@
                 android:id="@+id/tvserver4"
                 android:textStyle="bold" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/moviesCardView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -189,6 +189,6 @@
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

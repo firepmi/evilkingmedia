@@ -1,11 +1,9 @@
-
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".film.FilmActivity"
+    tools:context=".demand.Sito2Activity"
     android:background="@drawable/background">
 
 
@@ -19,43 +17,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Home"
+            android:text="Movies"
             android:textAllCaps="false"
             android:textSize="14sp"
-            android:id="@+id/btnhome"/>
+            android:textColor="@android:color/white"
+            android:id="@+id/btnMovies"
+            android:background="@drawable/highlight_button"
+            android:layout_margin="5dp"/>
+        <requestFocus/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Film Al Cinema"
+            android:text="Series"
             android:textAllCaps="false"
             android:textSize="14sp"
-            android:id="@+id/btnfilmal"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Film Sub ITA"
-            android:textAllCaps="false"
-            android:textSize="14sp"
-            android:id="@+id/btnfilmsub"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Film A/Z"
-            android:textAllCaps="false"
-            android:textSize="14sp"
-            android:id="@+id/btnfilmaz"/>
+            android:textColor="@android:color/white"
+            android:id="@+id/btnSeries"
+            android:background="@drawable/highlight_button"
+            android:layout_margin="5dp"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_below="@+id/categories"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,106 +52,34 @@
 
             <EditText
                 android:id="@+id/etMoviname"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="37dp"
                 android:background="@color/colorWhite"
                 android:layout_weight="1"
-                android:layout_marginTop="5px"
-                android:drawableLeft="@drawable/ic_search"
+                android:layout_marginTop="5dp"
+                android:drawableStart="@drawable/ic_search"
                 android:hint="Search your favourite movies"
-                android:focusable="false"
-                android:focusableInTouchMode="false"/>
-
-            <Button
-                android:id="@+id/btnMoviname"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-               android:text="Search"
-                android:textAllCaps="false"/>
+                android:drawableLeft="@drawable/ic_search"
+                android:focusable="true"/>
 
         </LinearLayout>
 
-    <!--<android.support.v7.widget.SearchView
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:background="@color/colorWhite"
-        android:layout_below="@+id/categories"/>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/categories"
-        android:layout_marginBottom="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0.1">
-    </android.support.v7.widget.RecyclerView>
-
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1">
-                <ImageView
-                    android:id="@+id/ivUp"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="50dp"
-                    android:src="@drawable/ic_up"
-                    android:layout_weight="0.2"/>
-
-                <ImageView
-                    android:id="@+id/ivDown"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="50dp"
-                    android:src="@drawable/ic_down"
-                    android:layout_weight="0.2"
-                    android:layout_marginTop="60px"/>
-            </LinearLayout>
+                android:layout_marginTop="10dp" />
+            <requestFocus/>
         </LinearLayout>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rlnext">
-
-        <ImageView
-            android:id="@+id/ivNext"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="50dp"
-            android:src="@drawable/ic_next" />
-
-        <ImageView
-            android:id="@+id/ivPrev"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="50dp"
-            android:src="@drawable/ic_prev" />
-    </RelativeLayout>
-
-
-
-
-
-</RelativeLayout>
+</LinearLayout>
 
 
 
